@@ -1,0 +1,41 @@
+/**
+ * Definition of ListNode
+ * class ListNode {
+ * public:
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int val) {
+ *         this->val = val;
+ *         this->next = NULL;
+ *     }
+ * }
+ */
+class Solution {
+public:
+    /**
+     * @param head: The first node of linked list.
+     * @return: You should return the head of the sorted linked list,
+                    using constant space complexity.
+     */
+    ListNode *sortList(ListNode *head) {
+        vector<int>vlist;
+        while(head){
+            vlist.push_back(head->val);
+            head=head->next;
+        }
+        int size = vlist.size();
+        if(size==0){
+            return NULL;
+        }
+        sort(vlist.begin(),vlist.end());
+        ListNode *p = new ListNode(vlist[0]);
+        ListNode *q =NULL;
+        head = p;
+        for(int i=1;i<size;i++){
+            q = new ListNode(vlist[i]);
+            p->next=q;
+            p=q;
+        }
+        return head;
+    }
+};
