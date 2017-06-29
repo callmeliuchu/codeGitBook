@@ -1,0 +1,41 @@
+class Solution {
+public:
+    /**
+     * @param head: The first node of linked list.
+     * @return: void
+     */
+    void reorderList(ListNode *head) {
+        if(head==NULL || head->next==NULL){
+            return;
+        }
+        ListNode *p = head;
+        ListNode *q = head;
+        ListNode *prep = NULL;
+        while(q && q->next){
+            p = p->next;
+            q = q->next->next;
+        }
+        prep = p->next;
+        p->next = NULL;
+        p = prep;
+        q = NULL;
+        ListNode *temp = NULL;
+        while(p){
+            temp = p->next;
+            p->next = q;
+            q = p;
+            p = temp;
+        }
+        p = q;
+        prep = head;
+        while(prep && p){
+            q = p->next;
+            temp = prep->next;
+            prep->next = p;
+            p->next = temp;
+            p = q;
+            prep = temp;
+        }
+    
+    }
+};
