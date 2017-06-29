@@ -1,0 +1,22 @@
+class Solution {
+public:
+    /**
+     * @param head: The first node of linked list.
+     * @return: True if it has a cycle, or false
+     */
+    bool hasCycle(ListNode *head) {
+        if(head==NULL){
+            return false;
+        }
+         ListNode *p = head;
+         ListNode *q = head;
+         while(q && q->next){
+             p=p->next;
+             q=q->next->next;
+             if(p==q){
+                 return true;
+             }
+         }
+         return false;
+    }
+};
