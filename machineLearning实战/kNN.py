@@ -30,5 +30,54 @@ def classify(vecInput,dataSet,labels,k):
 	return sortedClassCount[0][0]
 
 
+def file2matrix(fileName):
+	#读取每一行
+	lines = open(fileName).readlines()
+	#记录每一行的数值
+	returnMat = []
+	#得到每一行最后一个label
+	labels = []
+	for line in lines:
+		data = line.strip().split('\t')
+		numArr = [float(num) for num in data[:-1]]
+		labels.append(data[-1])
+		returnMat.append(numArr)
+	#返回数据
+	return array(returnMat),labels
+
+def testDataSet():
+	#测试数据
+	fileName =  'F:\python\machinelearning\machinelearninginaction-master\Ch02/datingTestSet.txt'
+	return file2matrix(fileName)
+
+def autoNorm(dataSet):
+	#得到每一列的最小值
+	minArr = dataSet.min(0)
+	#得到每一列的最大值
+	maxArr = dataSet.max(0)
+	#取得范围
+	rangeArr = maxArr - minArr
+	#广播，normalize 数据
+	returnMat = (dataSet-minArr)/rangeArr
+	return returnMat,rangeArr,minArr
+
+def datingClassTest():
+	h = 0.10
+	dataSet,labels = testDataSet()
+	normalMat,rangeArr,minArr=autoNorm(dataSet)
+	m = shape(dataSet)[0]
+	num = int(h*m)
+	e = 0.0
+	for i in range(num):
+		label = classify(normalMat[i,:],normalMat[num:m,:],labels,3)
+		if labels[i]!=label:
+			e = e + 1.0
+		else:
+			print('data:',labels[i],'predicted:',label)
+	return e/float(m)
+
+
+
+
 
 
