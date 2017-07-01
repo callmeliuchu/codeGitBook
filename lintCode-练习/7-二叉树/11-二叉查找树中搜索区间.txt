@@ -1,0 +1,37 @@
+/**
+ * Definition of TreeNode:
+ * class TreeNode {
+ * public:
+ *     int val;
+ *     TreeNode *left, *right;
+ *     TreeNode(int val) {
+ *         this->val = val;
+ *         this->left = this->right = NULL;
+ *     }
+ * }
+ */
+class Solution {
+public:
+    vector<int> res;
+    /**
+     * @param root: The root of the binary search tree.
+     * @param k1 and k2: range k1 to k2.
+     * @return: Return all keys that k1<=key<=k2 in ascending order.
+     */
+    vector<int> searchRange(TreeNode* root, int k1, int k2) {
+        vector<int>v;
+        inorder(root);
+        for(int i=0;i<res.size();i++){
+            if(res[i]>=k1 && res[i]<=k2)
+            v.push_back(res[i]);
+        }
+        return v;
+    }
+    void inorder(TreeNode* root){
+        if(root){
+            inorder(root->left);
+            res.push_back(root->val);
+            inorder(root->right);
+        }
+    }
+};
