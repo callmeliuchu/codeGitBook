@@ -1,0 +1,76 @@
+/**
+ * Definition of TreeNode:
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left, right;
+ *     public TreeNode(int val) {
+ *         this.val = val;
+ *         this.left = this.right = null;
+ *     }
+ * }
+ */
+class Solution {
+    /**
+     * This method will be invoked first, you should design your own algorithm 
+     * to serialize a binary tree which denote by a root node to a string which
+     * can be easily deserialized by your own "deserialize" method later.
+     */
+    private StringBuffer inorderSB;
+    private StringBuffer preorderSB;
+
+    private void order(TreeNode root){
+        if(root!=null){
+            preorderSB.append(String.valueOf(root.val)).append(",");
+            order(root.left);
+            inorderSB.append(String.valueOf(root.val)).append(",");
+            order(root.right);
+        }
+    }
+    public String serialize(TreeNode root) {
+            if(root==null){
+                return null;
+            }
+            inorderSB = new StringBuffer();
+            preorderSB = new StringBuffer();
+            order(root);
+            preorderSB.deleteCharAt(preorderSB.length()-1);
+            inorderSB.deleteCharAt(inorderSB.length()-1);
+            return  preorderSB.append("_").append(inorderSB).toString();
+    }
+    
+    private String[] inord;
+    private String[] preord;
+    
+    
+    /**
+     * This method will be invoked second, the argument data is what exactly
+     * you serialized at method "serialize", that means the data is not given by
+     * system, it's given by your own serialize method. So the format of data is
+     * designed by yourself, and deserialize it here as you serialize it in 
+     * "serialize" method.
+     */
+    public TreeNode deserialize(String data) {
+        if(data==null){
+            return null;
+        }
+       preord  = data.split("_")[0].split(",");
+       inord  = data.split("_")[1].split(",");
+        return createTree(0,inord.length-1,0,preord.length-1);
+    }
+    
+    private TreeNode createTree(int ps,int pe,int is,int ie){
+        if(ps>pe){
+            return null;
+        }
+        TreeNode root = new TreeNode(Integer.valueOf(preord[ps]));
+        int loc;
+        for(loc=is;loc<=ie && !preord[ps].equals(inord[loc]);loc++);
+        int len = loc - is;
+        root.left = createTree(ps+1,ps+len,is,loc-1);
+        root.right = createTree(ps+len+1,pe,loc+1,ie);
+        return root;
+    }
+    
+    
+    
+}

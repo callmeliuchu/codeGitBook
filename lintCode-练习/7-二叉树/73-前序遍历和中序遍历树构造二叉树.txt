@@ -1,0 +1,41 @@
+/**
+ * Definition of TreeNode:
+ * class TreeNode {
+ * public:
+ *     int val;
+ *     TreeNode *left, *right;
+ *     TreeNode(int val) {
+ *         this->val = val;
+ *         this->left = this->right = NULL;
+ *     }
+ * }
+ */
+ 
+
+class Solution {
+    /**
+     *@param preorder : A list of integers that preorder traversal of a tree
+     *@param inorder : A list of integers that inorder traversal of a tree
+     *@return : Root of a tree
+     */
+public:
+    vector<int> preorder;
+    vector<int> inorder;
+    TreeNode *buildTree(vector<int> &preorde, vector<int> &inorde) {
+            preorder=preorde;
+            inorder=inorde;
+            return createTree(0,preorder.size()-1,0,preorder.size()-1);
+    }
+    TreeNode *createTree(int ps,int pe,int is,int ie){
+        if(ps>pe){
+            return NULL;
+        }
+        TreeNode *root = new TreeNode(preorder[ps]);
+        int loc;
+        for(loc=is;loc<=ie && inorder[loc]!=preorder[ps];loc++);
+        int len = loc-is;
+        root->left=createTree(ps+1,ps+len,is,loc-1);
+        root->right=createTree(ps+len+1,pe,loc+1,ie);
+        return root;
+    }
+};
