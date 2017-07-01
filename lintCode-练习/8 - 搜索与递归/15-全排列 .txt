@@ -1,0 +1,32 @@
+class Solution {
+public:
+    /**
+     * @param nums: A list of integers.
+     * @return: A list of permutations.
+     */
+    vector<vector<int> >res;
+    vector<int>arr;
+    vector<vector<int> > permute(vector<int> nums) {
+        arr = nums;
+        f(0);
+        return res;
+    }
+    
+    void swap(int i,int j){
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+    
+    void f(int index){
+        if(index==arr.size()){
+            res.push_back(arr);
+        }
+        for(int i=index;i<arr.size();i++){
+            swap(index,i);
+            f(index+1);
+            swap(index,i);
+        }
+    }
+    
+};
