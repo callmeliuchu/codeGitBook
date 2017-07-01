@@ -1,5 +1,6 @@
 from numpy import *
 import operator
+import os
 
 def loadDataSet():
 	#自定义简单小数据用于测试
@@ -62,6 +63,7 @@ def autoNorm(dataSet):
 	return returnMat,rangeArr,minArr
 
 def datingClassTest():
+	#测试
 	h = 0.10
 	dataSet,labels = testDataSet()
 	normalMat,rangeArr,minArr=autoNorm(dataSet)
@@ -78,6 +80,51 @@ def datingClassTest():
 
 
 
+def digitPath():
+	#本地文件位置
+	return 'F:\python\machinelearning\machinelearninginaction-master\Ch02'
 
+def img2Vec(fileName):
+	#文件转换
+	file = open(fileName)
+	lines  = file.readlines()
+	dataCollect = []
+	for line in lines:
+		data = line.strip()
+		dataCollect.extend([int(num) for num in data])
+	return dataCollect
+
+def testANum():
+	#测试
+	fileName = digitPath() + "/trainingDigits/0_0.txt"
+	return img2Vec(fileName)
+
+def handWritingClassTest():
+	#测试
+	trainDataSet = []
+	labels = []
+	trainPath = digitPath() + "/trainingDigits"
+	numdir = os.listdir(trainPath)
+	for fileName in numdir:
+		filePath = trainPath + "/" + fileName
+		labels.append(int(fileName.split('.')[0].split('_')[0]))
+		vec = img2Vec(filePath)
+		trainDataSet.append(vec)
+	trainDataSet = array(trainDataSet)
+	testDataSet = []
+	testPath = digitPath() + "/testDigits"
+	testdir = os.listdir(testPath)
+	size = float(len(testdir))
+	e = 0.0
+	for fileName in testdir:
+		filePath = testPath + "/" + fileName
+		label=int(fileName.split('.')[0].split('_')[0])
+		vec = img2Vec(filePath)
+		predict=classify(vec,trainDataSet,labels,3)
+		if label!=predict:
+			e = e + 1.0
+		print('true:',label,'predict:',predict)
+	return e / size
+		
 
 
