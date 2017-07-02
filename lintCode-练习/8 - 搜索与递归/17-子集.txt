@@ -1,0 +1,36 @@
+class Solution {
+public:
+    /**
+     * @param S: A set of numbers.
+     * @return: A list of lists. All valid subsets.
+     */
+    vector<int>vec;
+    vector<vector<int> >res;
+    vector<int>arr;
+    vector<vector<int> > subsets(vector<int> &nums) {
+    	// write your code here
+    	arr = nums;
+    	sort(arr.begin(),arr.end());
+    	for(int i=0;i<=nums.size();i++){
+    	    combine(nums.size(),i);
+    	}
+    	return res;
+    }
+
+    vector<vector<int> > combine(int n, int k) {
+        // write your code here
+        f(0,n,k);
+        return res;
+    }
+    void f(int index,int n,int k){
+        if(vec.size()==k){
+            res.push_back(vec);
+            return;
+        }
+        for(int i=index;i<n;i++){
+            vec.push_back(arr[i]);
+            f(i+1,n,k);
+            vec.pop_back();
+        }
+    }
+};
