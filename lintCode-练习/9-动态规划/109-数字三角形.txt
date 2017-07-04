@@ -1,0 +1,37 @@
+class Solution {
+public:
+    /**
+     * @param triangle: a list of lists of integers.
+     * @return: An integer, minimum path sum.
+     */
+    int minimumTotal(vector<vector<int> > &triangle) {
+        int m=triangle.size();
+        int n;
+        if(m==1){
+            return triangle[0][0];
+        }
+        for(int i=1;i<m;i++){
+            n = triangle[i].size();
+            for(int j=0;j<n;j++){
+                if(j==0){
+                    triangle[i][j]=triangle[i-1][j]+triangle[i][j];
+                }else if(j==n-1){
+                    triangle[i][j]=triangle[i-1][j-1]+triangle[i][j];
+                }else{
+                    triangle[i][j]=triangle[i][j]+min(triangle[i-1][j-1],triangle[i-1][j]);
+                }
+            }
+        }
+        int amin;
+        for(int i=0;i<n;i++){
+            if(i==0){
+                amin = triangle[m-1][i];
+            }else{
+                if(amin>triangle[m-1][i]){
+                   amin=triangle[m-1][i];
+                }
+            }
+        }
+        return amin;
+    }
+};

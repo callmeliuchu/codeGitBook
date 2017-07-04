@@ -1,0 +1,30 @@
+class Solution {
+public:    
+    /**
+     * @param nums: A list of integers
+     * @return: A integer indicate the sum of max subarray
+     */
+    int maxSubArray(vector<int> nums) {
+        int sum=0;
+        int amax=0;
+        for(int i=0;i<nums.size();i++){
+            sum+=nums[i];
+            if(sum<0){
+                sum=0;
+            }
+            if(sum>amax){
+                amax=sum;
+            }
+        }
+        if(amax==0){
+            for(int i=0;i<nums.size();i++){
+                if(i==0){
+                    amax=nums[i];
+                }else if(nums[i]>amax){
+                    amax=nums[i];
+                }
+            }
+        }
+        return amax;
+    }
+};
