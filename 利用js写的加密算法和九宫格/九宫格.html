@@ -1,0 +1,276 @@
+<html>
+
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+</head>
+
+<style>
+.inputText{
+height:40px;
+width:40px;
+text-align:center;
+}
+</style>
+
+
+
+<script>
+var hardest=false;
+function colorChange(obj){
+obj.style="color:#00FF00";
+obj.readOnly=hardest;
+}
+//画出表格和初始化
+function clickme(){
+var s="";
+for(var i=0;i<81;i++){
+s+="<input type='text' class='inputText' id="+i+" onChange='colorChange(this)'>";
+if((i+1)%9==0){
+s+="<br>";
+}
+}
+document.getElementById("text").innerHTML=s;
+init(5);
+}
+//?????????
+//stemp作为全局变量是得到一个随机的数度题目
+var stemp;
+//s作为全局变量得到stemp的值后作为f()函数的全局变量值解题
+var s=new Array();
+//flag作为全局变量用于回溯一次结束
+var flag=true;  
+//函数产生一个随机数组
+function getRandomSudo(num){
+var sudoArray=[6,4,5,7,3,9,8,1,2,2,1,8,6,4,5,9,7,3,7,3,9,2,8,1,6,4,5,5,9,6,3,7,4,2,8,1,4,8,7,5,1,2,3,6,9,3,2,1,8,9,6,7,5,4,9,5,3,4,6,7,1,2,8,8,7,2,1,5,3,4,9,6,1,6,4,9,2,8,5,3,7];
+		for(var i=0;i<=72;i+=9){
+		var n=0;		
+		  while(n<num){
+		  var randNum=i+Math.floor(9*Math.random());
+			  if(sudoArray[randNum]!=0){
+				  sudoArray[randNum]=0;
+				  n++;
+			  }
+		  }
+		}
+return sudoArray;
+}
+//清空页面
+function clear(){
+for(var i=0;i<81;i++){
+document.getElementById(i).readOnly=false;
+document.getElementById(i).value="";
+document.getElementById(i).style="color:black";
+}
+}
+	
+//用于check()检查
+	function ArrayToZero(arr){
+		for(var i=0;i<10;i++){
+		arr[i]=0;
+		}
+	}
+	
+	
+//初始化
+function init(num){
+clear();
+stemp=getRandomSudo(num);
+	for(var i=0;i<stemp.length;i++){
+		if(stemp[i]!=0){
+		document.getElementById(i).value=stemp[i];
+		document.getElementById(i).readOnly=true;
+		}
+	}				
+}
+	
+	
+	
+	
+	
+	
+//由button传来
+		function go(obj){				
+				
+				if(obj.id=="solute"){
+	                    s=getSudo();
+						f(0);
+						flag=true;
+				}
+				
+				if(obj.id=="submit"){	
+					if(check())		
+					alert("回答正确");
+					else{
+					alert("回答错误");
+					}
+				}
+				
+				if(obj.id.length==5 && obj.id[0]=='h'){
+				 init(obj.id[4]-'0'+5);
+				}
+				
+				if(obj.id=="clean"){
+					for(var i=0;i<81;i++){	
+					if(document.getElementById(i).readOnly==false){
+					document.getElementById(i).value="";
+					document.getElementById(i).style="color:black;";
+					}
+			    }
+     			}
+				
+				if(obj.id=="blank"){
+				clear();
+				}
+				
+				if(obj.id=="hardest"){
+				hardest=true;
+				}
+				
+				
+		}
+		
+//从页面得到数度变成数组
+	function getSudo(){
+		var s=new Array();
+			for(var i=0;i<81;i++){
+				var value=document.getElementById(i).value;
+				if(value==""){
+				s[i]=0;
+				}else{
+				s[i]=value-'0';
+				}
+			}
+		return s;
+	}
+	
+//提交得到的数独检查是否正确
+	function check(){
+      var sudo=getSudo();
+	  var arr=[0,0,0,0,0,0,0,0,0,0];
+	  
+	  
+ //纵行判断
+	  for(var i=0;i<9;i++){
+	   for(var j=i;j<=i+72;j+=9){
+	     var x=sudo[j];
+			 if(arr[x]==0){
+			 arr[x]++;
+			 }else{
+			 return false;
+			 }
+	  }
+	   ArrayToZero(arr);
+	  }
+	  for(var i=0;i<=72;i+=9){
+	    for(var j=i;j<i+9;j++){
+	     var x=sudo[j];
+			 if(arr[x]==0){
+			 arr[x]++;
+			 }else{
+			 return false;
+			 }
+	  }
+	   ArrayToZero(arr);
+	  }
+	
+	  for(var i=0;i<3;i++)
+	   for(var j=0;j<3;j++){
+	   var x=i*3+j*27;
+	      for(var p=x;p<x+27;p+=9){
+		    for(var q=p;q<p+3;q++){
+			   var y=sudo[q];
+			   if(arr[y]==0){
+			    arr[y]++;
+			   }else{
+			   return false;
+			   }
+			}
+		 ArrayToZero(arr);
+			}
+	   }
+   return true;
+		
+	}
+		
+	
+		
+//作为f()函数的里面判断	
+     function pan(s,n,k){
+          var t1=Math.floor(n/9);
+		  var t2=Math.floor((n%9)/3);
+		  var t3=Math.floor(t1/3);
+	     for(var i=0;i<9;i++)
+		 if(s[i*9+n%9]==k || s[t1*9+i]==k){
+		 return false;
+		 }
+		 
+		 var op=t2*3+t3*27;
+		  
+		 for(var i=op;i<op+27;i+=9)
+		   for(var j=i;j<i+3;j++)
+		    if(s[j]==k){
+			return false;
+			}
+	  
+	  return true;
+	  
+	  }
+ //回溯解数独  
+        function f(n){
+		 if(flag){
+		 if(n<81){
+		  if(s[n]==0){
+				for(var k=1;k<=9;k++){
+					if(pan(s,n,k)){
+						s[n]=k;
+						f(n+1);
+						s[n]=0;
+					}
+				}
+		  }else{
+		  f(n+1);
+		  }
+		 
+		 
+		 }else{
+		   flag=false;
+			for(var i=0;i<81;i++){
+			
+			if(document.getElementById(i).readOnly==false){
+			document.getElementById(i).value=s[i];
+			document.getElementById(i).readOnly=true;
+			document.getElementById(i).style="color:#FF0000";
+			}
+			}
+	
+		 }
+		
+		}
+		
+		
+		}
+</script>
+
+
+<body onload="javascript:clickme()">
+
+<div id="text" align="center">
+
+</div>
+<div align="center">
+<button id="solute" onClick="go(this)">solute</button>
+<button id="submit" onClick="go(this)">submit</button>
+<button id="hard1" onClick="go(this)">hard1</button>
+<button id="hard2" onClick="go(this)">hard2</button>
+<button id="hard3" onClick="go(this)">hard3</button>
+<button id="clean" onClick="go(this)">clean</button>
+<button id="blank" onClick="go(this)">blank</button>
+<button id="hardest" onClick="go(this)">hardest</button>
+<div>
+
+</body>
+
+
+</html>

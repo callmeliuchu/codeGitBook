@@ -1,0 +1,680 @@
+<html>
+ <head>
+ 
+ <script>
+ 
+ 
+ //初始换位表64位
+var IP=[                          58, 50, 42, 34, 26, 18, 10, 2, 
+                                  60, 52, 44, 36, 28, 20, 12, 4,  
+								  62, 54, 46, 38, 30, 22, 14, 6, 
+                                  64, 56, 48, 40, 32, 24, 16, 8,  
+								  57, 49, 41, 33, 25, 17, 9, 1,
+                                  59, 51, 43, 35, 27, 19, 11, 3, 
+								  61, 53, 45, 37, 29, 21, 13, 5,
+	                              63, 55, 47, 39, 31, 23, 15, 7 ];  
+ /*逆初始置换表IP^-1 64*/ 
+ var IP_1_Table = [     39,7,47,15,55,23,63,31,   
+                        38,6,46,14,54,22,62,30,    
+						37,5,45,13,53,21,61,29,    
+						36,4,44,12,52,20,60,28,   
+						35,3,43,11,51,19,59,27,   
+						34,2,42,10,50,18,58,26,   
+						33,1,41,9,49,17,57,25,    
+						32,0,40,8,48,16,56,24]; 
+/*扩充置换表E  48*/ 
+var E_Table = [  31, 0, 1, 2, 3, 4,3,  4, 5, 6, 7, 8,7,   
+                      8,9,10,11,12,11,12,13,14,15,16,15,16,17,  
+					  18,19,20,19,20,21,22,23,24,23,24,25,26,  
+					  27,28,27,28,29,30,31, 0];    
+ /*置换函数P   32*/  
+ var P_Table =   [15,6,19,20,28,11,27,16,
+                   0,14,22,25,4, 17,30,9,
+				   1,7,23,13,31,26,2,8,
+				   18,12,29,5,21,10,3,24];    
+
+//置换选择56
+ var PC_1 = [ 56,48,40,32,24,16,8,  
+			   0,57,49,41,33,25,17,    
+			   9,1,58,50,42,34,26,     
+			   18,10,2,59,51,43,35,   
+			   62,54,46,38,30,22,14,    
+			   6,61,53,45,37,29,21,    
+			   13,5,60,52,44,36,28,     
+			   20,12,4,27,19,11,3];      
+/*置换选择2    48*/   
+var PC_2 =     [13,16,10,23,0,4,
+                  2,27,14,5,20,9,
+				 22,18,11,3,25,7,
+				 15,6,26,19,12,1,     
+				 40,51,30,36,46,54,
+				 29,39,50,44,32,47,
+				 43,48,38,55,33,52,
+				 45,41,49,35,28,31];  
+							
+				    
+/*对左移次数的规定16*/  
+var MOVE_TIMES = [1,1,2,2,2,2,2,2,1,2,2,2,2,2,2,1]; 
+var   MOVE   =   [1,2,4,6,8,10,12,14,15,17,19,21,23,25,27,28]; 
+
+
+
+
+
+
+//s盒
+var S1=[14,4,13,1,2,15,11,8,3,10,6,12,5,9,0,7,
+
+	　　0,15,7,4,14,2,13,1,10,6,12,11,9,5,3,8,
+	
+	　　4,1,14,8,13,6,2,11,15,12,9,7,3,10,5,0,
+	
+	　　15,12,8,2,4,9,1,7,5,11,3,14,10,0,6,13];
+
+var S2=[15,1,8,14,6,11,3,4,9,7,2,13,12,0,5,10,
+
+	　　3,13,4,7,15,2,8,14,12,0,1,10,6,9,11,5,
+	
+	　　0,14,7,11,10,4,13,1,5,8,12,6,9,3,2,15,
+	
+	　　13,8,10,1,3,15,4,2,11,6,7,12,0,5,14,9];
+
+var S3=[10,0,9,14,6,3,15,5,1,13,12,7,11,4,2,8,
+
+	　　13,7,0,9,3,4,6,10,2,8,5,14,12,11,15,1,
+	
+	　　13,6,4,9,8,15,3,0,11,1,2,12,5,10,14,7,
+	
+	　　1,10,13,0,6,9,8,7,4,15,14,3,11,5,2,12];
+
+var S4=[7,13,14,3,0,6,9,10,1,2,8,5,11,12,4,15,
+
+	　　13,8,11,5,6,15,0,3,4,7,2,12,1,10,14,9,
+	
+	　　10,6,9,0,12,11,7,13,15,1,3,14,5,2,8,4,
+	
+	　　3,15,0,6,10,1,13,8,9,4,5,11,12,7,2,14];
+
+var S5=[2,12,4,1,7,10,11,6,8,5,3,15,13,0,14,9,
+
+	　　14,11,2,12,4,7,13,1,5,0,15,10,3,9,8,6,
+	
+	　　4,2,1,11,10,13,7,8,15,9,12,5,6,3,0,14,
+	
+	　　11,8,12,7,1,14,2,13,6,15,0,9,10,4,5,3];
+
+var S6=[12,1,10,15,9,2,6,8,0,13,3,4,14,7,5,11,
+
+	　　10,15,4,2,7,12,9,5,6,1,13,14,0,11,3,8,
+	
+	　　9,14,15,5,2,8,12,3,7,0,4,10,1,13,11,6,
+	
+	　　4,3,2,12,9,5,15,10,11,14,1,7,6,0,8,13];
+
+var S7=[4,11,2,14,15,0,8,13,3,12,9,7,5,10,6,1,
+
+	　　13,0,11,7,4,9,1,10,14,3,5,12,2,15,8,6,
+	
+	　　1,4,11,13,12,3,7,14,10,15,6,8,0,5,9,2,
+	
+	　　6,11,13,8,1,4,10,7,9,5,0,15,14,2,3,12];
+
+var S8=[13,2,8,4,6,15,11,1,10,9,3,14,5,0,12,7,
+
+	　　1,15,13,8,10,3,7,4,12,5,6,11,0,14,9,2,
+	
+	　　7,11,4,1,9,12,14,2,0,6,10,13,15,3,5,8,
+	
+	　　2,1,14,7,4,10,8,13,15,12,9,0,3,5,6,11];
+
+
+
+var sh =[S1,S2,S3,S4,S5,S6,S7,S8];
+
+
+
+
+
+function getSH(S){
+
+    var SH = new Array();
+	var stSH=0;
+	for(var i=0;i<S.length;i+=6){
+	//			alert(""+S[i]+S[i+1]+S[i+2]+S[i+3]+S[i+4]+S[i+5]);
+				var x=S[i]*2+S[i+5];
+				var y=S[i+1]*8+S[i+2]*4+S[i+3]*2+S[i+4];
+				var loc = x*16+y;
+				var n=i/6;
+	//			alert(x+","+y+","+n+","+sh[n][loc]);
+				var arr = getBinery(sh[n][loc],4);
+	    for(var j=arr.length-1;j>=0;j--){
+		SH[stSH++]=arr[j];
+		}
+	}
+	return SH;
+}
+
+
+
+function getFinalR(RP,L){
+  
+ var temp=new Array();
+ 
+   for(var i=0;i<RP.length;i++){
+   temp[i]=L[i]^RP[i];
+   }
+return temp;
+
+}
+
+
+
+
+function getR(M){
+var temp = new Array();
+  for(var i=32;i<64;i++){
+  temp[i-32]=M[i];
+  }
+return temp;
+}
+
+
+function getL(M){
+var temp = new Array();
+  for(var i=0;i<32;i++){
+  temp[i]=M[i];
+  }
+return temp;
+}
+
+
+
+function getCD0(Key){
+
+  var CD0 = new Array();
+
+ 
+//新的key经过PC_1置换得到56位C0,D0
+   for(var k=0;k<PC_1.length;k++){
+   CD0[k]=Key[PC_1[k]];
+   }
+return CD0;
+
+}
+
+
+function getCDMoveI(CD0,i){
+
+return CDMoveLeft(CD0,MOVE[i]);
+
+}
+
+
+
+
+
+
+	function f(L,R,K){
+	
+	 var RE = getER(R);
+   
+    var S = getS(RE,K);
+
+    var SH = getSH(S);
+
+   var RP=getRP(SH);
+
+  var R1=getFinalR(RP,L);
+  
+  return R1;
+	}
+	
+	
+	
+	function getMergeRL(L,R){
+	var merge = new Array();
+	var k=0;
+	   for(var i=0;i<L.length;i++)
+	     merge[k++]=L[i];
+	
+	   for(var i=0;i<R.length;i++)
+	     merge[k++]=R[i];
+	
+	return merge;
+	}
+	
+	
+	
+	
+	function getIP_1_Table(merge){
+	
+	   var temp = new Array();
+	   
+	   
+	   for(var i=0;i<merge.length;i++){
+	   temp[i]=merge[IP_1_Table[i]];
+	   }
+	
+	return temp;
+	
+	}
+	
+	
+
+function clickme(){
+
+var value=sh[0][0];
+alert(value);
+
+//  alert('a'.charCodeAt());
+   var s="";
+   var str="program";
+   var ssnewArr="";
+   var Key = getKey(str);
+//   alert(n);
+//  alert(s);
+   
+   for(var k=0;k<Key.length;k++){
+   ssnewArr+=Key[k];
+	   if((k+1)%8==0){
+	   ssnewArr+="\n";
+	   }
+   
+   }
+ //  alert(ssnewArr);
+   
+   
+   var M=getM("computer");
+   MToStr(M);
+
+   
+   var CD0 = getCD0(Key);
+ 
+//   alert(ss);
+//   CDToStr(CD0);
+   var R0 = getR(M);
+   KToStr(R0+"R0");
+   var L0 = getL(M);
+   KToStr(L0+"L0");
+   
+   
+  var Ri;
+  var Li;
+
+
+   for(var i=0;i<16;i++){
+	   var CD1 = getCDMoveI(CD0,i);
+	//   CDToStr(CD1);
+	   
+	   var K = CDPC_2(CD1);
+	//   KToStr(K+"K");
+	   
+	 //M
+	//   alert("M");
+       
+       Li=R0;
+	   Ri=f(L0,R0,K);
+	   
+	   
+	   L0=Li;
+	   R0=Ri;   
+
+  
+  }
+  
+  
+  KToStr(Li+"Li");
+  
+  KToStr(Ri+"Ri");
+  
+  var merge = getMergeRL(Ri,Li);
+
+  MToStr(merge);
+  
+  var mi = getIP_1_Table(merge);
+  
+  
+  MToStr(mi);
+  
+  var str=encode(mi);
+  alert(str);
+
+}
+
+
+
+
+//base64
+   function encode(binery1){
+   
+   
+       var binery = binery1;
+   	   var y=binery1.length/8;
+	   var k=y;
+	   
+	   
+	   var cha=Math.floor((y+2)/3)*3-y;
+	   for(var i=0;i<cha*8;i++){
+	   binery[k++]=0;
+	   }
+   
+   var arr6=ArrayForBToD(binery,6);
+   
+		   
+		   
+	   var st="";
+	   for(var i=0;i<arr6.length;i++){
+		   st+=SixToCharacter(arr6[i]);
+	   }
+	   
+	   
+     return st;
+   }
+   
+   
+
+  //把得到的二进制数组按num位变成十进制数组
+   function ArrayForBToD(binery,num){
+   
+   var count=1;
+   var sum=0;
+   var arr=new Array();
+   var i=0;
+  
+  
+		   for(var k=0;k<binery.length;k++){			   
+			   sum+=binery[k]*Math.pow(2,num-count);
+			   count++;
+			   if(count>num){
+			   arr[i++]=sum;
+			   sum=0;
+			   count=1;
+			   }
+		   }
+   
+  return arr;
+   
+   }
+
+
+  //把数字按照64位映射成字母
+   function SixToCharacter(num){
+	   if(num>=0 && num<=25){
+	   return String.fromCharCode('A'.charCodeAt()+num);
+	   }
+       if(num>=26 && num<=51){
+	   return String.fromCharCode('a'.charCodeAt()+ (num-26));
+	   }
+	   if(num>=52 && num<=61){
+	   return String.fromCharCode('0'.charCodeAt()+(num-52));
+	   }
+	   if(num==62){
+	   return String.fromCharCode('+'.charCodeAt());
+	   }
+       if(num==63){
+	   return String.fromCharCode('/'.charCodeAt());
+	   }
+   
+   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+ //得到一个wei位的二进制数组，注意是逆向的
+   function getBinery(num,wei){
+	   var bineryArr =new Array();
+		   for(var i=0;i<wei;i++){
+			   var x=num%2;
+			   bineryArr[i]=x;
+			   num=Math.floor(num/2);
+	       }
+	return bineryArr;
+   }
+   
+   
+   
+//得到密钥的二进制
+   function getKey(str){
+    var Key =new Array();
+   var n=0;
+   for(var k=0;k<str.length;k++){
+	   var arr=getBinery(str[k].charCodeAt(),8);
+	   for(var i=arr.length-1;i>=0;i--){
+		       if((n+1)%8!=0){
+			    Key[n++]=arr[i];
+			   }else{
+			    Key[n++]=0;
+				Key[n++]=arr[i];
+			   }
+		   }
+   }
+   Key[n++]=0;
+   
+   return Key;
+   }
+   
+   
+//得到明文的二进制
+function getM(str){
+var temp = new Array();
+
+    var n=0;
+	for(var i=0;i<str.length;i++){
+	   var arr=getBinery(str[i].charCodeAt(),8);
+	   for(var j=arr.length-1;j>=0;j--){
+		temp[n++]=arr[j];
+		}
+	}
+alert(n);  
+var temp1 = new Array();
+   for(var i=0; i<temp.length;i++){
+   temp1[i] = temp[IP[i]-1];
+   }
+return temp1;
+}
+   
+   
+   
+function getER(R0){
+var R = new Array();
+
+for(var i=0; i < E_Table.length; i++){
+R[i] = R0[E_Table[i]];
+}
+
+return R;
+}
+   
+   
+   
+function  getS(R,K){
+var temp = new Array();
+  for(var i=0;i<R.length;i++){
+		
+		  temp[i]=R[i]^K[i];
+		
+  }
+return temp;
+}
+   
+   
+function getRP(S){
+var temp = new Array();
+
+	for(var i=0; i < P_Table.length; i++){
+	temp[i]=S[P_Table[i]];
+	}
+return temp;
+}  
+
+
+
+
+   
+   function clickme1(){
+ 
+   
+   alert('a'.charCodeAt());
+   var s="";
+   var str="program";
+   var ssnewArr="";
+   var Key = getKey(str);
+//   alert(n);
+//  alert(s);
+   
+   for(var k=0;k<Key.length;k++){
+   ssnewArr+=Key[k];
+	   if((k+1)%8==0){
+	   ssnewArr+="\n";
+	   }
+   
+   }
+ //  alert(ssnewArr);
+   
+   
+   
+   
+   
+   
+   var CD0 = new Array();
+   var ss="";
+  
+  
+//新的key经过PC_1置换得到56位C0,D0
+   for(var k=0;k<PC_1.length;k++){
+   CD0[k]=Key[PC_1[k]];
+   ss+=CD0[k];
+	   if((k+1)%28==0){
+	   ss+="\n";
+	
+	   }
+   }
+ 
+   alert(ss);
+   CDToStr(CD0);
+   
+   
+   var CD1 = CDMoveLeft(CD0,1);
+   CDToStr(CD1);
+   var K = CDPC_2(CD1);
+   KToStr(K+"K");
+   
+   //M
+   alert("M");
+   
+   var M=getM("computer");
+   MToStr(M);
+   
+   var R = getEMR(M);
+   KToStr(R+"R");
+   
+   
+   var S = getS(R,K);
+   KToStr(S + "S");
+   
+   
+   var R1 = getRP(S);
+   KToStr(R1+"R1");
+   
+   }
+   
+ 
+ function CDPC_2(CD){
+ var temp = new Array();
+ 
+	 for(var i=0;i<PC_2.length;i++){
+	 temp[i]=CD[PC_2[i]];
+	 }
+ 
+return temp;
+ }
+   
+   
+   
+   
+   
+   
+   
+function CDMoveLeft(CD,num){
+  var n=num%28;
+  var temp = new Array();
+  
+  for(var i = 0; i < 28; i++){
+   temp[i]=CD[(i+n)%28];
+   temp[i+28]=CD[(i+n)%28+28];
+  }
+
+return temp;
+
+}   
+
+function CDToStr(CD){
+var s="";
+   for(var i=0;i<CD.length;i++){
+   s+=CD[i];
+      if((i+1)%28==0){
+	  s+="\n";
+	  }
+   }
+alert(s);
+return s;
+}
+   
+   
+function MToStr(CD){
+var s="";
+   for(var i=0;i<CD.length;i++){
+   s+=CD[i];
+      if((i+1)%32==0){
+	  s+="\n";
+	  }
+   }
+alert(s);
+return s;
+}   
+   
+   
+   
+function KToStr(K){
+
+	var s="";
+	for(var i=0;i<K.length;i++){
+	s+=K[i];
+	}
+    alert(s);
+	return s;
+}
+   
+   
+   
+</script>
+
+</head>
+
+<body>
+
+<input type="button" value="clickme" onClick="clickme()"/>
+
+
+</body>
+
+
+
+
+
+
+
+
+
+</html>
+
+

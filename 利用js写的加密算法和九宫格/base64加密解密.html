@@ -1,0 +1,265 @@
+<html>
+<head>
+<script>
+//编码
+   function encode(){
+   var str=document.getElementById("input").value;
+   
+   var binery=new Array();
+   var k=0;
+	   for(var i=0;i<str.length;i++){
+	   var arr=getBinery(str.charCodeAt(i),8);
+	      for(var j=arr.length-1;j>=0;j--){
+		  binery[k++]=arr[j];
+		  }
+	   }
+	   
+       //仅仅对于编码过程
+	   var y=str.length;
+	   var cha=Math.floor((y+2)/3)*3-y;
+	   for(var i=0;i<cha*8;i++){
+	   binery[k++]=0;
+	   }
+	   
+	   
+	   
+   var arr6=ArrayForBToD(binery,6);
+   
+		   
+		   
+	   var st="";
+	   for(var i=0;i<arr6.length;i++){
+		   if(arr6[i]!=0){
+		   st+=SixToCharacter(arr6[i]);
+		   }else{
+		   st+='=';
+		   }
+	   }
+	   
+	   
+	   document.getElementById("getCode").value=st;
+   }
+   
+   
+   
+ //解码
+   function decode(){
+   var str=document.getElementById("input").value;
+   var binery=new Array();
+   var k=0;
+	   for(var i=0;i<str.length;i++){
+		   var arr=getBinery(CharacterToD(str[i]),6);
+	       for(var j=arr.length-1;j>=0;j--){
+		   binery[k++]=arr[j];
+		   }
+	   }
+	 
+	   
+   var arr8=ArrayForBToD(binery,8);
+	   var st="";
+	   for(var i=0;i<arr8.length;i++){
+		   if(arr8[i]!=0){
+		   st+=String.fromCharCode(arr8[i]);
+		   }
+	   }
+	   
+   document.getElementById("getCode").value=st;    
+   }
+   
+   
+   
+   
+ //把前面两个放在一个function里面
+   function go(obj){
+   var num=parseInt(obj.id[6]);
+   
+   var str=document.getElementById("input").value;
+   var binery=new Array();
+   var k=0;
+	   for(var i=0;i<str.length;i++){
+           var arr;
+                   if(num==6){
+			arr=getBinery(CharacterToD(str[i]),6);
+                   }else{
+		        arr=getBinery(str.charCodeAt(i),8);
+                   }
+               
+	       for(var j=arr.length-1;j>=0;j--){
+		   binery[k++]=arr[j];
+		   }
+	   }
+	 
+       if(num==8){
+		   var y=str.length;
+		   var cha=Math.floor((y+2)/3)*3-y;
+		   for(var i=0;i<cha*8;i++){
+			   binery[k++]=0;
+	       }
+        }
+	  
+   var arr=ArrayForBToD(binery,num==8 ? 6 : 8);
+	   var st="";
+	   for(var i=0;i<arr.length;i++){
+	       if(num==8){
+			   if(arr[i]!=0){
+				  //是数字映射成字符
+				   st+=SixToCharacter(arr[i]);
+				  //仅仅是对于编码过程
+			   }else{
+				   st+='=';
+			   }                
+           }else{
+			   if(arr[i]!=0){
+					//是数字变成ASCII
+				   st+=String.fromCharCode(arr[i]);
+			   }
+           }
+	   }
+	   
+   document.getElementById("getCode").value=st;    
+   
+   
+   }
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+  //把得到的二进制数组按num位变成十进制数组
+   function ArrayForBToD(binery,num){
+   
+   var count=1;
+   var sum=0;
+   var arr=new Array();
+   var i=0;
+  
+  
+		   for(var k=0;k<binery.length;k++){			   
+			   sum+=binery[k]*Math.pow(2,num-count);
+			   count++;
+			   if(count>num){
+			   arr[i++]=sum;
+			   sum=0;
+			   count=1;
+			   }
+		   }
+   
+  return arr;
+   
+   }
+   
+   
+   
+   
+  
+   
+   
+  //把数字按照64位映射成字母
+   function SixToCharacter(num){
+	   if(num>=0 && num<=25){
+	   return String.fromCharCode('A'.charCodeAt()+num);
+	   }
+       if(num>=26 && num<=51){
+	   return String.fromCharCode('a'.charCodeAt()+ (num-26));
+	   }
+	   if(num>=52 && num<=61){
+	   return String.fromCharCode('0'.charCodeAt()+(num-52));
+	   }
+	   if(num==62){
+	   return String.fromCharCode('+'.charCodeAt());
+	   }
+       if(num==63){
+	   return String.fromCharCode('/'.charCodeAt());
+	   }
+   
+   }
+   
+  //字母按照64位映射成数字
+   function CharacterToD(ch){
+	   if(ch>='A' && ch<='Z'){
+	   return ch.charCodeAt()-'A'.charCodeAt();
+	   }
+	 
+	   if(ch>='a'&& ch<='z'){
+	   return ch.charCodeAt()-'a'.charCodeAt()+26;
+	   }
+	   
+	   if(ch>='0' && ch<='9'){
+	   return ch.charCodeAt()-'0'.charCodeAt()+52;
+	   }
+ 
+       if(ch=='+'){
+	   return 62;
+	   }
+       
+	   if(ch=='/'){
+	   return 63;
+	   }
+	   
+	   if(ch=='='){
+	   return 0;
+	   }
+ 
+ 
+   }
+   
+   
+   
+   
+ //得到一个wei位的二进制数组，注意是逆向的
+   function getBinery(num,wei){
+	   var bineryArr =new Array();
+		   for(var i=0;i<wei;i++){
+			   var x=num%2;
+			   bineryArr[i]=x;
+			   num=Math.floor(num/2);
+	       }
+	return bineryArr;
+   }
+   
+   
+   
+   
+   
+</script>
+
+</head>
+	<body>
+		<table>
+			<tr>
+				<td>输入:</td>
+				<td><input type="text" style="width:449px" id="input"><br/></td>
+				</tr>
+			<tr>
+				<td>输出:</td>
+				<td><input type="text" style="width:449px" id="getCode"></td>
+			</tr>
+		</table>
+		
+		<button onClick="encode()">编码1</button>
+		<button onClick="decode()">解码1</button>
+		
+		
+		
+		<button id="encode8" onClick="go(this)">编码2</button>
+		<button id="decode6" onClick="go(this)">解码2</button>
+		
+		
+		
+	</body>
+</html>
