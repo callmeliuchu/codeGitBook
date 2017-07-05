@@ -1,0 +1,20 @@
+class Solution {
+public:
+    /**
+     * @param nums: a vector of integers
+     * @return: an integer
+     */
+    int maxProduct(vector<int>& nums) {
+        int pos = nums[0];
+        int neg = nums[0];
+        int res = nums[0];
+        for(int i=1;i<nums.size();i++){
+            int posTemp = pos;
+            int negTemp = neg;
+            pos = max(nums[i],max(nums[i]*posTemp,nums[i]*negTemp));
+            neg = min(nums[i],min(nums[i]*posTemp,nums[i]*negTemp));
+            res = max(pos,res);
+        }
+        return res;
+    }
+};
