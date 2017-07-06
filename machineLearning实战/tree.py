@@ -38,3 +38,8 @@ def splitDataSet(dataSet,axis,value):
 			vec.extend(data[axis+1:])
 			retMat.append(vec)
 	return retMat
+
+
+
+data = createData()
+print(data)

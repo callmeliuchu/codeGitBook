@@ -1,0 +1,27 @@
+class Solution {
+public:
+    /*
+     * @param n an integer
+     * @return the nth prime number as description.
+     */
+    int nthUglyNumber(int n) {
+       vector<int>a(1);
+       a[0]=1;
+       int i = 0;
+       int i2 = 0;
+       int i3 = 0;
+       int i5 = 0;
+       while(i<n){
+        int   n2 = a[i2]*2;
+        int   n3 = a[i3]*3;
+        int   n5 = a[i5]*5;
+        int amin = min(n2,min(n3,n5));
+        if(amin==n2)i2++;
+        if(amin==n3)i3++;
+        if(amin==n5)i5++;
+        a.push_back(amin);
+        i++;
+       }
+       return a[n-1];
+    }
+};

@@ -1,0 +1,40 @@
+class MyQueue {
+public
+    stackint stack1;
+    stackint stack2;
+
+    MyQueue() {
+         do intialization if necessary
+    }
+
+    void push(int element) {
+         enterStack1();
+         stack1.push(element);
+    }
+    
+    void enterStack1(){
+        while(!stack2.empty()){
+            int val = stack2.top();
+            stack2.pop();
+            stack1.push(val);
+        }
+    }
+    int pop() {
+        int val = top();
+        stack2.pop();
+        return val;
+    }
+    
+    void enterStack2(){
+         while(!stack1.empty()){
+            int val = stack1.top();
+            stack1.pop();
+            stack2.push(val);
+        }       
+    }
+
+    int top() {
+        enterStack2();
+        return stack2.top();
+    }
+};
