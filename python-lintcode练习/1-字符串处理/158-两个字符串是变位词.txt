@@ -1,0 +1,11 @@
+class Solution:
+    """
+    @param s: The first string
+    @param b: The second string
+    @return true or false
+    """
+    def anagram(self, s, b):
+        l1 = sorted(list(s))
+        l2 = sorted(list(b))
+        return l1==l2
+        
