@@ -1,0 +1,14 @@
+class Solution:
+    """
+    @param nums: A list of integers
+    @return: A list of integers includes the index of the first number 
+             and the index of the last number
+    """
+    def subarraySum(self, nums):
+        for i in range(len(nums)):
+            sum = 0
+            for j in range(i,len(nums)):
+                sum = sum + nums[j]
+                if sum == 0:
+                    return [i,j]
+                
