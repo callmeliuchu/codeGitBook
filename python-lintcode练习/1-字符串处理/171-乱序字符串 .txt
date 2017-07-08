@@ -1,0 +1,26 @@
+class Solution:
+    # @param strs: A list of strings
+    # @return: A list of strings
+    def anagrams(self, strs):
+        newstr = [''.join(sorted(astr)) for astr in strs]
+        index = 0
+        dictA = {}
+        for astr in newstr:
+            if astr in dictA:
+                dictA[astr].append(strs[index])
+            else:
+                dictA[astr]=[strs[index]]
+            index = index + 1
+        res = []
+        for key in dictA:
+            if len(dictA[key])>1:
+                res.extend(dictA[key])
+        return res
+                
+                
+            
+        
+            
+            
+            
+        

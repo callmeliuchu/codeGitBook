@@ -63,6 +63,21 @@ def  SurviveInClass(data):
 
 
 
+strs = ['','','b']
+newstr = [''.join(sorted(astr)) for astr in strs]
+print(newstr)
+index = 0
+dictA = {}
+for astr in newstr:
+	if astr in dictA:
+		dictA[astr].append(strs[index])
+	else:
+		dictA[astr]=[strs[index]]
+	index = index + 1
+res = []
+for key in dictA:
+	print(dictA[key])
+	if len(dictA[key])>1:
+		res.extend(dictA[key])
+print(res)
 
-d = data()
-SurviveInClass(d)
