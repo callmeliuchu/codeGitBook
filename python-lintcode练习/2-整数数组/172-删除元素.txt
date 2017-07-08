@@ -1,0 +1,11 @@
+class Solution:
+    """
+    @param A: A list of integers
+    @param elem: An integer
+    @return: The new length after remove
+    """
+    def removeElement(self, A, elem):
+        newArr = [num for num in A if num != elem]
+        del A[:]
+        A.extend(newArr)
+        return len(A)
