@@ -27,9 +27,3 @@ def  drawData(data):
 	plt.ylabel('action type number')
 	plt.xlabel('action type')
 	plt.show()
-
- 
-
-
-data = trainData()
-drawData(data)
