@@ -1,0 +1,27 @@
+class Solution:
+    """
+    @param A: Given an integers array A
+    @return: An integer array B and B[i]= A[0] * ... * A[i-1] * A[i+1] * ... * A[n-1]
+    """
+    def productExcludeItself(self, A):
+        # write your code here
+        val = 1
+        count=0
+        loc = -1
+        for i in range(len(A)):
+            d = A[i]
+            if d!=0:
+                val=val*d
+            else:
+                loc = i
+                count=count+1
+        if count==0:
+            return [val//d for d in A]
+        elif count==1:
+            res = [0]*len(A)
+            res[loc]=val
+            return res
+        else:
+            return [0]*len(A)
+                
+            
