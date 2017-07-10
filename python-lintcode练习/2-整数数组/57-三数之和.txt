@@ -1,0 +1,20 @@
+class Solution:
+    """
+    @param numbersbers : Give an array numbersbers of n integer
+    @return : Find all unique triplets in the array which gives the sum of zero.
+    """
+    def threeSum(self, numbers):
+        # write your code here
+        size = len(numbers)
+        res = []
+        collect = set([])
+        numbers = sorted(numbers)
+        for i in range(size):
+            for j in range(i+1,size):
+                for k in range(j+1,size):
+                    if numbers[i]+numbers[j]+numbers[k]==0:
+                        sub = (numbers[i],numbers[j],numbers[k])
+                        if sub not in collect:
+                            collect.add(sub)
+                            res.append(sub)
+        return res
