@@ -1,0 +1,52 @@
+class Solution {
+public:
+    /**
+     * Calculate the total number of distinct N-Queen solutions.
+     * @param n: The number of queens.
+     * @return: The total number of distinct solutions.
+     */
+    vector<vector<int> >box;
+    int count;
+    void f(int index,int n){
+        if(index==n){
+            count++;
+            return;
+        }
+        for(int j=0;j<n;j++){
+            if(check(index,j,n)){
+                box[index][j]=1;
+                f(index+1,n);
+                box[index][j]=0;
+            }
+        }
+    }
+    
+
+    
+    
+    bool check(int i,int j,int n){
+        for(int x=0;x<n;x++){
+            if(box[x][j]==1 || box[i][x]==1){
+                return false;
+            }
+            int y1 = x+i-j;
+            if(y1>=0 && y1<n && box[y1][x]==1){
+                return false;
+            }
+            int y2 = i+j-x;
+            if(y2>=0 && y2<n && box[y2][x]==1){
+                return false;
+            }
+        }
+        return true;
+    }
+    int totalNQueens(int n) {
+            vector<int>vec(n);
+            for(int i=0;i<n;i++){
+                box.push_back(vec);
+            }
+            count=0;
+            f(0,n);
+            return count;
+    }
+};

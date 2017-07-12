@@ -108,4 +108,21 @@ def location():
 	import nltk
 	print(nltk.metrics.__file__)
 
-location()
+def  insert(trie,key,value):
+	if key:
+		first,rest=key[0],key[1:]
+		if first not in trie:
+			trie[first]={}
+		insert(trie[first],rest,value)
+	else:
+		trie['value']=value
+
+def testTrie():
+	import nltk
+	trie = nltk.defaultdict(dict)
+	insert(trie,'chat','cat')
+	insert(trie,'chien','dog')
+	insert(trie,'chair','flesh')
+	insert(trie,'hic','stylish')
+	print(trie)
+
