@@ -102,4 +102,11 @@ def testDraw():
 		counts[genre]=[cfdist[genre][word] for word in modals]
 	bar_chart(genres,modals,counts)
 
-testDraw()
+
+
+def testChapter5():
+	text = nltk.word_tokenize('And now for something compeletely different')
+	res = nltk.pos_tag(text)
+	print(res)
+
+testChapter5()
