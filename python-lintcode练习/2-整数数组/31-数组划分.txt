@@ -1,0 +1,24 @@
+class Solution:
+    """
+    @param nums: The integer array you should partition
+    @param k: As description
+    @return: The index after partition
+    """
+    def partitionArray(self, a, k):
+        # write your code here
+        # you should partition the nums by k
+        # and return the partition index as description
+        i = 0
+        j = len(a)-1
+        while i<j:
+            while i<j and a[i]<k:
+                i = i + 1
+            while i<j and a[j]>=k:
+                j = j -1
+            if i < j:
+                temp = a[i]
+                a[i] = a[j]
+                a[j] = temp
+        if i == len(a)-1  and  a[i]<k:
+            return i+1
+        return i
