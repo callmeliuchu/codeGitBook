@@ -1,0 +1,27 @@
+class Solution:
+    """
+    @param A : a list of integers
+    @param target : an integer to be searched
+    @return : a list of length 2, [index1, index2]
+    """
+    def searchRange(self, A, target):
+        st = 0 
+        end = len(A)-1
+        while st<=end:
+            mid = (st+end)/2
+            if A[mid]>target:
+                end= mid-1
+            elif A[mid]<target:
+                st = mid + 1
+            else:
+                i=mid
+                j=mid
+                while i>=0 and A[i]==A[mid]:
+                    i = i -1
+                while j<=len(A)-1 and A[j]==A[mid]:
+                    j = j + 1
+                return [i+1,j-1]
+        return [-1,-1]
+                
+                
+        
