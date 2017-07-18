@@ -12,6 +12,7 @@ def exexute(insertSql):
 	conn1.commit()
 
 
+
 def createDB():
 	val=conn.query("create database huajiao")
 	print(val)

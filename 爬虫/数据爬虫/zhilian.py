@@ -2,7 +2,8 @@ import re
 import urllib.request
 import os
 import csv
-filePath = "F:\codeGitBook\爬虫\数据爬虫\智联/"
+from FileDeal import *
+filePath = "F:\智联数据/"
 def saveFile(filePath,data):
 	with open(filePath,'wb') as f:
 		f.write(data)
@@ -128,13 +129,21 @@ def saveCSV(path,head,content):
 	f.close()
 
 
+
+
 def saveDataByPageNum(pageNum,city,job):
 	retDict,res=parsePage(pageNum,city,job)
+	print(retDict,res)
 	path = filePath + city +"/" + job + "/result_csv"
+	path_1 = filePath + city +"/" + job + "/result_json"
 	if not os.path.exists(path):
 		os.makedirs(path)
+	if not os.path.exists(path_1):
+		os.makedirs(path_1)
 	path = path + "/" + str(pageNum) + ".csv"
+	pathJson = path_1 + "/" + str(pageNum) + ".json"
 	saveCSV(path,retDict['head'],retDict['baseInfo'])
+	writeJson(pathJson,retDict)
 
 
 def genDataByCrawlPage(city,job):
@@ -142,7 +151,6 @@ def genDataByCrawlPage(city,job):
 	data = readHtml(1,city,job)
 	patPageCounts = "zlapply.searchjob.enter2Page\(this,event,(.*?)\)"
 	counts = re.compile(patPageCounts).findall(data)[0]
-	print(counts)
 	num = int(counts)
 	for i in range(2,num+1):
 		crawPage(i,city,job)
@@ -154,12 +162,78 @@ def genDataByCrawlPage(city,job):
 
 
 def searchCityJob():
-	cities = ['上海']
+	cities = ['上海','北京','广州','深圳','南京']
 	jobs = ['python','java','C++']
 	for city in cities:
 		for job in jobs:
 			genDataByCrawlPage(city,job)
 
-searchCityJob()
+
+def readJsonSalary(city,job):
+	path_1 = filePath + city +"/" + job + "/result_json"
+	fileNames = os.listdir(path_1)
+	sumFirst = 0
+	sumSecond = 0
+	num = 0
+	amin = 30000
+	amax = -1
+	for fileName in fileNames:
+		jsonData = readJson(path_1 + "/" + fileName)
+		dataBaseInfo  = jsonData['baseInfo']
+		for data in dataBaseInfo:
+			salary = data['salary']
+			temp = salary.split('-')
+			if len(temp)<2:
+				continue
+			first,second = temp
+			first = int(first)
+			second = int(second)
+			mid = (first+second)/2
+			if amin>mid:
+				amin=mid
+			if amax<mid:
+				amax = mid
+			sumFirst = sumFirst + first
+			sumSecond = sumSecond + second
+			num = num + 1
+	return sumFirst,sumSecond,num,amin,amax
+	
 
 
+
+
+def readCityJob():
+	cities = ['上海','北京','广州','深圳','南京']
+	jobs = ['python','java','C++']
+	res = {}
+	for city in cities:
+		jobSalary = {}
+		for job in jobs:
+			sumFirst,sumSecond,num,amin,amax= readJsonSalary(city,job)
+			jobSalary[job] = {'averageMin':sumFirst/num,'averageMax':sumSecond/num,'sum':num,'min:':amin,'max':amax}
+		res[city]=jobSalary
+	return res
+
+
+def saveSalaryResult():
+	path_1 = filePath + "result_salary_json"
+	if not os.path.exists(path_1):
+		os.makedirs(path_1)
+	path = path_1+'/salary.json'
+	if  os.path.isfile(path):
+		return
+	res=readCityJob()
+	writeJson(path,res)
+
+def readSalaryResult():
+	path_1 = filePath + "result_salary_json/salary.json"
+	res = readJson(path_1)
+	return res
+
+
+def parseData():
+	saveSalaryResult()
+	res = readSalaryResult()
+	print(res)
+
+parseData()
