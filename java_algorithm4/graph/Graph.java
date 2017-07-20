@@ -36,15 +36,28 @@ public class Graph {
     	  return adj[v];
       }
       
+      public String toString(){
+    	  String s = "";
+    	  s = "E:" + this.E + "," + "V:" + this.V + "\n";
+    	  for(int i=0;i<V;i++){
+    		  s = s + i + ":";
+    		  for(Integer v : adj[i]){
+    			  s = s + v + " ";
+    		  }
+    		  s = s + "\n";
+    	  }
+    	  return s;
+      }
+      
+      
       
       public static void main(String[] args) {
 		In in = new In("C:\\Users\\sony\\Desktop\\tinyG.txt");
 		Graph graph = new Graph(in);
-		for(int i=0;i<graph.V;i++){
-			System.out.println(i+":");
-			for(Integer v : graph.adj(i)){
-				System.out.print(v+",");
-			}
+		System.out.println(graph);
+		DepthFirstPaths tool = new DepthFirstPaths(graph,3);
+		for(Integer i : tool.paths(0)){
+			System.out.print(i+",");
 		}
 	  }
       
