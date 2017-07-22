@@ -76,7 +76,7 @@ def CreateTable(conn):
 
 def InsertDatas(conn):
 	insert_sql = "INSERT INTO user_key VALUES (%(value)s)"
-	key_list = key_num(KEY_ALL)
+	key_list = ["你好","恩恩"]
 	conn.executemany(insert_sql,[dict(value=v) for v in key_list])
 
 def DeleteData(conn):
