@@ -12,6 +12,33 @@ public class Graph {
     		  adj[i] = new Bag<Integer>();
     	  }
       }
+      
+      //this is for 4.1.2 S
+      public Graph(Graph graph){
+    	  this(graph.V);
+    	  this.E = graph.E();
+    	  for(int i=0;i<graph.V();i++){
+    		  for(Integer v : graph.adj(i)){
+    			   this.addSingleEdge(i, v);
+    		  }
+    	  }
+      }
+      private void addSingleEdge(int v,int w){
+    	  adj[v].add(w);
+      }  
+      //this is for 4.1.2 E
+      //this is for 4.14 S
+      public boolean hasEdge(int v,int w){
+    	  for(Integer i : adj[v]){
+    		  if(i==w){
+    			  return true;
+    		  }
+    	  }
+    	  return false;
+      }
+      //this is for 4.14 E
+      
+      
       public int E(){
     	  return E;
       }
@@ -55,10 +82,11 @@ public class Graph {
 		In in = new In("C:\\Users\\sony\\Desktop\\tinyG.txt");
 		Graph graph = new Graph(in);
 		System.out.println(graph);
-		DepthFirstPaths tool = new DepthFirstPaths(graph,3);
-		for(Integer i : tool.paths(0)){
-			System.out.print(i+",");
-		}
+		System.out.println(graph.hasEdge(7, 9));
+//		Graph G = new Graph(graph);
+//		System.out.println(G);
+//        CC tool = new CC(graph);
+//        System.out.println(tool);
 	  }
       
 }
