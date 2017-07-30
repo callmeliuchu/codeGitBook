@@ -24,4 +24,6 @@ urlpatterns = [
     url(r'^event_manage/$',views.event_manager),
     url(r'^accounts/login/$',views.event_manager),
     url(r'^$',views.event_manager),
+    url(r'^search_name/$',views.search_name)
+    url(r'^guest_manage/$',views.guest_manage)
 ]

@@ -14,7 +14,7 @@ def login_action(request):
 		user = auth.authenticate(username=username,password=password)
 		if user is not None:
 			auth.login(request,user)
-			response = HttpResponseRedirect('/event_manager/')
+			response = HttpResponseRedirect('/event_manage/')
 			#response.set_cookie('user',username,3600)
 			request.session['user']=username
 			return response
@@ -28,4 +28,9 @@ def event_manager(request):
 	username = request.session.get('user','')
 	return render(request,"event_manager.html",{'user':username,'events':event_list})
 
-
+@login_required
+def search_name(request):
+	username = request.session.get('user','')
+	search_name = request.GET.get("name","")
+	event_list = Event.objects.filter(name=search_name)
+	return render(request,"event_manager.html",{'user':username,'events':event_list})

@@ -1,0 +1,305 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>假冒伪劣_搜索结果_南报网</title>
+<link href="http://img.njdaily.cn/templates/njdaily/css/style.css" type="text/css" rel="stylesheet" rev="stylesheet" media="screen"  />
+<link href="http://img.njdaily.cn/templates/njdaily/css/content.css" type="text/css" rel="stylesheet" rev="stylesheet" media="screen"  />
+<script type="text/javascript" src="http://img.njdaily.cn/js/lib/jquery.js"></script>
+<script type="text/javascript" src="http://app.njdaily.cn/js/datepicker/WdatePicker.js"></script>
+<script type="text/javascript">
+jQuery(function($) {
+	$("#model>a").click(function (){
+		$("#model>a.now").removeClass('now');
+		$(this).addClass('now');
+		$('#type').val($(this).attr('type'));
+		if($('#wd').val()) {
+			$("#submit").click();
+		}
+	}).focus(function (){
+		$(this).blur();
+	});
+	
+	$("#submit").click(function(){
+		if($("#wd").val() =='') {
+			$("#wd").focus();
+			return false;
+		}
+		return true;
+	});
+	$('input.input_calendar').focus(function(){
+		WdatePicker({dateFmt:'yyyy-MM-dd'});
+	});
+	$("#advanced").click(function(){
+		if($(this).attr("checked") == true){
+			$("#advanced_div").show();
+		} else{
+			$("#advanced_div").hide();
+		}
+	});
+	
+	//保持状态
+	if("") {
+		$("#advanced").attr('checked', 1);
+		$('#advanced_div').show();
+	}
+	var type = "all";
+	$('#model a[type='+type+']').addClass('now');
+	if("") {
+		$("#catid").val();
+	}
+	if("") {
+		$("#content").attr('checked', 1);
+	}
+	var order = "rel";
+	$('#order').val(order);
+});
+</script>
+<style type="text/css">
+.f_r {
+	float: left;
+}
+#search {
+	position: relative;
+}
+#advanced_div {
+	top:52px;left:32px;width:430px;display:none;
+}
+dl em {
+	color: #c00;
+}
+</style>
+</head>
+<body>
+<div class="top_login">
+<div class="date"><script type="text/javascript" src="http://img.njdaily.cn/images/date.js"></script></div>
+<div class="sear-top">
+<form action="http://www.njdaily.cn/app/?app=search&controller=index&action=search" method="get" id="search" name="search">
+<input type="hidden" value="search" name="app"/>
+<input type="hidden" value="index" name="controller"/>
+<input type="hidden" value="search" name="action"/>
+<input type="hidden" value="all" name="type"/>
+<p class="mode-sear">
+<input type="input" class="sear-box" value="全文检索" name="wd" onblur="this.value=(this.value=='')?'全文检索':this.value" onfocus="this.value=(this.value=='全文检索')?'':this.value"/>
+<input type="submit" title="去搜索" class="sear-btn" value=""/>
+</p>
+</form>
+</div>
+<div class="sjb"></div>
+</div><!--顶部-->
+<div class="blank4"></div>
+<div class="nav">
+<ul>
+<li><a target="_blank" href="http://www.njdaily.cn/">首页</a></li>
+<li><a target="_blank" href="http://www.njdaily.cn/nanjing/">南京新闻</a></li>
+<li><a target="_blank" href="http://qujie.njdaily.cn/">区街新闻</a></li>
+<li><a target="_blank" href="http://www.njdaily.cn/zw/">政务</a></li>
+<li><a target="_blank" href="http://www.njdaily.cn/comment/">评论</a></li>
+<li><a target="_blank" href="http://www.njdaily.cn/tanzi/">谈资</a></li>
+<li><a target="_blank" href="http://www.njdaily.cn/shijue/">视觉</a></li>
+<li><a target="_blank" href="http://house.njdaily.cn/">房产</a></li>
+<li><a target="_blank" href="http://xjz.njdaily.cn/">小记者</a></li>
+<li><a target="_blank" href="http://www.njdaily.cn/life/">精致生活</a></li>
+<li><a target="_blank" href="http://www.njdaily.cn/yuedu/">悦读</a></li>
+<li><a target="_blank" href="http://space.njdaily.cn/">专栏</a></li>
+<li class="last"><a target="_blank" href="http://bbs.njdaily.cn/">论坛</a></li>
+
+<!--导航-->
+</ul>
+</div>
+<div class="blank4"></div>
+<div style="margin:10px auto 0 ;width:950px;">
+	<div class="logo"></div>
+	<div class="f_l searbox" style="float:left;width:494px;padding: 20px 0 0 30px;">
+		<div id="model" class="mar_t_10">
+			<a href="javascript:;" type="all">全站</a>
+			<a href="javascript:;" type="article">新闻</a>
+			<a href="javascript:;" type="picture">图片</a>
+			<a href="javascript:;" type="video">视频</a>
+			<a href="javascript:;" type="activity">活动</a>
+			<div class="clear"></div>
+		</div>
+		<form method="GET" action="" name="search" id="search" >
+			<div id="search_box">
+				<input type="hidden" value="search" name="app"/>
+				<input type="hidden" value="index" name="controller"/>
+				<input type="hidden" value="search" name="action"/>
+				<input type="hidden" value="all" name="type" id="type"/>
+				<input type="text" name="wd" id="wd" value="假冒伪劣" size="40" class="search_txt_1"/>
+				<input type="submit" id="submit" value="搜索" class="search_btn_1"/>
+				<input name="advanced" type="checkbox" id="advanced" value="1" class="high_search"/>
+				<span class="red">高级</span>
+			</div>
+			<div id="advanced_div">
+				<select id="catid" name="catid">
+					<option value="">频道</option>
+										<option value="1">新闻</option>
+										<option value="17">南京新闻</option>
+										<option value="589">汽车</option>
+										<option value="1203">采编</option>
+										<option value="1275">周刊</option>
+										<option value="1278">悦读</option>
+										<option value="35">理论评论</option>
+										<option value="47">南报热线</option>
+										<option value="39">视觉</option>
+										<option value="70">军事</option>
+										<option value="65">悦读</option>
+										<option value="92">教育</option>
+										<option value="76">生活通</option>
+										<option value="56">健康</option>
+										<option value="14">房产</option>
+										<option value="85">丽人行</option>
+										<option value="79">金融</option>
+										<option value="98">精致生活</option>
+										<option value="226">本网</option>
+										<option value="339">公告</option>
+										<option value="520">专题</option>
+										<option value="539">专题首页</option>
+										<option value="1284">谈资</option>
+									</select>
+				<select id="order" name="order">
+					<option value="rel">排序</option>
+					<option value="rel">相关度</option>
+					<option value="published">时间</option>
+					<!--<option value="pv">点击</option>-->
+					<option value="comments">评论</option>
+				</select>
+				时间：
+				<input type="text" value="" name="before" id="before" size="9"  class="input_calendar"/>
+				至
+				<input type="text" value="" name="after" id="after" size="9"  class="input_calendar"/>
+				<input type="checkbox" value="1" id="content" name="content"/> 搜内容
+			</div>
+		</form>
+	</div>
+	<div class="clear"></div>
+</div>
+<div id="search_result" class="layout"><span class="f-r">找到相关网页约<strong class="keyword"> 2598 </strong>篇，用时<strong class="keyword"> 0.12026 </strong>秒</span></div>
+<!--搜索列表-->
+<div id="search_list" class="search_txt" style="margin: 0 auto;">
+
+<dl>
+	<dt><a href="http://www.njdaily.cn/2012/0120/75928.shtml" target="_blank">中国称将打击侵权和<span class="keyword">假冒伪劣</span>纳入政府绩效考核</a></dt>
+	<dd class="info">...纳入社会治安综合治理考评范围，逐级开展督促检查。
+意见指出，党中央、国务院高度重视保护知识产权和打击制售<span class="keyword">假冒伪劣</span>商品工作，近年来采取了一系列政策措施，推动我国知识产权保护和产品质量安全水平不断提高。
+2010年...、审查起诉、诉讼监督和对行政执法机关移送涉嫌犯罪案件的监督职责，支持配合法院做好侵权和<span class="keyword">假冒伪劣</span>犯罪案件审理工作，依法严惩犯罪分子。
+(三)加强行政执法与刑事司法有效衔接。商务部作为打击侵权和...</dd>
+	<dd>
+		<a href="http://www.njdaily.cn/news/" target="_blank">[新闻]</a>
+		<span class="green">2012-01-20 11:33 </span>
+		评论：<span class="green"><a href="http://app.njdaily.cn/?app=comment&controller=comment&action=index&topicid=">0</a></span>
+	</dd>
+</dl>
+<dl>
+	<dt><a href="http://www.njdaily.cn/2012/0120/75978.shtml" target="_blank">中国将完善刑事定罪量刑标准 打击侵权<span class="keyword">假冒伪劣</span></a></dt>
+	<dd class="info">...相关法律法规和规章，推动完善刑事定罪量刑标准。
+为完善打击侵权和<span class="keyword">假冒伪劣</span>工作，意见提出4点保障措施：
+加强组织领导和统筹协调
+设立全国打击侵犯...对跨境、有组织知识产权犯罪以及利用互联网等新技术实施侵权和<span class="keyword">假冒伪劣</span>的行为，各地区、各有关部门要研究完善相应的执法监管措施。...公正执法、文明执法。充实基层行政执法人员，加强刑事司法打击侵权和<span class="keyword">假冒伪劣</span>犯罪专业力量，下移监管重心，推进综合执法和联合执法。保障打击侵权...</dd>
+	<dd>
+		<a href="http://www.njdaily.cn/news/" target="_blank">[新闻]</a>
+		<span class="green">2012-01-20 12:16 </span>
+		评论：<span class="green"><a href="http://app.njdaily.cn/?app=comment&controller=comment&action=index&topicid=">0</a></span>
+	</dd>
+</dl>
+<dl>
+	<dt><a href="http://www.njdaily.cn/2014/1124/993454.shtml" target="_blank">电梯质量安全问题频发有多少电梯是<span class="keyword">假冒伪劣</span>产品</a></dt>
+	<dd class="info">...盛翔
+销往国内多省份、价值2200余万元的品牌电梯，竟然全部是<span class="keyword">假冒伪劣</span>产品！近日，湖北荆州警方成功破获一起制售伪劣电梯案，抓获11名...公众的困惑。
+众所周知，电梯安全有专门的监管部门和检验部门，怎么就连<span class="keyword">假冒伪劣</span>电梯都识别不了？这里面是否同样存在巨大的寻租腐败空间？...查证——这究竟是制度的空白，还是执行的漏洞？电梯安全事关人命，<span class="keyword">假冒伪劣</span>电梯犹如“定时炸弹”，这一模糊地带亟待廓清，从制度上消除电梯造假空间...</dd>
+	<dd>
+		<a href="http://www.njdaily.cn/life/" target="_blank">[精致生活]</a>
+		<span class="green">2014-11-24 19:47 </span>
+		评论：<span class="green"><a href="http://app.njdaily.cn/?app=comment&controller=comment&action=index&topicid=1052604">0</a></span>
+	</dd>
+</dl>
+<dl>
+	<dt><a href="http://www.njdaily.cn/2011/1215/56686.shtml" target="_blank">从打击<span class="keyword">假冒伪劣</span>将入政府绩效考核看打假加码</a></dt>
+	<dd class="info">...打击侵权假冒工作常态化工作机制等情况举行发布会。全国打击侵犯知识产权和制售<span class="keyword">假冒伪劣</span>商品工作领导小组办公室主任、商务部副部长姜增伟表示，为建立健全打击...作为，难道不是纵容无良商家吗？
+如今，我国将把打击侵权和<span class="keyword">假冒伪劣</span>工作纳入政府的绩效考核体系，并将采取奖励的方法鼓励社会公众举报侵权...职责，依法严打无良厂商，不给问题产品流入市场的机会。
+将打击<span class="keyword">假冒伪劣</span>纳入政府政绩考核，就给职能部门套上了金箍，不履行职责、...</dd>
+	<dd>
+		<a href="http://www.njdaily.cn/comment/" target="_blank">[理论评论]</a>
+		<span class="green">2011-12-15 12:45 </span>
+		评论：<span class="green"><a href="http://app.njdaily.cn/?app=comment&controller=comment&action=index&topicid=">0</a></span>
+	</dd>
+</dl>
+<dl>
+	<dt><a href="http://www.njdaily.cn/2014/0120/730993.shtml" target="_blank">农村<span class="keyword">假冒伪劣</span>泛滥源于监管城乡有别</a></dt>
+	<dd class="info">...问题是,为什么这样的行为竟然能够长期存在?监管部门在哪里?谁来查处制假售假者的违法犯罪?
+不得不说,农村市场<span class="keyword">假冒伪劣</span>的泛滥,根本原因就在于那里是监管的真空地带和不毛之地。换句话说,不是因为农村消费者都是“傻子”,而是因为监管部门在穷乡僻壤常年“玩失踪”。当农村市场成为<span class="keyword">假冒伪劣</span>倾销地,巨大的中间利润必然发生劣币驱逐良币效应,让农村消费者除假货之外几乎没有真货可买,逃...</dd>
+	<dd>
+		<a href="http://www.njdaily.cn/comment/" target="_blank">[理论评论]</a>
+		<span class="green">2014-01-20 10:09 </span>
+		评论：<span class="green"><a href="http://app.njdaily.cn/?app=comment&controller=comment&action=index&topicid=789236">0</a></span>
+	</dd>
+</dl>
+<dl>
+	<dt><a href="http://www.njdaily.cn/2016/0929/1493969.shtml" target="_blank">广东口岸1至8月查处进出口<span class="keyword">假冒伪劣</span>商品案件增近四成</a></dt>
+	<dd class="info">...雷朋”等国际品牌的手袋、钱包、皮带、太阳镜等案件19宗；还有<span class="keyword">假冒伪劣</span>汽车配件、香水、洗面奶、化妆品、耳机、充电器等电子产品，涉及仿冒品牌有“尼桑”、“雪佛兰”“索尼”等。
+出口<span class="keyword">假冒伪劣</span>产品中各种鞋类和服装的案件数量最大，占所有案件数量的60%左右；其次为...所有案件数量的30%左右。无论从案件数量还是涉案金额来看，广东地区出口<span class="keyword">假冒伪劣</span>产品90%为服饰穿戴用品。专家分析指出，这是由于广东地区制造业较为...</dd>
+	<dd>
+		<a href="http://www.njdaily.cn/life/" target="_blank">[精致生活]</a>
+		<span class="green">2016-09-29 16:11 </span>
+		评论：<span class="green"><a href="http://app.njdaily.cn/?app=comment&controller=comment&action=index&topicid=1537926">0</a></span>
+	</dd>
+</dl>
+<dl>
+	<dt><a href="http://www.njdaily.cn/2016/1214/1541183.shtml" target="_blank">南京集中公开销毁一批<span class="keyword">假冒伪劣</span>商品 网购投诉举报多</a></dt>
+	<dd class="info">...成新热点
+南报网讯（记者 吕宁丰）工商部门出重拳，严打<span class="keyword">假冒伪劣</span>商品。12月14日下午，在江宁区秣陵街道一家环保回收企...”、“奔驰”汽配、“壳”牌机油等名牌。
+记者在销毁现场看到，等待处理的<span class="keyword">假冒伪劣</span>商品堆积如山，按照门类整齐摆放。主要涉及假酒、食品、保健品、化妆品...投诉举报日益增多成热点。针对这一现状，我市工商局加大打击网络销售<span class="keyword">假冒伪劣</span>产品的力度。据统计，今年全市工商、市场监管部门在网上检查网站5350...</dd>
+	<dd>
+		<a href="http://www.njdaily.cn/nanjing/" target="_blank">[南京新闻]</a>
+		<span class="green">2016-12-14 17:02 </span>
+		评论：<span class="green"><a href="http://app.njdaily.cn/?app=comment&controller=comment&action=index&topicid=1582379">0</a></span>
+	</dd>
+</dl>
+<dl>
+	<dt><a href="http://www.njdaily.cn/2011/1107/35503.shtml" target="_blank">公安近1年查<span class="keyword">假冒伪劣</span>商品案28607起 案值180亿</a></dt>
+	<dd class="info">...鱼”、“鲁花”等品牌食用油成品47吨，原料油98吨。犯罪嫌疑人累计销售金额达5500余万元。
+制售<span class="keyword">假冒伪劣</span>“三星”手机案
+特点：缴获假冒手机数量最多，打击生产销售利益链条最完整。
+今年6月，江苏警方发现...河南、贵州等14地警方出动警力2500余名，抓获犯罪嫌疑人483名，缴获假冒“茅台”、“五粮液”等各品牌<span class="keyword">假冒伪劣</span>白酒、葡萄酒13.4万瓶，假冒瓶盖、酒盒、商标、防伪标签等包装材料1350万件（套）。...</dd>
+	<dd>
+		<a href="http://www.njdaily.cn/news/" target="_blank">[新闻]</a>
+		<span class="green">2011-11-07 14:12 </span>
+		评论：<span class="green"><a href="http://app.njdaily.cn/?app=comment&controller=comment&action=index&topicid=">0</a></span>
+	</dd>
+</dl>
+<dl>
+	<dt><a href="http://www.njdaily.cn/2013/0810/540701.shtml" target="_blank">中国警方今年以来破获<span class="keyword">假冒伪劣</span>犯罪案件近2万起</a></dt>
+	<dd class="info">中新社北京8月10日电 (记者 欧阳开宇)2013年以来，中国警方共破获各类<span class="keyword">假冒伪劣</span>犯罪案件19889起。这是公安部10日透露的信息。
+警方以民意为导向开展的“打假行动”严厉打击危害民生的假...有害化学制剂加工“毒豆芽”系列案；浙江、江西等12省警方侦破以“人体血液测试”为幌子，制售“消栓三通”等<span class="keyword">假冒伪劣</span>保健品案；福建、广西警方破获制售假种子、导致农户重大损失案。截至目前，全国公安机关已彻底摧毁519...</dd>
+	<dd>
+		<a href="http://www.njdaily.cn/news/" target="_blank">[新闻]</a>
+		<span class="green">2013-08-10 12:18 </span>
+		评论：<span class="green"><a href="http://app.njdaily.cn/?app=comment&controller=comment&action=index&topicid=487078">0</a></span>
+	</dd>
+</dl>
+<dl>
+	<dt><a href="http://www.njdaily.cn/2016/1215/1541349.shtml" target="_blank">南京一批<span class="keyword">假冒伪劣</span>商品集中销毁</a></dt>
+	<dd class="info">...“LV”、“五粮液”、“洋河”、“奔驰”汽配、“壳”牌机油等名牌商品。
+记者在销毁现场看到，等待处理的<span class="keyword">假冒伪劣</span>商品堆积如山，作业人员按照酒类、衣着日用品、电子电器、机械等不同类别，通过外力冲击、浸泡、切割...，对<span class="keyword">假冒伪劣</span>商品进行无害化处理，并回收再利用。
+近年来，随着电商迅猛发展，工商部门加大打击网络销售<span class="keyword">假冒伪劣</span>产品的力度。据统计，今年全市工商、市场监管部门在网上检查网站5350个，查处网络商标侵权、...</dd>
+	<dd>
+		<a href="http://www.njdaily.cn/nanjing/" target="_blank">[南京新闻]</a>
+		<span class="green">2016-12-15 06:32 </span>
+		评论：<span class="green"><a href="http://app.njdaily.cn/?app=comment&controller=comment&action=index&topicid=">0</a></span>
+	</dd>
+</dl>
+</div>
+<!--分页-->
+<div class="page mar_t_8 mar_l_20">
+	<ul class="inline"><a href="javascript:void(0);" class="prev disable">&lt;</a><a href="javascript:void(0);" class="current">1</a><a href="http://app.njdaily.cn/?app=search&controller=index&action=search&type=all&wd=%E5%81%87%E5%86%92%E4%BC%AA%E5%8A%A3&Submit=&page=2&order=rel">2</a><a href="http://app.njdaily.cn/?app=search&controller=index&action=search&type=all&wd=%E5%81%87%E5%86%92%E4%BC%AA%E5%8A%A3&Submit=&page=3&order=rel">3</a><a href="http://app.njdaily.cn/?app=search&controller=index&action=search&type=all&wd=%E5%81%87%E5%86%92%E4%BC%AA%E5%8A%A3&Submit=&page=4&order=rel">4</a><a href="http://app.njdaily.cn/?app=search&controller=index&action=search&type=all&wd=%E5%81%87%E5%86%92%E4%BC%AA%E5%8A%A3&Submit=&page=5&order=rel">5</a><a href="http://app.njdaily.cn/?app=search&controller=index&action=search&type=all&wd=%E5%81%87%E5%86%92%E4%BC%AA%E5%8A%A3&Submit=&page=6&order=rel">6</a><a href="http://app.njdaily.cn/?app=search&controller=index&action=search&type=all&wd=%E5%81%87%E5%86%92%E4%BC%AA%E5%8A%A3&Submit=&page=7&order=rel">7</a><a href="http://app.njdaily.cn/?app=search&controller=index&action=search&type=all&wd=%E5%81%87%E5%86%92%E4%BC%AA%E5%8A%A3&Submit=&page=8&order=rel">8</a><a href="http://app.njdaily.cn/?app=search&controller=index&action=search&type=all&wd=%E5%81%87%E5%86%92%E4%BC%AA%E5%8A%A3&Submit=&page=100&order=rel">... 100</a><a href="http://app.njdaily.cn/?app=search&controller=index&action=search&type=all&wd=%E5%81%87%E5%86%92%E4%BC%AA%E5%8A%A3&Submit=&page=2&order=rel" class="next">&gt;</a></ul>
+	<div class="clear"></div>
+</div>
+<div id="search_foot"><p><a target="_blank" href="http://www.njdaily.cn/2011/0814/11860.shtml">南报网简介</a> | <a target="_blank" href="http://www.njdaily.cn/2011/0822/14352.shtml">About Us</a> | <a target="_blank" href="http://www.njdaily.cn/2011/0816/12606.shtml">广告服务</a> | <a href="http://www.njdaily.cn/2014/0425/820257.shtml" target="_blank">广告刊例</a> | <a target="_blank" href="http://www.njdaily.cn/2011/0814/11861.shtml">联系我们</a> | <a target="_blank" href="http://www.njdaily.cn/2011/0814/11863.shtml">招聘信息</a> | <a target="_blank" href="http://www.njdaily.cn/2011/0814/11866.shtml">版权声明</a> | <a target="_blank" href="http://bbs.njdaily.cn/register.php">会员注册</a> | <a target="_blank" href="http://mail.njdaily.cn">内部邮箱</a></p>
+<p>Copyright 2014 njdaily.cn, all rights reserved 南京日报网 版权所有</p>
+<p>苏ICP备11047051号 苏新网备2012056号 <a target="_blank" href="http://net.china.com.cn/">违法和不良信息举报中心</a></p>
+<p>南京报业传媒集团行风监督电话：84686084 | 本报投诉举报电话：4008885998 电子邮箱：njrbxxzx@sina.com</p></div>
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F7f32aed534f2da344768184078540b91' type='text/javascript'%3E%3C/script%3E"));
+</script></body>
+</html>
