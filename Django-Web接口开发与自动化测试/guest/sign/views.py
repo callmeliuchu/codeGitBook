@@ -3,6 +3,9 @@ from django.http import HttpResponse,HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import auth
 from sign.models import Event
+from sign.models import Event,Guest
+from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
+from django.shortcuts import render,get_object_or_404
 # Create your views here.
 def index(request):
 	return render(request,'index.html')
@@ -34,3 +37,24 @@ def search_name(request):
 	search_name = request.GET.get("name","")
 	event_list = Event.objects.filter(name=search_name)
 	return render(request,"event_manager.html",{'user':username,'events':event_list})
+
+@login_required
+def guest_manage(request):
+	username = request.session.get('user','')
+	guest_list = Guest.objects.all()
+	paginator = Paginator(guest_list,2)
+	page = request.GET.get('page')
+	try:
+		contacts = paginator.page(page)
+	except PageNotAnInteger:
+		contacts = paginator.page(1)
+	except EmptyPage:
+		contacts = Paginator.page(Paginator.num_pages)
+	return render(request,"guest_manage.html",{"user":username,"guests":contacts})
+
+@login_required
+def sign_index(request,eid):
+	event = get_object_or_404(Event,id=eid)
+	return render(request,'sign_index.html',{'event':event})
+
+

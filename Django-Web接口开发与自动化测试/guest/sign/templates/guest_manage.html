@@ -30,7 +30,7 @@
      <table class='table table-striped'>
       <thead>
       	<tr>
-      	 <th>id</th><th>name</th><th>phone</th><th>email</th><th>sign</th><th>fabuhui</th>
+      	 <th>id</th><th>name</th><th>phone</th><th>email</th><th>sign</th><th>fabuhui</th><th>sign</th>
       	</tr>
       </thead>
       <tbody>
@@ -42,19 +42,27 @@
       	    <td>{{guest.email}}</td>
             <td>{{guest.sign}}</td>
       	    <td>{{guest.event}}</td>
+            <td>
+             <a href="/sign_index/{{ event.id }}" target="{{ event.id }}_blank">sign</a>
+            </td>
       	  </tr>
       	{% endfor%}
       </tbody>
      </table>
     </div>
    </div>
-
-
-
-<h1>login success!</h1>
-<div style='float:right;'>
-	<a>hi!{{user}} welcome</a>
-</div>
-
+   <div class="pagination">
+     <span class="step-links">
+       {% if guests.has_previous %}
+         <a href="?page={{ guests.previous_page_number }}">previous</a>
+       {% endif %}
+         <span class="current">
+           Page {{ guests.number }} of {{ guests.paginator.num_pages }}
+         </span>
+         {% if guests.has_next %}
+           <a href="?page={{ guests.next_page_number }}">next</a>
+         {% endif %}
+     </span>
+   </div>
 </body>
 </html>
