@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
+	<title>sign_index</title>
+	{% load bootstrap3 %}
+	{% bootstrap_css %}
+	{% bootstrap_javascript %}
 </head>
 <body>
    <nav class='navbar navbar-inverse navbar-fixed-top'>
@@ -24,7 +27,7 @@
    
    <div class="page-header" style="padding-top: 80px">
    	 <div id="navbar" class="navbar-collapse collapse">
-   	 	<form class="navbar-form" method="post" action="/sign_index_action/{{ event.id }}">
+   	 	<form class="navbar-form" method="post" action="/sign_index_action/{{ event.id }}/">
    	 		<div class="form-group">
    	 			<input type="text" name="phone" placeholder="input your phone number" class="form-control">
    	 		</div>
@@ -34,9 +37,9 @@
    	 		  <br>{{ guest.realname }}
    	 		  <br>{{ guest.phone }}
    	 		</font>
+   	 		  {% csrf_token %}
    	 	</form>
    	 </div>
    </div>
-
 </body>
 </html>
