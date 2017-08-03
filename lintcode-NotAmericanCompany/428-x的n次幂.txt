@@ -1,0 +1,34 @@
+class Solution {
+public:
+    /**
+     * @param x the base number
+     * @param n the power number
+     * @return the result
+     */
+    double myPow(double x, int n) {
+          if(n<0){
+              n=-n;
+              x=1/x;
+          }
+          return g(x,n);
+    }
+    
+    double g(double x, int n){
+        if(n==0){
+            return 1;
+        }
+        if(n==1){
+            return x;
+        }
+        if(n%2==0){
+            return f(g(x,n/2));
+        }else{
+            return x*g(x,n-1);
+        }
+    }
+    
+    
+    double f(double val){
+        return val*val;
+    }
+};
