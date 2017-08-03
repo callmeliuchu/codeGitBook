@@ -1,0 +1,52 @@
+/**
+ * Definition of TreeNode:
+ * class TreeNode {
+ * public:
+ *     int val;
+ *     TreeNode *left, *right;
+ *     TreeNode(int val) {
+ *         this->val = val;
+ *         this->left = this->right = NULL;
+ *     }
+ * }
+ */
+class Solution {
+public:
+    /**
+     * @param root: The root of the binary search tree.
+     * @param A and B: two nodes in a Binary.
+     * @return: Return the least common ancestor(LCA) of the two nodes.
+     */
+    map<TreeNode*,TreeNode*>amap;
+    TreeNode *lowestCommonAncestor(TreeNode *root, TreeNode *A, TreeNode *B) {
+        preOrder(root);
+        map<TreeNode*,int>visited;
+        while(A!=root){
+            visited[A]++;
+            A = amap[A];
+        }
+        while(B!=root){
+            if(visited[B]==1){
+                return B;
+            }
+            B = amap[B];
+        }
+        return root;
+    }
+    
+    void preOrder(TreeNode *root){
+        if(root){
+            if(root->left){
+                amap[root->left] = root;
+            }
+            if(root->right){
+                amap[root->right] = root;
+            }
+            preOrder(root->left);
+            preOrder(root->right);
+        }
+    }
+    
+    
+    
+};
