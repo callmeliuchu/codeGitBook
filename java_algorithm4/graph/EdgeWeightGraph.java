@@ -1,10 +1,15 @@
 package github.java.algorithm4.graph;
 
+
+
 public class EdgeWeightGraph {
 	private int V;
 	private int E;
     private Bag<Edge>[] adj;
     
+    public int V(){
+    	return V;
+    }
     
     public EdgeWeightGraph(int V){
     	this.V = V;
@@ -27,6 +32,18 @@ public class EdgeWeightGraph {
     	}
     }
     
+    public Iterable<Edge> edges(){
+   	Bag<Edge>list = new Bag<Edge>();
+   	for(int v=0;v<V;v++){
+   		for(Edge e : adj[v]){
+   			if(v<e.other(v)){
+   				list.add(e);
+   			}
+   		}
+   	}
+   	return list;
+    }
+    
     public void addEdge(Edge e){
     	int v = e.either();
     	int w = e.other(v);
@@ -38,7 +55,7 @@ public class EdgeWeightGraph {
     public Iterable<Edge> adj(int v){
     	return adj[v];
     }
-    
+
     
     
 	
