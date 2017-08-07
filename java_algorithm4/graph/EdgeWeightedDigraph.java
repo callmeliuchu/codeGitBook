@@ -14,6 +14,9 @@ public class EdgeWeightedDigraph {
     	}
     }
 	
+    public int V(){
+    	return V;
+    }
     
     public void  addEdge(DirectedEdge e){
     	adj[e.from()].add(e);
