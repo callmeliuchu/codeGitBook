@@ -70,7 +70,7 @@ class PoolImages():
           k=0
           for i in range(img.size[0]):
             for j in range(img.size[1]):
-              pix[i,j] = self.Avimage[k]
+              pix[i,j] = int(self.Avimage[k])
               k=k+1
           img.save("average.jpg")
           
@@ -116,6 +116,7 @@ class CheckImage():
           self.Avim = self.poolims.Avimage
           self.CalcProjectionIm()
           self.projectionims = self.poolims.projdiffimages
+          self.poolims.DumpAverage()
           #self.DeterminePoolImage
           
       def GetImage(self,filename):
@@ -165,6 +166,7 @@ FILENAME='testimage.jpg' #image can be in gif jpeg or png format
 #run script
 test = CheckImage(FILENAME,folder)
 test.DeterminePoolImage()
+
 
 
 

@@ -14,7 +14,10 @@ class PoolImages():
 		self.Nimages = len(self.images)
 		self.Avimages = []
 		self.CalcAverage()
-
+		self.diffimages = [0 for i in range(self.Nimages)]
+		self.CalcDiffImagesAv()
+		self.uvecs = [[0.0 for j in range(self.images)] for i in range(self.Nimages)]
+		self.CalcEgienvectors()
 
 	def get_filepaths(self,directory):
 		file_paths = []
@@ -40,6 +43,50 @@ class PoolImages():
 		for i in range(self.imsize):
 			tmpvalue = sum(row[i] for row in self.images)
 			self.Avimages.append(tmpvalue/self.Nimages)
+
+	def CalcDiffImagesAv(self):
+		for i  in range(self.Nimages):
+			tmpdiff = []
+			for j in range(self.imsize):
+				tmpdiff.append(-self.Avimages[i]+self.images[i][j])
+			self.diffimages[i] = tmpdiff
+
+	def CalcEigenvectors():
+		L = [[0 for i in range(self.Nimages)] for j in range(self.Nimages)]
+		for i in range(self.Nimages):
+			for j in range(self.Nimages):
+				L[i][j] = np.dot(self.diffimages[i],self.diffimages[j])
+		evals,evecs=LA.eig(L)
+		for i in range(self.Nimages):
+			for j in range(self.Nimages):
+				self.uvecs[i] = list(map(lambda x,y:x+evecs[i][j]*y,self.uvecs[i],self.diffimages[j]))
+
+
+class CheckImage():
+	def __init__(self,FILENAME,directory):
+		self.imagetest = []
+		self.GetImages(FILENAME)
+		self.poolims = PoolImages(directory)
+		self.utest = [0 for i in range(self.poolims.Nimages)]
+		self.uvecs = self.poolims.uvecs
+		self.Avim = self.poolims.Avimages
+		self.CalcProjectionIm()
+
+
+	def GetImage(self,filename):
+		imtest = Image.open(filename).convert("L")
+		pixtest = imtest.load()
+		w = imtest.size[0]
+		h = imtest.size[1]
+		for i in range(w):
+			for j in range(h):
+				self.imagetest.append(pixtest[i,j])
+
+	def CalcProjectionIm(self):
+		for i in range(self.poolims.Nimages):
+			
+
+
 
 
 folder = "./photos/training"
