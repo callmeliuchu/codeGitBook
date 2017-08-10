@@ -1,0 +1,33 @@
+class Solution {
+public:
+    /**
+     * @param n: An integer.
+     * return : An array storing 1 to the largest number with n digits.
+     */
+    vector<int>res;
+    int N;
+    vector<int> numbersByRecursion(int n) {
+        N=n;
+        dfs(0);
+        return res;
+    }
+    int f(int val,int n){
+        int sum=1;
+        for(int i=0;i<n;i++){
+            sum=sum*val;
+        }
+        return sum;
+    }
+    void dfs(int n){
+        if(n>N){
+            return;
+        }
+        int s=f(10,n-1);
+        int e=f(10,n);
+        for(int i=s;i<e;i++){
+            res.push_back(i);
+        }
+        dfs(n+1);
+    }
+
+};
