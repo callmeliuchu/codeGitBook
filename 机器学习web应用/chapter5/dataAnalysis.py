@@ -36,3 +36,6 @@ for i in range(1,nusers):
 toremovelist = list(set(toremovelist))
 dfout.drop(dfout.columns[toremovelist],axis=1,inplace=True)
 dfout.to_csv('utilitymatrix.csv',index=None)
+
+
+
