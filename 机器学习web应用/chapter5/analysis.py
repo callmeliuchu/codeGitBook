@@ -34,3 +34,4 @@ nfolds = 5
 df_trains,df_vals=cross_validation(df,nfolds)
 print(len(df_trains))
 print(len(df_vals))
+
