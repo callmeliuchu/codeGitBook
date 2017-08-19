@@ -1,26 +1,7 @@
 import pymysql
-import string
-import random
-
-KEY_LEN = 20
-KEY_ALL = 200
-
-
-def base_str():
-	return string.ascii_letters + string.digits
 
 
 
-def key_gen():
-	keylist = [random.choice(base_str()) for i in range(KEY_LEN)]
-	return ''.join(keylist)
-
-def key_num(num,result=None):
-	if result == None:
-		result = []
-	for i in range(num):
-		result.append(key_gen())
-	return result
 
 class mysql_init(object):
 	def __init__(self,conn):
@@ -32,7 +13,7 @@ class mysql_init(object):
 			port = 3306,
 			user = 'root',
 			passwd = 'root',
-			db = 'mydb2',
+			db = 'boss',
 			charset='utf8'
 		)
 
@@ -71,7 +52,26 @@ def DropTable(conn):
 	conn.execute("DROP TABLE IF EXISTS `user_key`")
 
 def CreateTable(conn):
-	sql_create = ''' CREATE TABLE `user_key` (`key` varchar(50) NOT NULL)'''
+	sql_create = '''DROP TABLE IF EXISTS `boss`;  
+	CREATE TABLE `com_info` (  
+	`id` int(11) NOT NULL AUTO_INCREMENT,  
+	`comlink` varchar(60) NOT NULL,
+	`finance` varchar(60) NOT NULL,
+	`joblink` varchar(60) NOT NULL,
+	`location` varchar(60) NOT NULL,
+	`jobdesc` varchar(60) NOT NULL,
+	`years` varchar(60) NOT NULL,
+	`education` varchar(60) NOT NULL,
+	`jobsalary` varchar(60) NOT NULL,
+	`comscale` varchar(60) NOT NULL,
+	`comname` varchar(60) NOT NULL,
+	`comdomain` varchar(60) NOT NULL, 
+	`moredetail` longtext NOT NULL, 
+	`city` varchar(60) NOT NULL,
+	`language` varchar(60) NOT NULL, 
+	  PRIMARY KEY (`id`)  
+     ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;  
+	                '''
 	conn.execute(sql_create)
 
 
@@ -96,7 +96,11 @@ def printResult(rows):
 	for row in rows:
 		print(row)
 
+def getStr(val):
+	return "`"+val+"` varchar(60) NOT NULL,"
 
 if __name__ =="__main__":
-	dbconn = mysql_init(None)
-	process()
+	columns = ['comlink', 'finance', 'joblink', 'location', 'jobdesc', 'years', 'education', 'jobsalary', 'comscale', 'comname', 'comdomain']
+	for column in columns:
+		print(getStr(column))
+	
