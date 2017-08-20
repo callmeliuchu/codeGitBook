@@ -3,6 +3,10 @@ import pandas as pd
 
 
 df = pd.read_csv("train.csv",header=0)
+# print(df.describe())
+print(df.isnull().sum())
+
+
 #展示训练数据的每一项
 # Data Dictionary
 # Variable	Definition	Key
@@ -16,24 +20,24 @@ df = pd.read_csv("train.csv",header=0)
 # fare 	Passenger fare 	
 # cabin 	Cabin number 	
 # embarked 	Port of Embarkation
-columns = df.columns
-print(columns)
-for column in columns:
-	print(column)
-	print(df[column].tolist())
-	print("-------------------------------------------------------------------------------------------------")
+# columns = df.columns
+# print(columns)
+# for column in columns:
+# 	print(column)
+# 	print(df[column].tolist())
+# 	print("-------------------------------------------------------------------------------------------------")
 
-#画图
-# import os
-# import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
+# #画图
+# # import os
+# # import pandas as pd
+# import numpy as np
+# import matplotlib.pyplot as plt
 
 
 
-plt.rcParams['axes.unicode_minus']=False
-plt.rcParams['font.sans-serif']=['SimHei']
-plt.style.use('ggplot')
+# plt.rcParams['axes.unicode_minus']=False
+# plt.rcParams['font.sans-serif']=['SimHei']
+# plt.style.use('ggplot')
 
 # def data():
 # 	path = 'F:\GitCodeBook\泰坦尼克号案例练习\Titanic'
@@ -41,28 +45,41 @@ plt.style.use('ggplot')
 # 	data.head(10)
 # 	return data
 
-fig = plt.figure(figsize=(10,10))
-fig.set(alpha=0.5)
-#passenger survived
-plt.subplot2grid((2,3),(0,0))
+# fig = plt.figure(figsize=(10,10))
+# fig.set(alpha=0.5)
+# #passenger survived
+# plt.subplot2grid((2,3),(0,0))
 
-df.Survived.value_counts().plot(kind='bar')
-plt.ylabel('people number')
-plt.xlabel('survied or not')
-plt.title('passenger survived')
-#class level
-plt.subplot2grid((2,3),(0,1))
-df.Pclass.value_counts().plot(kind='bar')
-plt.ylabel('class level number')
-plt.xlabel('class level:0,1,2')
-plt.title('class level distribution')
-#统计获取者与遇难者的年龄分布
-plt.subplot2grid((2,3),(0,2))
-plt.scatter(df.Survived,df.Age)
-plt.ylabel('age')
-plt.grid(b=True,which='major',axis='y')
-plt.title('distribution')
-plt.show()
+# df.Survived.value_counts().plot(kind='bar')
+# plt.ylabel('people number')
+# plt.xlabel('survied or not')
+# plt.title('passenger survived')
+# #class level
+# plt.subplot2grid((2,3),(0,1))
+# df.Pclass.value_counts().plot(kind='bar')
+# plt.ylabel('class level number')
+# plt.xlabel('class level:0,1,2')
+# plt.title('class level distribution')
+# #统计获取者与遇难者的年龄分布
+# plt.subplot2grid((2,3),(0,2))
+# plt.scatter(df.Survived,df.Age)
+# plt.ylabel('age')
+# plt.grid(b=True,which='major',axis='y')
+# plt.title('distribution')
+# #各个等级乘客年龄分布
+# plt.subplot2grid((2,3),(1,0),colspan=2)
+# df.Age[df.Pclass==1].plot(kind='kde')
+# df.Age[df.Pclass==2].plot(kind='kde')
+# df.Age[df.Pclass==3].plot(kind='kde')
+# plt.xlabel('age')
+# plt.ylabel('dense')
+# plt.title('distribution')
+# plt.legend(('1 level','2 level','3 level'),loc='best')
+# #港口分布
+# df.Embarked.value_counts().plot(kind='bar')
+# plt.xlabel('harbor')
+# plt.ylabel('survived')
+# plt.show()
 
 
 # def showData(data):

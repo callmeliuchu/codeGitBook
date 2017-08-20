@@ -187,12 +187,10 @@ def crawlPageByOne(language,city,num,header=default_header):
 	crawlDetailHTML(language,city,num,header)	
 
 
-
+db = DB()
 # readJobDetail("","","","")
 def parse(language,city,num):
-	db = DB()
 	table_name = "com_info"
-	db.clear(table_name)
 	data = readFileByCityJob(language,city,num)
 	soup = BeautifulSoup(data,'lxml')
 	joblist = soup.find('div',class_='job-list')
@@ -286,8 +284,9 @@ print(get_rand_agent())
 language = 'C++'
 city = '广州'
 url = geturl(('融资','D轮及以上'),language)
-crawlPageByOne(language,city,1,get_rand_agent())
-parse(language,city,1)
+for num in range(10):
+	crawlPageByOne(language,city,num,get_rand_agent())
+	parse(language,city,num)
 # write_searchmap()
 # searchmap = read_searchmap()
 # for item in searchmap:
