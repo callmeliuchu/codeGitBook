@@ -113,7 +113,8 @@ for dataset in combine:
 # print (train_data[['IsAlone', 'Survived']].groupby(['IsAlone'], as_index=False).mean())
 
 # 年龄存活比例图
-# g = sns.FacetGrid(train_data, col='Survived')
+# g = sns.FacetGrid(train_data, col='Survi
+#ved')
 # g.map(plt.hist, 'Age', bins=20)
 # plt.show()
 
@@ -213,7 +214,7 @@ for dataset in combine:
     dataset.loc[(dataset['Age'] > 16) & (dataset['Age'] <= 32), 'Age'] = 1
     dataset.loc[(dataset['Age'] > 32) & (dataset['Age'] <= 48), 'Age'] = 2
     dataset.loc[(dataset['Age'] > 48) & (dataset['Age'] <= 64), 'Age'] = 3
-    dataset.loc[dataset['Age'] > 64, 'Age']
+    dataset.loc[dataset['Age'] > 64, 'Age'] = 4
 # print(train.head())
 train = train.drop(['AgeBand'], axis=1)
 combine = [train, test]
