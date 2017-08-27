@@ -2,7 +2,8 @@ import csv
 import numpy as np
 from collections import Counter
 import pandas as pd
-
+from PIL import Image
+import matplotlib.pyplot as plt
 
 def get_pic():
 	digit_pic = {}
@@ -93,4 +94,9 @@ def test():
 	    })
 	submission.to_csv('submission_1.csv',index=False)
 
-test()
+# test()
+# train_data,train_labels = loadDataSet('train.csv','train')
+# data = train_data[0].reshape(28,28)
+# new_im = Image.fromarray(data)
+# plt.imshow(data)
+# new_im.show()
