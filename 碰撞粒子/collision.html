@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<div id="canvas-wrap">
+   <canvas id="canvas" style="border:1px solid #aaaaaa; display: block;margin:50px auto;">
+   	your browser does not support canvas
+   </canvas>
+</div>
+</body>
+<script type="text/javascript">
+    function Particle(x=10,y=10,radius=10,vx=1,vy=1,mass=0.1){
+        this.x = x;
+        this.y = y;
+        this.radius = radius;
+        this.vx = vx;
+        this.vy = vy;
+        this.mass = mass;
+        this.draw = function(){
+        	DrawTool.fillCycle(x,y,radius);
+        }
+        this.move = function(dt){
+             this.x +=this.vx*dt;
+             this.y +=this.vy*dt;
+        }
+    }
+    var Point = function(x,y){
+        this.x = x;
+        this.y = y;
+    }
+    var DrawTool = {}
+    DrawTool.canvas = document.getElementById("canvas");
+    DrawTool.ctx = this.canvas.getContext("2d");
+
+    DrawTool.iniCanvas = function(width=800,height=600){
+    	this.canvas.width = width;
+    	this.canvas.height = height;
+    }
+    DrawTool.line = function(p1,p2,width=0.1,color="#AA394C"){
+         this.ctx.moveTo(p1.x,p1.y);
+         this.ctx.lineTo(p2.x,p2.y);
+         this.ctx.strokeStyle=color;
+         this.ctx.lineWidth=width;
+    }
+    DrawTool.clear = function(){
+    	this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    }
+    DrawTool.beginPath = function(){
+    	 this.ctx.beginPath();
+    }
+    DrawTool.fillCycle = function(rx,ry,radius){
+         this.beginPath();
+         this.ctx.arc(rx, ry, radius, 0, Math.PI*2, true);
+         this.stroke();
+    }
+    DrawTool.stroke = function(){
+         this.ctx.stroke();
+    }
+    function drawBox(){
+    	 DrawTool.beginPath();
+    	 var height = 600;
+		 var width = 800;
+         DrawTool.iniCanvas(width,height);
+         var columnNum = 80;
+         var rowNum = 60;
+         columnWidth = Math.floor(width/columnNum);
+         rowWidth = Math.floor(height/rowNum);
+         for(var i=1;i<columnNum;i++){
+                 var p1 = new Point(i*columnWidth,0);
+                 var p2 = new Point(i*columnWidth,height);
+                 DrawTool.line(p1,p2);
+         }
+         for(var i=1;i<rowNum;i++){
+                 var p1 = new Point(0,i*rowWidth);
+                 var p2 = new Point(width,i*rowWidth);
+                 DrawTool.line(p1,p2);
+         }
+         DrawTool.stroke();
+    }
+     
+    
+    function CollisionSystem(){
+         this.particle = new Particle();
+
+
+         this.simulate = function(){
+         	this.particle.draw();
+         	this.particle.move(1);
+         }
+    }
+	window.onload = function(){
+		drawBox();
+		// var  particle = new Particle(30,40,10);
+		// particle.draw();
+		var sys = new CollisionSystem();
+		sys.simulate();
+		
+	}
+</script>
+</html>
+

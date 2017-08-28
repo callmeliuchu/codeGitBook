@@ -102,8 +102,7 @@ def digitsTest():
 	print(e/len(test_data))
 
 
-df = pd.read_csv('train.csv',header=None)
-print(df[,:])
+df = pd.read_csv('train.csv')
 
 
 
