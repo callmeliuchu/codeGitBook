@@ -208,7 +208,7 @@ for dataset in combine:
 
 train = train.drop(['FareBand'],axis=1)
 combine = [train,test]
-print(train.head(10))
+# print(train.head(10))
 
 colormap = plt.cm.viridis
 plt.figure(figsize=(12,12))
@@ -231,5 +231,81 @@ logreg = LogisticRegression()
 logreg.fit(x_train,y_train)
 y_pred = logreg.predict(x_test)
 acc_log = round(logreg.score(x_train,y_train)*100,2)
-# print(acc_log)
+print(acc_log)
 # print(y_pred)
+
+# 2 支持向量机 Support Vector Machines
+svc = SVC()
+svc.fit(x_train,y_train)
+y_pred = svc.predict(x_test)
+acc_svc = round(svc.score(x_train,y_train)*100,2)
+print(acc_svc)
+
+
+
+# 3 K-近邻 KNN or k-Nearest Neighbors
+knn = KNeighborsClassifier(n_neighbors=3)
+knn.fit(x_train, y_train)
+y_pred = knn.predict(x_test)
+acc_knn = round(knn.score(x_train, y_train) * 100, 2)
+print(acc_knn)
+
+# 4 朴素贝叶斯分类 Naive Bayes classifier
+gaussian = GaussianNB()
+gaussian.fit(x_train, y_train)
+y_pred = gaussian.predict(x_test)
+acc_gaussian = round(gaussian.score(x_train, y_train) * 100, 2)
+print(acc_gaussian)
+
+# 5 感知器 Perceptron
+perceptron = Perceptron()
+perceptron.fit(x_train, y_train)
+y_pred = perceptron.predict(x_test)
+acc_perceptron = round(perceptron.score(x_train, y_train) * 100, 2)
+print(acc_perceptron)
+
+# 6 线性补偿 Linear SVC
+linear_svc = LinearSVC()
+linear_svc.fit(x_train, y_train)
+y_pred = linear_svc.predict(x_test)
+acc_linear_svc = round(linear_svc.score(x_train, y_train) * 100, 2)
+print(acc_linear_svc)
+
+# 7 决策树 Decision Tree
+decision_tree = DecisionTreeClassifier()
+decision_tree.fit(x_train, y_train)
+y_pred = decision_tree.predict(x_test)
+acc_decision_tree = round(decision_tree.score(x_train, y_train) * 100, 2)
+print(acc_decision_tree)
+
+# 8 随机森林 Random Forest
+random_forest = RandomForestClassifier(n_estimators=100)
+random_forest.fit(x_train, y_train)
+y_pred = random_forest.predict(x_test)
+random_forest.score(x_train, y_train)
+acc_random_forest = round(random_forest.score(x_train, y_train) * 100, 2)
+print(acc_random_forest)
+
+# 9 随机梯度下降法 Stochastic Gradient Descent
+sgd = SGDClassifier()
+sgd.fit(x_train, y_train)
+y_pred = sgd.predict(x_test)
+acc_sgd = round(sgd.score(x_train, y_train) * 100, 2)
+print(acc_sgd)
+# 评价模型,各个算法评分
+models = pd.DataFrame({
+    'Model': ['Support Vector Machines', 'KNN', 'Logistic Regression',
+              'Random Forest', 'Naive Bayes', 'Perceptron',
+              'Stochastic Gradient Decent', 'Linear SVC',
+              'Decision Tree'],
+    'Score': [acc_svc, acc_knn, acc_log,
+              acc_random_forest, acc_gaussian, acc_perceptron,
+              acc_sgd, acc_linear_svc, acc_decision_tree]})
+print(models)
+submission = pd.DataFrame({
+        "PassengerId": test["PassengerId"],
+        "Survived": y_pred
+    })
+
+
+print(submission)

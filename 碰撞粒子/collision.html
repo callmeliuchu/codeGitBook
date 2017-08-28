@@ -11,30 +11,74 @@
 </div>
 </body>
 <script type="text/javascript">
-    function Particle(x=10,y=10,radius=10,vx=1,vy=1,mass=0.1){
+    var colorList = [
+     '#C1232B','#B5C334','#FCCE10','#E87C25','#27727B',
+     '#FE8463','#9BCA63','#FAD860','#F3A43B','#60C0DD',
+     '#D7504B','#C6E579','#F4E001','#F0805A','#26C0C0'
+     ];
+
+
+
+    var myCanvas = document.getElementById("canvas");
+    var context = myCanvas.getContext("2d");
+    function Particle(x=10,y=10,radius=10,vx=20,vy=30,mass=0.1,color){
         this.x = x;
         this.y = y;
         this.radius = radius;
         this.vx = vx;
         this.vy = vy;
         this.mass = mass;
-        this.draw = function(){
-        	DrawTool.fillCycle(x,y,radius);
+        this.color=color;
+    }
+    Particle.prototype.INFINITY = Number.POSITIVE_INFINITY;
+    function  generateParticle(){
+        var x = 10;
+        var y = 10;
+        var radius = 20;
+        var vx = Math.random()*10+10;
+        var vy = Math.random()*10+10;
+        var mass = 10;
+        var color = colorList[Math.floor(Math.random()*colorList.length)];
+        return new Particle(x,y,radius,vx,vy,mass,color);
+    }
+    function getParticleGroup(n){
+        var arr = [];
+        for(var i=0;i<n;i++){
+          arr.push(generateParticle());
         }
-        this.move = function(dt){
-             this.x +=this.vx*dt;
-             this.y +=this.vy*dt;
+        return arr;
+    }
+    var particles =  getParticleGroup(5);
+    Particle.prototype.draw = function(){
+        DrawTool.ctx.fillStyle = this.color;
+        DrawTool.fillCycle(this.x,this.y,this.radius);
+        DrawTool.ctx.fill();
+    }
+    Particle.prototype.move = function(dt){
+        this.x +=this.vx*dt;
+        this.y +=this.vy*dt;
+        if(DrawTool.width<=this.x+this.radius || this.x<=this.radius){
+            this.vx = -this.vx;
+        }
+        if(DrawTool.height<=this.y+this.radius || this.y<=this.radius){
+            this.vy = -this.vy;
         }
     }
+    Particle.prototype.timeToHitVerticalWall = function(){
+        
+    }
+
     var Point = function(x,y){
         this.x = x;
         this.y = y;
     }
     var DrawTool = {}
-    DrawTool.canvas = document.getElementById("canvas");
-    DrawTool.ctx = this.canvas.getContext("2d");
+    DrawTool.canvas = myCanvas;
+    DrawTool.ctx = context;
 
     DrawTool.iniCanvas = function(width=800,height=600){
+        this.width = width;
+        this.height = height;
     	this.canvas.width = width;
     	this.canvas.height = height;
     }
@@ -65,8 +109,8 @@
          DrawTool.iniCanvas(width,height);
          var columnNum = 80;
          var rowNum = 60;
-         columnWidth = Math.floor(width/columnNum);
-         rowWidth = Math.floor(height/rowNum);
+         var columnWidth = Math.floor(width/columnNum);
+         var rowWidth = Math.floor(height/rowNum);
          for(var i=1;i<columnNum;i++){
                  var p1 = new Point(i*columnWidth,0);
                  var p2 = new Point(i*columnWidth,height);
@@ -81,23 +125,31 @@
     }
      
     
-    function CollisionSystem(){
-         this.particle = new Particle();
-
-
-         this.simulate = function(){
-         	this.particle.draw();
-         	this.particle.move(1);
-         }
+    var CollisionSystem = {};
+    CollisionSystem.particle = new Particle();
+    CollisionSystem.particles = particles;
+    CollisionSystem.particlesDraw = function(){
+        for(var i=0;i<this.particles.length;i++){
+            this.particles[i].draw();
+            this.particles[i].move(1);
+        }
     }
+    
+    CollisionSystem.silumate = function(){
+        // this.particle.draw();
+        // this.particle.move(1);
+        this.particlesDraw();
+     }
+
+    
+ 
 	window.onload = function(){
 		drawBox();
-		// var  particle = new Particle(30,40,10);
-		// particle.draw();
-		var sys = new CollisionSystem();
-		sys.simulate();
-		
-	}
+        setInterval(function(){
+          DrawTool.clear();
+          CollisionSystem.silumate();
+        },30);
+	    }
 </script>
 </html>
 

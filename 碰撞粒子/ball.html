@@ -1,0 +1,118 @@
+<!doctype html><html lang="en">
+<head>
+<meta charset="utf-8" />
+</head>
+<body>
+<style>
+	*{
+		margin:0;
+		padding:0;
+	}
+	html,body{
+		width:100%;
+		height:100%;
+	}
+	.draw{
+		height:100%;
+		width:100%;
+		position:relative;
+		overflow:hidden;
+		background-color:#222;
+	}
+</style>
+<div class="draw">
+	<canvas width="100%" height="100%"></canvas>
+</div>
+<script>
+	(function(){
+			/*不支持CANVAS的浏览器直接返回*/
+			if (!document.getElementsByTagName("canvas")[0].getContext) {
+				return;
+			}else{
+				var canvas=document.getElementsByTagName("canvas")[0];
+				var cWidth=document.body.clientWidth;
+				var cHeight=canvas.parentNode.clientHeight;
+				canvas.width=cWidth;
+				canvas.height=cHeight;
+				var ctx=canvas.getContext("2d");
+				var arr=[];
+				for (var i=0;i<1000;i++){
+					arr[i]=new Ball();
+				}
+				var x = setInterval(function(){
+					ctx.clearRect(0,0,cWidth,cHeight);
+					for (var i=0;i<1000;i++){
+						arr[i].move();
+					}
+				},30);
+			}
+
+			/*调整窗口不需要重新画*/
+			window.onresize = function(){
+				cWidth=document.body.clientWidth;
+				cHeight=canvas.parentNode.clientHeight;
+				canvas.width=cWidth;
+				canvas.height=cHeight;
+				clearInterval(x);
+				x = setInterval(function(){
+					ctx.clearRect(0,0,cWidth,cHeight);
+					/*画1000个*/
+					for (var i=0;i<1000;i++){
+						arr[i].move();
+					}
+				},30);
+			};
+
+			function Ball(cw,ch){
+				//this.cw = cw;//因为不想在拖动窗口后重新画，所以用外部变量的形式传入，这样肯定不规范吧······
+				//this.ch = ch;
+				this.zuoyou=true;//碰到左右边缘
+				this.shangxia=true;//碰到上下边缘
+				this.r=ran(0.9,10);//半径
+				//this.x=ran(10,this.cw-20);//
+				this.x=ran(10,cWidth-20);//X坐标
+				//this.y=ran(10,this.ch-20);//
+				this.y=ran(10,cHeight-20);//Y坐标
+				this.color="SpringGreen";//颜色
+				this.speed1=ran(1,10);//移动速度1
+				this.speed2=ran(1,10);//移动速度2
+			}
+			Ball.prototype.move=function(){
+				ctx.beginPath();
+				if (this.zuoyou){
+					this.x += this.speed1;
+					if (this.x >= cWidth-this.r){
+						this.zuoyou = false;
+					}
+				}else{
+					this.x -= this.speed1;
+					if (this.x<=this.r){
+						this.zuoyou=true;
+					}
+				}
+
+				if (this.shangxia){
+					this.y += this.speed2;
+					if (this.y >= cHeight-this.r){
+						this.shangxia = false;
+					}
+				}else{
+					this.y -= this.speed2;
+					if (this.y <= this.r){
+						this.shangxia = true;
+					}
+				}
+				ctx.fillStyle = this.color;
+				ctx.arc(this.x,this.y,this.r,0,Math.PI*2,false);
+				ctx.closePath();
+				ctx.fill();
+			};
+			function ran(max,min){
+				var sma=arguments[1] || 0;
+				return Math.floor(Math.random()*(max-min+1)+sma);
+			}
+		}
+	)();
+</script>
+</body>
+</html>
