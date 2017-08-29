@@ -11,16 +11,49 @@
 </div>
 </body>
 <script type="text/javascript">
+    var myCanvas = document.getElementById("canvas");
+    var context = myCanvas.getContext("2d");
     var colorList = [
      '#C1232B','#B5C334','#FCCE10','#E87C25','#27727B',
      '#FE8463','#9BCA63','#FAD860','#F3A43B','#60C0DD',
      '#D7504B','#C6E579','#F4E001','#F0805A','#26C0C0'
      ];
 
+    //DrawTool 
+    var DrawTool = {}
+    DrawTool.canvas = myCanvas;
+    DrawTool.ctx = context;
+    DrawTool.iniCanvas = function(width=800,height=600){
+        this.width = width;
+        this.height = height;
+        this.canvas.width = width;
+        this.canvas.height = height;
+    }
+    DrawTool.line = function(p1,p2,width=0.1,color="#AA394C"){
+         this.ctx.moveTo(p1.x,p1.y);
+         this.ctx.lineTo(p2.x,p2.y);
+         this.ctx.strokeStyle=color;
+         this.ctx.lineWidth=width;
+    }
+    DrawTool.clear = function(){
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    }
+    DrawTool.beginPath = function(){
+         this.ctx.beginPath();
+    }
+    DrawTool.fillCycle = function(rx,ry,radius){
+         this.beginPath();
+         this.ctx.arc(rx, ry, radius, 0, Math.PI*2, true);
+         this.stroke();
+    }
+    DrawTool.stroke = function(){
+         this.ctx.stroke();
+    }
 
 
-    var myCanvas = document.getElementById("canvas");
-    var context = myCanvas.getContext("2d");
+
+
+    //Particle
     function Particle(x=10,y=10,radius=10,vx=20,vy=30,mass=0.1,color){
         this.x = x;
         this.y = y;
@@ -29,15 +62,98 @@
         this.vy = vy;
         this.mass = mass;
         this.color=color;
+        this.count = 0;
     }
     Particle.prototype.INFINITY = Number.POSITIVE_INFINITY;
+    Particle.prototype.draw = function(){
+        DrawTool.ctx.fillStyle = this.color;
+        DrawTool.fillCycle(this.x,this.y,this.radius);
+        DrawTool.ctx.fill();
+    }
+    Particle.prototype.move = function(dt){
+        this.x +=this.vx*dt;
+        this.y +=this.vy*dt;
+        // if(DrawTool.width<=this.x+this.radius || this.x<=this.radius){
+        //     this.vx = -this.vx;
+        // }
+        // if(DrawTool.height<=this.y+this.radius || this.y<=this.radius){
+        //     this.vy = -this.vy;
+        // }
+    }
+    Particle.prototype.timeToHit = function(that){
+        if (this == that) return this.INFINITY;
+        var dx  = that.x - this.x;
+        var dy  = that.y - this.y;
+        var dvx = that.vx - this.vx;
+        var dvy = that.vy - this.vy;
+        var dvdr = dx*dvx + dy*dvy;
+        if (dvdr > 0) return this.INFINITY;
+        var dvdv = dvx*dvx + dvy*dvy;
+        var drdr = dx*dx + dy*dy;
+        var sigma = this.radius + that.radius;
+        var d = (dvdr*dvdr) - dvdv * (drdr - sigma*sigma);
+        // if (drdr < sigma*sigma) StdOut.println("overlapping particles");
+        if (d < 0) return this.INFINITY;
+        return -(dvdr + Math.sqrt(d)) / dvdv;
+    }
+    Particle.prototype.timeToHitVerticalWall = function(){
+        if(this.vx > 0) return (DrawTool.width - this.x - this.radius) / this.vx;
+        else if (this.vx < 0) return (this.radius - this.x) / this.vx;  
+        else             return this.INFINITY;
+    }
+    Particle.prototype.timeToHitHorizontalWall = function(){
+        if(this.vy > 0) return (DrawTool.height - this.y - this.radius) / this.vy;
+        else if (this.vy < 0) return (this.radius - this.y) / this.vy;
+        else             return this.INFINITY;
+    }
+    Particle.prototype.bounceOff = function(that){
+        var dx  = that.x - this.x;
+        var dy  = that.y - this.y;
+        var dvx = that.vx - this.vx;
+        var dvy = that.vy - this.vy;
+        var dvdr = dx*dvx + dy*dvy;             // dv dot dr
+        var dist = this.radius + that.radius;   // distance between particle centers at collison
+
+        // magnitude of normal force
+        var magnitude = 2 * this.mass * that.mass * dvdr / ((this.mass + that.mass) * dist);
+
+        // normal force, and in x and y directions
+        var fx = magnitude * dx / dist;
+        var fy = magnitude * dy / dist;
+
+        // update velocities according to normal force
+        this.vx += fx / this.mass;
+        this.vy += fy / this.mass;
+        that.vx -= fx / that.mass;
+        that.vy -= fy / that.mass;
+
+        // update collision counts
+        this.count++;
+        that.count++;
+    }
+     
+    Particle.prototype.bounceOffVerticalWall = function(){
+        this.vx = -this.vx;
+        this.count++;
+    }
+
+    Particle.prototype.bounceOffHorizontalWall = function(){
+        this.vy = -this.vy;
+        this.count++;
+    }
+
+    Particle.prototype.kineticEnergy = function(){
+        return 0.5*this.mass*(this.vx*this.vx + this.vy*this.vy);
+    }
+
+   //generate random particles 
     function  generateParticle(){
-        var x = 10;
-        var y = 10;
-        var radius = 20;
-        var vx = Math.random()*10+10;
-        var vy = Math.random()*10+10;
-        var mass = 10;
+        var radius = 10+Math.random()*20;
+        var x = Math.random()*800;
+        var y = Math.random()*600;
+        var vx = Math.random()*15;
+        var vy = Math.random()*15;
+        var mass = Math.random()*10;
         var color = colorList[Math.floor(Math.random()*colorList.length)];
         return new Particle(x,y,radius,vx,vy,mass,color);
     }
@@ -49,59 +165,15 @@
         return arr;
     }
     var particles =  getParticleGroup(5);
-    Particle.prototype.draw = function(){
-        DrawTool.ctx.fillStyle = this.color;
-        DrawTool.fillCycle(this.x,this.y,this.radius);
-        DrawTool.ctx.fill();
-    }
-    Particle.prototype.move = function(dt){
-        this.x +=this.vx*dt;
-        this.y +=this.vy*dt;
-        if(DrawTool.width<=this.x+this.radius || this.x<=this.radius){
-            this.vx = -this.vx;
-        }
-        if(DrawTool.height<=this.y+this.radius || this.y<=this.radius){
-            this.vy = -this.vy;
-        }
-    }
-    Particle.prototype.timeToHitVerticalWall = function(){
-        
-    }
+
+
 
     var Point = function(x,y){
         this.x = x;
         this.y = y;
     }
-    var DrawTool = {}
-    DrawTool.canvas = myCanvas;
-    DrawTool.ctx = context;
 
-    DrawTool.iniCanvas = function(width=800,height=600){
-        this.width = width;
-        this.height = height;
-    	this.canvas.width = width;
-    	this.canvas.height = height;
-    }
-    DrawTool.line = function(p1,p2,width=0.1,color="#AA394C"){
-         this.ctx.moveTo(p1.x,p1.y);
-         this.ctx.lineTo(p2.x,p2.y);
-         this.ctx.strokeStyle=color;
-         this.ctx.lineWidth=width;
-    }
-    DrawTool.clear = function(){
-    	this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    }
-    DrawTool.beginPath = function(){
-    	 this.ctx.beginPath();
-    }
-    DrawTool.fillCycle = function(rx,ry,radius){
-         this.beginPath();
-         this.ctx.arc(rx, ry, radius, 0, Math.PI*2, true);
-         this.stroke();
-    }
-    DrawTool.stroke = function(){
-         this.ctx.stroke();
-    }
+    //example draw picture
     function drawBox(){
     	 DrawTool.beginPath();
     	 var height = 600;
@@ -123,32 +195,135 @@
          }
          DrawTool.stroke();
     }
-     
     
-    var CollisionSystem = {};
-    CollisionSystem.particle = new Particle();
-    CollisionSystem.particles = particles;
-    CollisionSystem.particlesDraw = function(){
-        for(var i=0;i<this.particles.length;i++){
-            this.particles[i].draw();
-            this.particles[i].move(1);
+
+    //Event that two particles 
+    function Event(t,a,b){
+        this.time = t;
+        this.a = a;
+        this.b = b;
+        if(a!=null){
+            this.countA = a.count;
+        }else{
+            this.countA = -1;
+        }
+        if(b!=null){
+            this.countB = b.count;
+        }else{
+            this.countB = -1;
         }
     }
+    Event.prototype.isValid = function() {
+        if (this.a != null && this.a.count != this.countA) return false;
+        if (this.b != null && this.b.count != this.countB) return false;
+        return true;
+    }
     
-    CollisionSystem.silumate = function(){
-        // this.particle.draw();
-        // this.particle.move(1);
-        this.particlesDraw();
-     }
+    //MinPQ
+    function MinPQ(){
+        var items = [];
+        this.insert = function(event){
+           var added = false;
+           for(var i=0;i<items.length;i++){
+             if(event.time<items[i].time){
+                items.splice(i,0,event);
+                added = true;
+                break;
+             }
+           }
+           if(!added){
+             items.push(event);
+           }
+        }
+        this.delMin = function(){
+            return items.shift();
+        }
+        this.isEmpty = function(){
+            return items.length == 0;
+        }
+    }
+   //sleep
 
-    
- 
+   function sleep(n){
+    var start=new Date().getTime();
+    while(true) if(new Date().getTime()-start>n) break;
+
+  }
+
+    //CollisionSystem
+    CollisionSystem ={};
+    CollisionSystem.particles = particles;
+    CollisionSystem.pq = new MinPQ();
+    CollisionSystem.t = 0.0;
+    CollisionSystem.HZ = 0.5;
+    CollisionSystem.predict = function(a,limit){
+         if(a == null)return;
+         for(var i =0;i<particles.length;i++){
+            var dt = a.timeToHit(this.particles[i]);
+            if(this.t+dt<=limit){
+                this.pq.insert(new Event(this.t+dt,a,this.particles[i]));
+            }
+         }
+        var dtX = a.timeToHitVerticalWall();
+        var dtY = a.timeToHitHorizontalWall();
+        if (this.t + dtX <= limit) this.pq.insert(new Event(this.t + dtX, a, null));
+        if (this.t + dtY <= limit) this.pq.insert(new Event(this.t + dtY, null, a));
+    }
+    CollisionSystem.redraw = function(limit){
+        DrawTool.clear();
+        for (var i = 0; i < this.particles.length; i++) {
+            this.particles[i].draw();
+        }
+        alert();
+        if (this.t < limit) {
+            this.pq.insert(new Event(this.t + 1.0 / this.HZ, null, null));
+        }
+    }
+
+    CollisionSystem.simulate = function(limit) {
+        for (var i = 0; i < this.particles.length; i++) {
+            this.predict(this.particles[i], limit);
+        }
+        this.pq.insert(new Event(0, null, null));        // redraw event
+        // the main event-driven simulation loop
+        while (!this.pq.isEmpty()) { 
+
+            // get impending event, discard if invalidated
+            var e = this.pq.delMin();
+            if (!e.isValid()) continue;
+            var a = e.a;
+            var b = e.b;
+
+            // physical collision, so update positions, and then simulation clock
+            for (var i = 0; i < this.particles.length; i++)
+                this.particles[i].move(e.time - this.t);
+            this.t = e.time;
+
+            // process event
+            if      (a != null && b != null) a.bounceOff(b);              // particle-particle collision
+            else if (a != null && b == null) a.bounceOffVerticalWall();   // particle-wall collision
+            else if (a == null && b != null) b.bounceOffHorizontalWall(); // particle-wall collision
+            else if (a == null && b == null) {
+                           CollisionSystem.redraw(limit); 
+            }            // redraw event
+
+            // update the priority queue with new collisions involving a or b
+            this.predict(a, limit);
+            this.predict(b, limit);
+        }
+    }
+
+
+
+
 	window.onload = function(){
-		drawBox();
-        setInterval(function(){
-          DrawTool.clear();
-          CollisionSystem.silumate();
-        },30);
+		   drawBox();
+  //       setInterval(function(){
+  //         DrawTool.clear();
+  //         CollisionSystem.silumate();
+  //       },30);
+         // test();
+            CollisionSystem.simulate(1000000);
 	    }
 </script>
 </html>
