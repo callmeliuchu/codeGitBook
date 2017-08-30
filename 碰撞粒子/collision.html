@@ -4,7 +4,6 @@
 	<title></title>
 </head>
 <body>
-<button onclick="test()">test</button>
 <div id="canvas-wrap">
    <canvas id="canvas" style="border:1px solid #aaaaaa; display: block;margin:50px auto;">
    	your browser does not support canvas
@@ -148,24 +147,61 @@
     }
 
    //generate random particles 
-    function  generateParticle(){
-        var radius = 10+Math.random()*20;
+    function  generateParticle(_radius,_vx,_vy,_mass){
+        var radius = _radius+Math.random()*_radius;
         var x = Math.random()*800;
         var y = Math.random()*600;
-        var vx = Math.random()*15;
-        var vy = Math.random()*15;
-        var mass = Math.random()*10;
+        var vx = Math.random()*_vx;
+        var vy = Math.random()*_vy;
+        var mass = (radius*0.1)*(radius*0.1)*(radius*0.1)
         var color = colorList[Math.floor(Math.random()*colorList.length)];
         return new Particle(x,y,radius,vx,vy,mass,color);
     }
-    function getParticleGroup(n){
+
+
+    function  generateParticle_1(y){
+        var radius = 10;
+        var x = radius;
+        // var y = 300;
+        var vx = 10;
+        var vy = 0;
+        var mass = (radius*0.1)*(radius*0.1)*(radius*0.1)
+        var color = colorList[Math.floor(Math.random()*colorList.length)];
+        return new Particle(x,y,radius,vx,vy,mass,color);
+    }
+    function  generateParticle_2(y){
+        var radius = 80;
+        var x = 400;
+        // var y = 300;
+        var vx = 0;
+        var vy = 0;
+        var mass = (radius*0.1)*(radius*0.1)*(radius*0.1)
+        var color = colorList[Math.floor(Math.random()*colorList.length)];
+        return new Particle(x,y,radius,vx,vy,mass,color);
+    }
+     
+    function generateGrp_1(){
+         var arr = [];
+         // for(var i=20;i<=580;i+=80){
+            arr.push(generateParticle_1(300));
+            arr.push(generateParticle_2(300));       
+         // }
+
+         return arr;
+    }
+
+
+    function getParticleGroup(_radius,_vx,_vy,_mass,n){
         var arr = [];
         for(var i=0;i<n;i++){
-          arr.push(generateParticle());
+          arr.push(generateParticle(_radius,_vx,_vy,_mass));
         }
         return arr;
     }
-    var particles =  getParticleGroup(10);
+
+    // _radius,_vx,_vy,_mass,particlesNum
+    // var particles =  getParticleGroup(50,10,10,30,1);
+    var particles = generateGrp_1();
 
 
 
@@ -258,7 +294,7 @@
     CollisionSystem.HZ = 0.5;
     CollisionSystem.predict = function(a,limit){
          if(a == null)return;
-         for(var i =0;i<particles.length;i++){
+         for(var i =0;i<this.particles.length;i++){
             var dt = a.timeToHit(this.particles[i]);
             if(this.t+dt<=limit){
                 this.pq.insert(new Event(this.t+dt,a,this.particles[i]));
@@ -319,17 +355,23 @@
         }
     }
 
-
-   function test(){
-     CollisionSystem.simulate(1000000);
+   function getNum(field){
+      var fieldVal = document.getElementById(field).value;
+         return 10;
+ 
+      
    }
+
+
+
+
 
 	window.onload = function(){
 		   drawBox();
            CollisionSystem.prepare(100000); 
            setInterval(function(){
               CollisionSystem.simulate(100000);
-           },30);
+           },10);
 	    }
 </script>
 </html>
