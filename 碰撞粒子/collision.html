@@ -4,6 +4,7 @@
 	<title></title>
 </head>
 <body>
+<button onclick="test()">test</button>
 <div id="canvas-wrap">
    <canvas id="canvas" style="border:1px solid #aaaaaa; display: block;margin:50px auto;">
    	your browser does not support canvas
@@ -164,7 +165,7 @@
         }
         return arr;
     }
-    var particles =  getParticleGroup(5);
+    var particles =  getParticleGroup(10);
 
 
 
@@ -247,7 +248,6 @@
    function sleep(n){
     var start=new Date().getTime();
     while(true) if(new Date().getTime()-start>n) break;
-
   }
 
     //CollisionSystem
@@ -274,56 +274,62 @@
         for (var i = 0; i < this.particles.length; i++) {
             this.particles[i].draw();
         }
-        alert();
         if (this.t < limit) {
             this.pq.insert(new Event(this.t + 1.0 / this.HZ, null, null));
         }
     }
 
-    CollisionSystem.simulate = function(limit) {
+    CollisionSystem.prepare = function(limit){
         for (var i = 0; i < this.particles.length; i++) {
             this.predict(this.particles[i], limit);
         }
         this.pq.insert(new Event(0, null, null));        // redraw event
-        // the main event-driven simulation loop
-        while (!this.pq.isEmpty()) { 
-
-            // get impending event, discard if invalidated
-            var e = this.pq.delMin();
-            if (!e.isValid()) continue;
-            var a = e.a;
-            var b = e.b;
-
-            // physical collision, so update positions, and then simulation clock
-            for (var i = 0; i < this.particles.length; i++)
-                this.particles[i].move(e.time - this.t);
-            this.t = e.time;
-
-            // process event
-            if      (a != null && b != null) a.bounceOff(b);              // particle-particle collision
-            else if (a != null && b == null) a.bounceOffVerticalWall();   // particle-wall collision
-            else if (a == null && b != null) b.bounceOffHorizontalWall(); // particle-wall collision
-            else if (a == null && b == null) {
-                           CollisionSystem.redraw(limit); 
-            }            // redraw event
-
-            // update the priority queue with new collisions involving a or b
-            this.predict(a, limit);
-            this.predict(b, limit);
-        }
     }
 
 
 
+    CollisionSystem.simulate = function(limit) {
+
+        // the main event-driven simulation loop
+            if(!this.pq.isEmpty()) { 
+
+                // get impending event, discard if invalidated
+                var e = this.pq.delMin();
+                if (e.isValid()){
+                var a = e.a;
+                var b = e.b;
+
+                // physical collision, so update positions, and then simulation clock
+                for (var i = 0; i < this.particles.length; i++)
+                    this.particles[i].move(e.time - this.t);
+                this.t = e.time;
+
+                // process event
+                if      (a != null && b != null) a.bounceOff(b);              // particle-particle collision
+                else if (a != null && b == null) a.bounceOffVerticalWall();   // particle-wall collision
+                else if (a == null && b != null) b.bounceOffHorizontalWall(); // particle-wall collision
+                else if (a == null && b == null) {
+                this.redraw(limit);
+                }        // redraw event
+
+                // update the priority queue with new collisions involving a or b
+                this.predict(a, limit);
+                this.predict(b, limit);
+            }
+        }
+    }
+
+
+   function test(){
+     CollisionSystem.simulate(1000000);
+   }
 
 	window.onload = function(){
 		   drawBox();
-  //       setInterval(function(){
-  //         DrawTool.clear();
-  //         CollisionSystem.silumate();
-  //       },30);
-         // test();
-            CollisionSystem.simulate(1000000);
+           CollisionSystem.prepare(100000); 
+           setInterval(function(){
+              CollisionSystem.simulate(100000);
+           },30);
 	    }
 </script>
 </html>
