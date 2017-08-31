@@ -3,7 +3,7 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import cross_val_predict
-
+from sklearn.model_selection import StratifiedKFold
 
 # def readFile(path):
 # 	with open(path,encoding='utf8') as f:
@@ -64,3 +64,6 @@ def evaluate_features(X,y,clf=None):
 	classes = np.unique(y)
 	preds = classes[pred_indices]
 	skplt.plot_confusion_matrix(y,preds)
+#test
+# from sklearn.datasets import load_iris
+# print(evaluate_features(*load_iris(True)))

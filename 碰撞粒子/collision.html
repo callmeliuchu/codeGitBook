@@ -190,6 +190,70 @@
          return arr;
     }
 
+    function  generateParticle_3(){
+        var radius = 10;
+        var x = 400;
+        var y = 5;
+        var vx = -3.9;
+        var vy = 2.9;
+        var mass = (radius*0.1)*(radius*0.1)*(radius*0.1)
+        var color = colorList[Math.floor(Math.random()*colorList.length)];
+        return new Particle(x,y,radius,vx,vy,mass,color);
+    }
+    function  generateParticle_4(){
+        var radius = 10;
+        var x = 5;
+        var y = 300;
+        var vx = 3.9;
+        var vy = 2.9;
+        var mass = (radius*0.1)*(radius*0.1)*(radius*0.1)
+        var color = colorList[Math.floor(Math.random()*colorList.length)];
+        return new Particle(x,y,radius,vx,vy,mass,color);
+    }
+    function  generateParticle_5(){
+        var radius = 10;
+        var x = 400;
+        var y = 590;
+        var vx = 3.9;
+        var vy = -2.9;
+        var mass = (radius*0.1)*(radius*0.1)*(radius*0.1)
+        var color = colorList[Math.floor(Math.random()*colorList.length)];
+        return new Particle(x,y,radius,vx,vy,mass,color);
+    }
+    function  generateParticle_6(){
+        var radius = 10;
+        var x = 790;
+        var y = 300;
+        var vx = -3.9;
+        var vy = -2.9;
+        var mass = (radius*0.1)*(radius*0.1)*(radius*0.1)
+        var color = colorList[Math.floor(Math.random()*colorList.length)];
+        return new Particle(x,y,radius,vx,vy,mass,color);
+    }
+    function  generateParticle_7(){
+        var radius = 3;
+        var x = 2;
+        var y = 150;
+        var vx = 0;
+        var vy = 0;
+        var mass = (radius*0.1)*(radius*0.1)*(radius*0.1)*1000
+        var color = colorList[Math.floor(Math.random()*colorList.length)];
+        return new Particle(x,y,radius,vx,vy,mass,color);
+    }
+    function generateGrp_2(){
+         var arr = [];
+         // for(var i=20;i<=580;i+=80){
+            arr.push(generateParticle_3()); 
+            arr.push(generateParticle_4()); 
+            arr.push(generateParticle_5()); 
+            arr.push(generateParticle_6()); 
+            arr.push(generateParticle_7()); 
+         // }
+
+         return arr;
+    }
+
+
 
     function getParticleGroup(_radius,_vx,_vy,_mass,n){
         var arr = [];
@@ -201,7 +265,7 @@
 
     // _radius,_vx,_vy,_mass,particlesNum
     // var particles =  getParticleGroup(50,10,10,30,1);
-     var particles = generateGrp_1();
+     var particles = generateGrp_2();
 
 
 
