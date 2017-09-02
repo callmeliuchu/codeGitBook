@@ -1,9 +1,39 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />  
+    <style type="text/css" media="screen">  
+    .button {
+    -moz-user-select: none;
+    background-color: hsl(0, 0%, 75%);
+    background-image: radial-gradient(ellipse farthest-corner at center top , rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0) 100%), url("noise.png");
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    border-top: 1px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 0.3em 0.3em rgba(255, 254, 255, 0.6) inset, 0 -0.1em 0.3em rgba(0, 0, 0, 0.15) inset, 0 0.1em 3px hsl(0, 0%, 60%), 0 0.3em 1px hsl(0, 0%, 45%), 0 0.5em 5px rgba(0, 0, 0, 0.2);
+    color: hsl(0, 0%, 40%);
+    display: inline-block;
+    font: bold 24px/1em "Droid Sans",sans-serif;
+    margin: 0.5em;
+    padding: 0.5em 0.6em 0.4em;
+    position: relative;
+    text-decoration: none;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+    transition: background 0.2s ease-in-out 0s;
+     }
+    </style> 
 	<title></title>
 </head>
 <body>
+<a href="#" class="button" onclick='test1()'>  
+ <span>四个临界碰撞的小球</span>  
+</a> 
+<a href="#" class="button" onclick='test2()'>  
+ <span>速度交换</span>  
+</a> 
+<a href="#" class="button" onclick='test3()'>  
+ <span>多个小球随机碰撞</span>  
+</a> 
 <div id="canvas-wrap">
    <canvas id="canvas" style="border:1px solid #aaaaaa; display: block;margin:50px auto;">
    	your browser does not support canvas
@@ -11,8 +41,8 @@
 </div>
 </body>
 <script type="text/javascript">
-    var myCanvas = document.getElementById("canvas");
-    var context = myCanvas.getContext("2d");
+    // var myCanvas = ;
+    // var context = myCanvas.getContext("2d");
     var colorList = [
      '#C1232B','#B5C334','#FCCE10','#E87C25','#27727B',
      '#FE8463','#9BCA63','#FAD860','#F3A43B','#60C0DD',
@@ -21,8 +51,8 @@
 
     //DrawTool 
     var DrawTool = {}
-    DrawTool.canvas = myCanvas;
-    DrawTool.ctx = context;
+    DrawTool.canvas = document.getElementById("canvas");
+    DrawTool.ctx = DrawTool.canvas.getContext("2d");
     DrawTool.iniCanvas = function(width=800,height=600){
         this.width = width;
         this.height = height;
@@ -149,18 +179,25 @@
    //generate random particles 
     function  generateParticle(_radius,_vx,_vy,_mass){
         var radius = _radius+Math.random()*_radius;
-        var x = Math.random()*800;
-        var y = Math.random()*600;
+        var x = Math.random()*DrawTool.width;
+        var y = Math.random()*DrawTool.height;
         var vx = Math.random()*_vx;
         var vy = Math.random()*_vy;
         var mass = (radius*0.1)*(radius*0.1)*(radius*0.1)
         var color = colorList[Math.floor(Math.random()*colorList.length)];
         return new Particle(x,y,radius,vx,vy,mass,color);
     }
-
+    
+    function  generateGrp(n){
+        var arr = [];
+        for(var i=0;i<n;i++){
+            arr.push(generateParticle(15,5,5,5));
+        }
+        return arr;
+    }
 
     function  generateParticle_1(y){
-        var radius = 10;
+        var radius = 40;
         var x = radius;
         // var y = 300;
         var vx = 10;
@@ -170,7 +207,7 @@
         return new Particle(x,y,radius,vx,vy,mass,color);
     }
     function  generateParticle_2(y){
-        var radius = 80;
+        var radius = 40;
         var x = 400;
         // var y = 300;
         var vx = 0;
@@ -265,7 +302,7 @@
 
     // _radius,_vx,_vy,_mass,particlesNum
     // var particles =  getParticleGroup(50,10,10,30,1);
-     var particles = generateGrp_2();
+     // var particles = generateGrp_2();
 
 
 
@@ -351,12 +388,14 @@
   }
 
     //CollisionSystem
-    CollisionSystem ={};
-    CollisionSystem.particles = particles;
-    CollisionSystem.pq = new MinPQ();
-    CollisionSystem.t = 0.0;
-    CollisionSystem.HZ = 0.5;
-    CollisionSystem.predict = function(a,limit){
+   function  CollisionSystem(particles,limit){
+        this.particles = particles;
+        this.pq = new MinPQ();
+        this.limit = limit;
+        this.t = 0.0;
+        this.HZ=0.5;
+    };
+    CollisionSystem.prototype.predict = function(a,limit){
          if(a == null)return;
          for(var i =0;i<this.particles.length;i++){
             var dt = a.timeToHit(this.particles[i]);
@@ -369,26 +408,26 @@
         if (this.t + dtX <= limit) this.pq.insert(new Event(this.t + dtX, a, null));
         if (this.t + dtY <= limit) this.pq.insert(new Event(this.t + dtY, null, a));
     }
-    CollisionSystem.redraw = function(limit){
+    CollisionSystem.prototype.redraw = function(){
         DrawTool.clear();
         for (var i = 0; i < this.particles.length; i++) {
             this.particles[i].draw();
         }
-        if (this.t < limit) {
+        if (this.t < this.limit) {
             this.pq.insert(new Event(this.t + 1.0 / this.HZ, null, null));
         }
     }
 
-    CollisionSystem.prepare = function(limit){
+    CollisionSystem.prototype.prepare = function(){
         for (var i = 0; i < this.particles.length; i++) {
-            this.predict(this.particles[i], limit);
+            this.predict(this.particles[i], this.limit);
         }
         this.pq.insert(new Event(0, null, null));        // redraw event
     }
 
 
 
-    CollisionSystem.simulate = function(limit) {
+    CollisionSystem.prototype.simulate = function() {
 
         // the main event-driven simulation loop
             if(!this.pq.isEmpty()) { 
@@ -409,33 +448,42 @@
                 else if (a != null && b == null) a.bounceOffVerticalWall();   // particle-wall collision
                 else if (a == null && b != null) b.bounceOffHorizontalWall(); // particle-wall collision
                 else if (a == null && b == null) {
-                this.redraw(limit);
+                this.redraw(this.limit);
                 }        // redraw event
 
                 // update the priority queue with new collisions involving a or b
-                this.predict(a, limit);
-                this.predict(b, limit);
+                this.predict(a, this.limit);
+                this.predict(b, this.limit);
             }
         }
     }
+   var timer = null;
 
-   function getNum(field){
-      var fieldVal = document.getElementById(field).value;
-         return 10;
- 
-      
+   function test(particles,limit){
+     if(timer!=null){
+        clearInterval(timer);
+      }
+      DrawTool.clear();
+      var sys  = new CollisionSystem(particles,limit);
+      sys.prepare(); 
+      timer = setInterval(function(){
+              sys.simulate();
+      },10);
    }
 
-
-
-
+  
+   function test1(){
+        test(generateGrp_2(),100000);
+   }
+   function test2(){
+         test(generateGrp_1(),100000);
+   }
+   function test3(){
+         test(generateGrp(5),100000);
+   }
 
 	window.onload = function(){
 		   drawBox();
-           CollisionSystem.prepare(100000); 
-           setInterval(function(){
-              CollisionSystem.simulate(100000);
-           },10);
 	    }
 </script>
 </html>
