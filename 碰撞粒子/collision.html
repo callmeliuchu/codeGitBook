@@ -34,6 +34,12 @@
 <a href="#" class="button" onclick='test3()'>  
  <span>多个小球随机碰撞</span>  
 </a> 
+<a href="#" class="button" onclick='test4()'>  
+ <span>加尾巴</span>  
+</a> 
+<a href="#" class="button" onclick='test5()'>  
+ <span>去尾巴</span>  
+</a> 
 <div id="canvas-wrap">
    <canvas id="canvas" style="border:1px solid #aaaaaa; display: block;margin:50px auto;">
    	your browser does not support canvas
@@ -41,6 +47,7 @@
 </div>
 </body>
 <script type="text/javascript">
+    var addLen = 0;
     // var myCanvas = ;
     // var context = myCanvas.getContext("2d");
     var colorList = [
@@ -49,6 +56,12 @@
      '#D7504B','#C6E579','#F4E001','#F0805A','#26C0C0'
      ];
 
+    var Point = function(x,y){
+        this.x = x;
+        this.y = y;
+    }
+
+   
     //DrawTool 
     var DrawTool = {}
     DrawTool.canvas = document.getElementById("canvas");
@@ -80,8 +93,21 @@
          this.ctx.stroke();
     }
 
-
-
+    function queue(){
+         this.arr = [];
+    }
+    queue.prototype.enqueue = function(item){
+        if(addLen==0){
+            this.arr.length=0;
+        }
+        if(this.arr.length>addLen){
+            this.arr.shift();
+        }
+        this.arr.push(item);
+    }
+    queue.prototype.getArr = function(){
+          return this.arr;
+    }
 
     //Particle
     function Particle(x=10,y=10,radius=10,vx=20,vy=30,mass=0.1,color){
@@ -93,16 +119,78 @@
         this.mass = mass;
         this.color=color;
         this.count = 0;
+        this.trace = new queue();
     }
+    Particle.prototype.drawTrace = function(){
+
+        // DrawTool.ctx.moveTo(this.trace[0])
+        var trace = this.trace.getArr();
+        for(var i=0,len=trace.length;i<len;i++){
+            // if(i==0){
+            //     // DrawTool.ctx.moveTo(trace[i].x,trace[i].y);
+            //     // DrawTool.drawCycle(trace[i].x,trace[i].y,this.radius*i/len*2,this.color);
+            // }else{
+                // DrawTool.ctx.lineTo(trace[i].x,trace[i].y);
+                if(i<len/2){
+                     DrawTool.drawCycle(trace[i].x,trace[i].y,this.radius*i/len,this.color);
+                }else{
+                     DrawTool.drawCycle(trace[i].x,trace[i].y,this.radius*i*0.6/len,this.color);
+                }
+               
+            // }
+        }
+        DrawTool.ctx.lineWidth=0.5;
+        DrawTool.ctx.strokeStyle=this.color;
+        DrawTool.ctx.stroke();
+    }
+    Particle.prototype.u = 0.0;
     Particle.prototype.INFINITY = Number.POSITIVE_INFINITY;
     Particle.prototype.draw = function(){
-        DrawTool.ctx.fillStyle = this.color;
-        DrawTool.fillCycle(this.x,this.y,this.radius);
+        this.drawTrace();
+        DrawTool.drawCycle(this.x,this.y,this.radius,this.color);
+        // var colorObj = DrawTool.ctx.createRadialGradient(this.x-this.radius/1.8,this.y-this.radius/1.8,0,this.x,this.y,this.radius);
+        // colorObj.addColorStop(0,"#FFFFFF");
+        // colorObj.addColorStop(1,this.color);
+        // DrawTool.ctx.fillStyle = colorObj;
+        // // var radial = DrawTool.ctx.createRadialGradient(this.x+this.radius/2,this.y+this.radius/2,this.radius/3,this.x,this.y,this.radius);
+        // // radial.addColorStop(0,'#EE84AA');
+        // // radial.addColorStop(0.9,'#FF0188');  // 颜色值 #FF0188 == rgba(255,1,136,1)
+        // // radial.addColorStop(1,'rgba(255,1,136,0)');
+        // // DrawTool.ctx.fillStyle = radial;
+        // DrawTool.fillCycle(this.x,this.y,this.radius);
+        // DrawTool.ctx.fill();
+    }
+    DrawTool.drawCycle = function(x,y,radius,color){
+        var colorObj = DrawTool.ctx.createRadialGradient(x-radius/1.8,y-radius/1.8,0,x,y,radius);
+        colorObj.addColorStop(0,"#FFFFFF");
+        colorObj.addColorStop(1,color);
+        DrawTool.ctx.fillStyle = colorObj;
+        // var radial = DrawTool.ctx.createRadialGradient(this.x+this.radius/2,this.y+this.radius/2,this.radius/3,this.x,this.y,this.radius);
+        // radial.addColorStop(0,'#EE84AA');
+        // radial.addColorStop(0.9,'#FF0188');  // 颜色值 #FF0188 == rgba(255,1,136,1)
+        // radial.addColorStop(1,'rgba(255,1,136,0)');
+        // DrawTool.ctx.fillStyle = radial;
+        DrawTool.fillCycle(x,y,radius);
         DrawTool.ctx.fill();
     }
     Particle.prototype.move = function(dt){
-        this.x +=this.vx*dt;
-        this.y +=this.vy*dt;
+        var vx_change = 0.0; 
+        var vy_change = 0.0; 
+        if(this.vx<0){
+           vx_change = this.vx + this.u*dt;
+        }else if(this.vx>0){
+           vx_change = this.vx - this.u*dt;
+        }
+        if(this.vy<0){
+            vy_change = this.vy + this.u*dt;
+        }else if(this.vy>0){
+            vy_change = this.vy - this.u*dt;
+        }
+        this.x +=0.5*(vx_change+this.vx)*dt;
+        this.y +=0.5*(vy_change+this.vy)*dt;
+        this.vx = vx_change;
+        this.vy = vy_change;
+        this.trace.enqueue(new Point(this.x,this.y));
         // if(DrawTool.width<=this.x+this.radius || this.x<=this.radius){
         //     this.vx = -this.vx;
         // }
@@ -191,7 +279,7 @@
     function  generateGrp(n){
         var arr = [];
         for(var i=0;i<n;i++){
-            arr.push(generateParticle(15,5,5,5));
+            arr.push(generateParticle(15,15,5,5));
         }
         return arr;
     }
@@ -306,10 +394,6 @@
 
 
 
-    var Point = function(x,y){
-        this.x = x;
-        this.y = y;
-    }
 
     //example draw picture
     function drawBox(){
@@ -479,7 +563,13 @@
          test(generateGrp_1(),100000);
    }
    function test3(){
-         test(generateGrp(5),100000);
+         test(generateGrp(10),100000);
+   }
+   function test4(){
+         addLen = 50;
+   }
+   function test5(){
+         addLen = 0;
    }
 
 	window.onload = function(){

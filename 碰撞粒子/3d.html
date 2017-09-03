@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang='zh-cn'>
+<head>
+<title>Insert you title</title>
+<meta name='description' content='this is my page'>
+<meta name='keywords' content='keyword1,keyword2,keyword3'>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel='stylesheet' type='text/css' href='./css/index.css' />
+<script type='text/javascript' src='./js/jquery-1.12.1.min.js'></script>
+<style type='text/css'>
+html,body {
+    margin: 0; padding: 0;
+}
+
+html {
+    background: #999; height: 100%;
+}
+
+#can {
+    background: #FFF; display: block; margin: 75px auto; border-radius: 2px;
+}
+</style>
+<script type='text/javascript'>
+    $( function(){
+        var canvas = $( '#can' ).get( 0 );
+        var oCan = canvas.getContext( '2d' );
+        var img = new Image(); /* 新建图片对象 */
+        img.src = './images/bg.jpg';
+        createLinearGradient();
+        function createLinearGradient(){
+            //var color = oCan.createLinearGradient( 0 , 0 , 500 , 500 ); /* 线性渐变 :渐变的起止位置 */
+            var color = oCan.createRadialGradient( 250 , 250 , 100 , 250 , 250 , 300 ) /* 内圆坐标及半径 , 外圆坐标及半径 */
+            color.addColorStop( 0 , '#333255' ); /* 添加起止颜色 , 参数 1 :位置(0,1),参数2:颜色  如果位置要有多个就不断的添加就可以了*/
+            //color.addColorStop( 0.2 , '#CDE6BA' );
+            //color.addColorStop( 0.5 , '#D33E59' );
+            //color.addColorStop( 0.9 , '#985365' );
+            color.addColorStop( 1 , '#6C9AE3' );
+            oCan.fillStyle = color; /* 请注意 : fillStyle 填充样式这个属性不仅可以设置颜色还可以设置背景图片 */
+            oCan.fillRect( 0 , 0 , canvas.width , canvas.height );
+        }
+    } );
+</script>
+</head>
+<body>
+    <canvas id='can' width='500' height='500'>您的浏览器版本过低,请升级您的浏览器以获取更好的用户体验...</canvas>
+</body>
+</html>

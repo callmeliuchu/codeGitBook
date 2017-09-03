@@ -1,9 +1,44 @@
 import matplotlib.pyplot as plt
 import pandas as pd
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LogisticRegression
+import numpy as np
+
 from sklearn.model_selection import cross_val_predict
 from sklearn.model_selection import StratifiedKFold
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import log_loss, accuracy_score
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.svm import SVC
+from sklearn.decomposition import TruncatedSVD
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.preprocessing import LabelEncoder
+
+# import gensim
+
+# import scikitplot.plotters as skplt
+
+import nltk
+
+from xgboost import XGBClassifier
+
+import os
+
+from keras.preprocessing.text import Tokenizer
+from keras.preprocessing.sequence import pad_sequences
+from keras.models import Sequential
+from keras.layers import Dense, Embedding, LSTM
+from keras.utils.np_utils import to_categorical
+from keras.callbacks import ModelCheckpoint
+from keras.models import load_model
+from keras.optimizers import Adam
+
+
+
+
+
+
+
 
 # def readFile(path):
 # 	with open(path,encoding='utf8') as f:
@@ -63,7 +98,16 @@ def evaluate_features(X,y,clf=None):
 	pred_indices = np.argmax(probas,axis=1)
 	classes = np.unique(y)
 	preds = classes[pred_indices]
-	skplt.plot_confusion_matrix(y,preds)
+	plt.plot_confusion_matrix(y,preds)
+	plt.show()
 #test
 # from sklearn.datasets import load_iris
 # print(evaluate_features(*load_iris(True)))
+
+count_vectorizer = CountVectorizer(
+	analyzer = "word",tokenizer=nltk.word_tokenize,
+	preprocessor=None,stop_words='english',max_features=None)
+
+
+bag_of_words = count_vectorizer.fit_transform(df_train['Text'])
+print(bag_of_words)
