@@ -40,6 +40,9 @@
 <a href="#" class="button" onclick='test5()'>  
  <span>去尾巴</span>  
 </a> 
+<a href="#" class="button" onclick='test6()'>  
+ <span>测试画蝌蚪</span>  
+</a> 
 <div id="canvas-wrap">
    <canvas id="canvas" style="border:1px solid #aaaaaa; display: block;margin:50px auto;">
    	your browser does not support canvas
@@ -110,7 +113,7 @@
     }
 
     //Particle
-    function Particle(x=10,y=10,radius=10,vx=20,vy=30,mass=0.1,color){
+    function Particle(x=10,y=10,radius=10,vx=20,vy=30,mass=0.1,color="#000000"){
         this.x = x;
         this.y = y;
         this.radius = radius;
@@ -156,6 +159,38 @@
     }
     Particle.prototype.u = 0.0;
     Particle.prototype.INFINITY = Number.POSITIVE_INFINITY;
+    Particle.prototype.personalDraw = function(){
+              var gap = 0.01;
+              var x = this.x;
+              var y = this.y;
+              var r1 = 40;
+              var r2 = 120;
+              DrawTool.ctx.beginPath();
+              DrawTool.ctx.moveTo(x,y-r1);
+              for(var alpha = -Math.PI/2;alpha<=Math.PI/2;alpha+=gap){
+                     var x1 = x+r2*Math.cos(alpha);
+                     var y1 = y+r1*Math.sin(alpha);
+                     DrawTool.ctx.lineTo(x1,y1);
+              }
+              for(var alpha = Math.PI/2;alpha<=Math.PI*5/6;alpha+=gap){
+                     var x1 = x+r1*Math.cos(alpha);
+                     var y1 = y+r1*Math.sin(alpha);
+                     DrawTool.ctx.lineTo(x1,y1);
+              }
+              for(var alpha = -Math.PI*5/6;alpha<=-Math.PI/2;alpha+=gap){
+                     var x1 = x+r1*Math.cos(alpha);
+                     var y1 = y+r1*Math.sin(alpha);
+                     DrawTool.ctx.lineTo(x1,y1);
+              }
+              DrawTool.ctx.closePath();
+              var colorObj = DrawTool.ctx.createRadialGradient(x+r2,y-r1/2,1,x,y,(r1+r2));
+              colorObj.addColorStop(0,"#FFF0EF");
+              colorObj.addColorStop(1,'#E87C25');
+              // DrawTool.ctx.fillStyle = '#E87C25';
+              DrawTool.ctx.fillStyle = colorObj;
+              DrawTool.ctx.fill();
+
+    }
     Particle.prototype.draw = function(){
         this.drawTrace();
         DrawTool.drawCycle(this.x,this.y,this.radius,this.color);
@@ -598,6 +633,11 @@
    }
    function test5(){
          addLen = 0;
+   }
+   // Particle(x=10,y=10,radius=10,vx=20,vy=30,mass=0.1,color="#000000")
+   function test6(){
+         var particle = new Particle(540,140,40,0,0,0.1,'#000000');
+         particle.personalDraw();
    }
 
 	window.onload = function(){
