@@ -121,20 +121,31 @@
         this.count = 0;
         this.trace = new queue();
     }
+    function dist(x1,y1,x2,y2){
+        return Math.sqrt((x1-x2)*(x1-x2) + (y1-y2)*(y1-y2))
+
+    }
     Particle.prototype.drawTrace = function(){
 
         // DrawTool.ctx.moveTo(this.trace[0])
         var trace = this.trace.getArr();
-        for(var i=0,len=trace.length;i<len;i++){
+        for(var i=0,len=trace.length;i<len-2;i+=2){
             // if(i==0){
             //     // DrawTool.ctx.moveTo(trace[i].x,trace[i].y);
             //     // DrawTool.drawCycle(trace[i].x,trace[i].y,this.radius*i/len*2,this.color);
             // }else{
                 // DrawTool.ctx.lineTo(trace[i].x,trace[i].y);
-                if(i<len/2){
-                     DrawTool.drawCycle(trace[i].x,trace[i].y,this.radius*i/len,this.color);
+                if(i<len/1.2){
+                    var x_1 = trace[i].x;
+                    var y_1 = trace[i].y;
+                    // var x_2 = +20*Math.sin(trace[i].y)
+                    var x_2 = trace[i+1].x;
+                    var y_2 = trace[i+1].y;
+                    var x = (x_1+x_2)/2;
+                    var y = (y_1+y_2)/2;
+                     DrawTool.drawCycle(x,y+0*Math.sin(y),this.radius*i*0.5/len,this.color);
                 }else{
-                     DrawTool.drawCycle(trace[i].x,trace[i].y,this.radius*i*0.6/len,this.color);
+                     DrawTool.drawCycle(trace[i].x,trace[i].y,this.radius*i*0.7/len,this.color);
                 }
                
             // }
@@ -271,7 +282,7 @@
         var y = Math.random()*DrawTool.height;
         var vx = Math.random()*_vx;
         var vy = Math.random()*_vy;
-        var mass = (radius*0.1)*(radius*0.1)*(radius*0.1)
+        var mass = (radius*0.1)*(radius*0.1)*(radius*0.1)*_mass
         var color = colorList[Math.floor(Math.random()*colorList.length)];
         return new Particle(x,y,radius,vx,vy,mass,color);
     }
@@ -279,8 +290,25 @@
     function  generateGrp(n){
         var arr = [];
         for(var i=0;i<n;i++){
-            arr.push(generateParticle(15,15,5,5));
+            arr.push(generateParticle(10,2,5,1));
         }
+         // DrawTool.ctx.arc(DrawTool.width,0,DrawTool.width/3,true)
+         var r = DrawTool.width/3;
+         for(var alpha=0;alpha<Math.PI/2;alpha+=Math.PI/2/6){
+             var x = DrawTool.width - r*Math.cos(alpha);
+             var y = r*Math.sin(alpha);
+             // alert(x);
+             // alert(y);
+             arr.push(new Particle(x,y,10,0,0,100000000,'#111111'));
+             // DrawTool.drawCycle(x,y,25,'#000000');
+         }
+         for(var vertical=10;vertical<DrawTool.height-10;vertical+=100){
+             arr.push(new Particle(DrawTool.width/2,vertical,10,0,0,100000000,'#111111'));
+         }
+         // arr.push(generateParticle(25,0,0,100000000));
+         // arr.push(generateParticle(25,0,0,100000000));
+         // arr.push(generateParticle(25,0,0,100000000));
+         // arr.push(generateParticle(25,0,0,100000000));
         return arr;
     }
 
@@ -563,10 +591,10 @@
          test(generateGrp_1(),100000);
    }
    function test3(){
-         test(generateGrp(10),100000);
+         test(generateGrp(5),100000);
    }
    function test4(){
-         addLen = 50;
+         addLen = 100;
    }
    function test5(){
          addLen = 0;
