@@ -159,28 +159,46 @@
     }
     Particle.prototype.u = 0.0;
     Particle.prototype.INFINITY = Number.POSITIVE_INFINITY;
+    
+
+    function rotate(vx,vy,x,y,x1,y1){
+         var length = Math.sqrt(vx*vx+vy*vy);
+         var cos = vx/length;
+         var sin = vy/length;
+         // var x1 = (x1-x)*cos - (y1-y)*sin + x;
+         // var y1 = (x1-x)*sin + (y1-y)*cos + y;
+         return [x1,y1];
+    }
+  
+
     Particle.prototype.personalDraw = function(){
-              var gap = 0.01;
+              var gap = 0.001;
               var x = this.x;
               var y = this.y;
-              var r1 = 40;
+              var vx = this.vx;
+              var vy = this.vy;
+              var r1 = 30;
               var r2 = 120;
               DrawTool.ctx.beginPath();
-              DrawTool.ctx.moveTo(x,y-r1);
+              var arr = rotate(vx,vy,x,y-r1);
+              DrawTool.ctx.moveTo(arr[0],arr[1]);
               for(var alpha = -Math.PI/2;alpha<=Math.PI/2;alpha+=gap){
                      var x1 = x+r2*Math.cos(alpha);
                      var y1 = y+r1*Math.sin(alpha);
-                     DrawTool.ctx.lineTo(x1,y1);
+                     var arr = rotate(vx,vy,x,y,x1,y1);
+                     DrawTool.ctx.lineTo(arr[0],arr[1]);
               }
               for(var alpha = Math.PI/2;alpha<=Math.PI*5/6;alpha+=gap){
                      var x1 = x+r1*Math.cos(alpha);
                      var y1 = y+r1*Math.sin(alpha);
-                     DrawTool.ctx.lineTo(x1,y1);
+                     var arr = rotate(vx,vy,x,y,x1,y1);
+                     DrawTool.ctx.lineTo(arr[0],arr[1]);
               }
               for(var alpha = -Math.PI*5/6;alpha<=-Math.PI/2;alpha+=gap){
                      var x1 = x+r1*Math.cos(alpha);
                      var y1 = y+r1*Math.sin(alpha);
-                     DrawTool.ctx.lineTo(x1,y1);
+                     var arr = rotate(vx,vy,x,y,x1,y1);
+                     DrawTool.ctx.lineTo(arr[0],arr[1]);
               }
               DrawTool.ctx.closePath();
               var colorObj = DrawTool.ctx.createRadialGradient(x+r2,y-r1/2,1,x,y,(r1+r2));
@@ -188,6 +206,8 @@
               colorObj.addColorStop(1,'#E87C25');
               // DrawTool.ctx.fillStyle = '#E87C25';
               DrawTool.ctx.fillStyle = colorObj;
+              DrawTool.ctx.translate(x, y);
+              DrawTool.ctx.rotate(10 * Math.PI/180);
               DrawTool.ctx.fill();
 
     }
@@ -636,7 +656,7 @@
    }
    // Particle(x=10,y=10,radius=10,vx=20,vy=30,mass=0.1,color="#000000")
    function test6(){
-         var particle = new Particle(540,140,40,0,0,0.1,'#000000');
+         var particle = new Particle(540,140,40,3,4,0.1,'#000000');
          particle.personalDraw();
    }
 
