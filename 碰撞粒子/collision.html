@@ -547,33 +547,61 @@
     //         return items.length == 0;
     //     }
     // }
-    function MinPQ(){
+function MinPQ(){
     this.arr = [];
+    this.n = 0;
     function item(priority,obj){
          this.priority = priority;
          this.obj = obj;
     }
+    this.less = function(i,j){
+        return this.arr[i].priority<this.arr[j].priority;
+    }
+    
+    this.swap = function(i,j){
+       var tmp = this.arr[i];
+       this.arr[i] = this.arr[j];
+       this.arr[j] = tmp;
+    }
+    
+    this.swim = function(i){
+        
+        while(i<1){
+             var k = Math.floor(i/2);
+             if(this.less(k,i))break;
+             this.swap(k,i);
+             i = k;
+        }
+    }
+    this.sink = function(i){
+        while(i*2<this.n){
+            var k = i*2;
+            if(k+1<=this.n && this.less(k+1,k))k++;
+            if(this.less(i,k))break;
+            this.swap(k,i);
+            i = k;
+        }
+    }
+
     this.insert = function(event){
         this._insert(event.time,event);
     }
     this._insert = function(priority,obj){
-        var flag = true;
-          for(var i=0;i<this.arr.length;i++){
-            if(priority<this.arr[i].priority){
-                this.arr.splice(i,0,new item(priority,obj));
-                flag = false;
-                break;
-            }
-          }
-          if(flag){
-             this.arr.push(new item(priority,obj));
-          }
+        var item_obj = new item(priority,obj);
+        this.n++;
+        this.arr[this.n]=item_obj;
+        this.swim(this.n);
+        console.log(this.arr);
     }
     this.delMin = function(){
-        return this.arr.shift().obj;
+        var item_obj = this.arr[1];
+        this.arr[1] = this.arr[this.n];
+        this.n--;
+        this.sink(1);
+        return item_obj.obj;
     }
     this.isEmpty = function(){
-        return this.arr.length==0;
+        return this.n==0;
     }
 }
    //sleep
