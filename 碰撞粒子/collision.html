@@ -525,28 +525,57 @@
     }
     
     //MinPQ
+    // function MinPQ(){
+    //     var items = [];
+    //     this.insert = function(event){
+    //        var added = false;
+    //        for(var i=0;i<items.length;i++){
+    //          if(event.time<items[i].time){
+    //             items.splice(i,0,event);
+    //             added = true;
+    //             break;
+    //          }
+    //        }
+    //        if(!added){
+    //          items.push(event);
+    //        }
+    //     }
+    //     this.delMin = function(){
+    //         return items.shift();
+    //     }
+    //     this.isEmpty = function(){
+    //         return items.length == 0;
+    //     }
+    // }
     function MinPQ(){
-        var items = [];
-        this.insert = function(event){
-           var added = false;
-           for(var i=0;i<items.length;i++){
-             if(event.time<items[i].time){
-                items.splice(i,0,event);
-                added = true;
-                break;
-             }
-           }
-           if(!added){
-             items.push(event);
-           }
-        }
-        this.delMin = function(){
-            return items.shift();
-        }
-        this.isEmpty = function(){
-            return items.length == 0;
-        }
+    this.arr = [];
+    function item(priority,obj){
+         this.priority = priority;
+         this.obj = obj;
     }
+    this.insert = function(event){
+        this._insert(event.time,event);
+    }
+    this._insert = function(priority,obj){
+        var flag = true;
+          for(var i=0;i<this.arr.length;i++){
+            if(priority<this.arr[i].priority){
+                this.arr.splice(i,0,new item(priority,obj));
+                flag = false;
+                break;
+            }
+          }
+          if(flag){
+             this.arr.push(new item(priority,obj));
+          }
+    }
+    this.delMin = function(){
+        return this.arr.shift().obj;
+    }
+    this.isEmpty = function(){
+        return this.arr.length==0;
+    }
+}
    //sleep
 
    function sleep(n){
@@ -646,7 +675,7 @@
          test(generateGrp_1(),100000);
    }
    function test3(){
-         test(generateGrp(5),100000);
+         test(generateGrp(40),100000);
    }
    function test4(){
          addLen = 100;
