@@ -566,7 +566,7 @@ function MinPQ(){
     
     this.swim = function(i){
         
-        while(i<1){
+        while(i>1){
              var k = Math.floor(i/2);
              if(this.less(k,i))break;
              this.swap(k,i);
@@ -574,7 +574,7 @@ function MinPQ(){
         }
     }
     this.sink = function(i){
-        while(i*2<this.n){
+        while(i*2<=this.n){
             var k = i*2;
             if(k+1<=this.n && this.less(k+1,k))k++;
             if(this.less(i,k))break;

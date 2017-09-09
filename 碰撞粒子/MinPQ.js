@@ -18,9 +18,8 @@ function MinPQ(){
        this.arr[j] = tmp;
     }
     
-    this.swim = function(i){
-    	
-        while(i<1){
+    this.swim = function(i){    	
+        while(i>1){
         	 var k = Math.floor(i/2);
 	     	 if(this.less(k,i))break;
 	         this.swap(k,i);
@@ -28,7 +27,7 @@ function MinPQ(){
         }
     }
     this.sink = function(i){
-    	while(i*2<this.n){
+    	while(i*2<=this.n){
     		var k = i*2;
     		if(k+1<=this.n && this.less(k+1,k))k++;
     		if(this.less(i,k))break;
@@ -60,7 +59,7 @@ function MinPQ(){
 }
 
 
-var s = [1,4,2,5,623,4];
+var s = [1,4,2,5,623,4,4,5,678,423,234,234,234,234,234234,234];
 console.log(s);
 var pq = new MinPQ();
 for(var i=0;i<s.length;i++){
