@@ -548,15 +548,15 @@
     //     }
     // }
 function MinPQ(){
-    this.arr = [];
-    this.n = 0;
-    function item(priority,obj){
+  this.arr = [];
+  this.n = 0;
+  function item(priority,obj){
          this.priority = priority;
          this.obj = obj;
-    }
-    this.less = function(i,j){
-        return this.arr[i].priority<this.arr[j].priority;
-    }
+  }
+  this.less = function(i,j){
+    return this.arr[i].priority<this.arr[j].priority;
+  }
     
     this.swap = function(i,j){
        var tmp = this.arr[i];
@@ -564,52 +564,48 @@ function MinPQ(){
        this.arr[j] = tmp;
     }
     
-    this.swim = function(i){
-        
-        while(i<1){
-             var k = Math.floor(i/2);
-             if(this.less(k,i))break;
-             this.swap(k,i);
-             i = k;
+    this.swim = function(i){      
+        while(i>1){
+           var k = Math.floor(i/2);
+          //console.log(k);
+         if(this.less(k,i))break;
+           this.swap(k,i);
+           i = k;
         }
     }
     this.sink = function(i){
-        while(i*2<this.n){
-            var k = i*2;
-            if(k+1<=this.n && this.less(k+1,k))k++;
-            if(this.less(i,k))break;
-            this.swap(k,i);
-            i = k;
-        }
+      while(i*2<=this.n){
+        var k = i*2;
+        if(k+1<=this.n && this.less(k+1,k))k++;
+        if(this.less(i,k))break;
+        this.swap(k,i);
+        i = k;
+      }
     }
 
-    this.insert = function(event){
+  this.insert = function(event){
         this._insert(event.time,event);
-    }
-    this._insert = function(priority,obj){
+  }
+  this._insert = function(priority,obj){
         var item_obj = new item(priority,obj);
         this.n++;
         this.arr[this.n]=item_obj;
         this.swim(this.n);
-        console.log(this.arr);
-    }
-    this.delMin = function(){
-        var item_obj = this.arr[1];
-        this.arr[1] = this.arr[this.n];
-        this.n--;
-        this.sink(1);
-        return item_obj.obj;
-    }
-    this.isEmpty = function(){
-        return this.n==0;
-    }
-}
-   //sleep
-
-   function sleep(n){
-    var start=new Date().getTime();
-    while(true) if(new Date().getTime()-start>n) break;
+        // console.log(this.arr);
   }
+  this.delMin = function(){
+    var item_obj = this.arr[1];
+    this.arr[1] = this.arr[this.n];
+    this.n--;
+    this.sink(1);
+    return item_obj.obj;
+  }
+  this.isEmpty = function(){
+    return this.n==0;
+  }
+}
+
+   //sleep
 
     //CollisionSystem
    function  CollisionSystem(particles,limit){
@@ -703,7 +699,7 @@ function MinPQ(){
          test(generateGrp_1(),100000);
    }
    function test3(){
-         test(generateGrp(40),100000);
+         test(generateGrp(20),100000);
    }
    function test4(){
          addLen = 100;

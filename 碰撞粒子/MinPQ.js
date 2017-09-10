@@ -18,9 +18,8 @@ function MinPQ(){
        this.arr[j] = tmp;
     }
     
-    this.swim = function(i){
-    	
-        while(i<1){
+    this.swim = function(i){    	
+        while(i>1){
         	 var k = Math.floor(i/2);
 	     	 if(this.less(k,i))break;
 	         this.swap(k,i);
@@ -28,7 +27,7 @@ function MinPQ(){
         }
     }
     this.sink = function(i){
-    	while(i*2<this.n){
+    	while(i*2<=this.n){
     		var k = i*2;
     		if(k+1<=this.n && this.less(k+1,k))k++;
     		if(this.less(i,k))break;
@@ -45,7 +44,6 @@ function MinPQ(){
         this.n++;
         this.arr[this.n]=item_obj;
         this.swim(this.n);
-        console.log(this.arr);
 	}
 	this.delMin = function(){
 		var item_obj = this.arr[1];
@@ -59,13 +57,14 @@ function MinPQ(){
 	}
 }
 
-
-var s = [1,4,2,5,623,4];
-console.log(s);
+var s = [1,2,4,2,3,2,323,2,33,24,34,4,2,32,4,435,34,53,45,345,435,345,534,534,345,345,345,345,345,345,34];
 var pq = new MinPQ();
 for(var i=0;i<s.length;i++){
 	pq.insert(s[i],s[i]);
 }
+var str = "";
 while(!pq.isEmpty()){
-	console.log(pq.delMin());
+    str = str + pq.delMin() + ",";
+	// console.log(pq.delMin());
 }
+console.log(str);
