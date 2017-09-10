@@ -1,4 +1,5 @@
 from math import log
+from collections import Counter
 
 def load_data():
 	data_set = [ [1,1,'yes'],
@@ -48,17 +49,46 @@ def choose_best_split(data_set):
 	return loc
 
 
+def majority(data_set):
+	class_list = [vec[-1] for vec in data_set]
+	return Counter(class_list).most_common(1)[0][0]
 
 
 
 
 
+def create_tree(data_set,labels):
+	class_list = [vec[-1] for vec in data_set]
+	if len(set(class_list))==1:
+		return class_list[0]
+	if len(data_set[0])==1:
+		return majority(data_set)
+	best_split = choose_best_split(data_set)
+	print(data_set)
+	print(labels)
+	best_label = labels[best_split]
+	my_tree = {best_label:{}}
+	del(labels[best_split])
+	feat_values = [vec[best_split] for vec in data_set]
+	feat_set = set(feat_values)
+	for val in feat_set:
+		sub_labels = labels[:]
+		my_tree[best_label][val] = create_tree(split_data_set(data_set,best_split,val),sub_labels)
+	return my_tree
 
 
 
+test_arr =[['a'],['b'],['a']]
+# print(majority(test_arr))
+
+
+
+labels = ['no surfacing','flippers']
 data_set = load_data()
 print(data_set)
-p = cal_entries(data_set)
-print(p)
-print(split_data_set(data_set,0,1))
-print(choose_best_split(data_set))
+# p = cal_entries(data_set)
+# print(p)
+# print(split_data_set(data_set,0,1))
+# print(choose_best_split(data_set))
+tree = create_tree(data_set,labels)
+print(tree)
