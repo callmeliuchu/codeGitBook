@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />  
@@ -6,7 +5,7 @@
     .button {
     -moz-user-select: none;
     background-color: hsl(0, 0%, 75%);
-    background-image: radial-gradient(ellipse farthest-corner at center top , rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0) 100%), url("noise.png");
+    background-image: radial-gradient(ellipse farthest-corner at center top , rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0) 100%));
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     border-top: 1px solid rgba(255, 255, 255, 0.8);
@@ -482,7 +481,7 @@
     function drawBox(){
     	 DrawTool.beginPath();
     	 var height = 600;
-		 var width = 800;
+		   var width = 800;
          DrawTool.iniCanvas(width,height);
          var columnNum = 80;
          var rowNum = 60;
@@ -564,7 +563,6 @@ function MinPQ(){
        this.arr[j] = tmp;
     }
     
-<<<<<<< HEAD
     this.swim = function(i){      
         while(i>1){
            var k = Math.floor(i/2);
@@ -582,7 +580,7 @@ function MinPQ(){
         this.swap(k,i);
         i = k;
       }
-=======
+    }
     this.swim = function(i){
         
         while(i>1){
@@ -600,7 +598,6 @@ function MinPQ(){
             this.swap(k,i);
             i = k;
         }
->>>>>>> b59ccbda68f6195a858db02dda23ecb962a91428
     }
 
   this.insert = function(event){
@@ -719,7 +716,7 @@ function MinPQ(){
          test(generateGrp_1(),100000);
    }
    function test3(){
-         test(generateGrp(20),100000);
+         test(generateGrp(10),100000);
    }
    function test4(){
          addLen = 100;
