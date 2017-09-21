@@ -4,6 +4,7 @@ from bs4 import BeautifulSoup
 import re
 import time
 import csv
+import operator
 user_base_path = 'user_data'
 csv_data_path = 'csv_data'
 
@@ -96,6 +97,7 @@ class User:
 
 
 	def profile_parse(self):
+		# name,url_name,bio,location,repositories,stars,followers,following
 		self.profile.append(self.name)
 		self.profile.append(self.url_name)
 		self.profile.append(self.bio)
@@ -230,11 +232,56 @@ class Graph_CSV:
 	def get_table(self):
 		return self.table
 
+class csv_user:
+	def __init__(self,csv_row):
+		name,url_name,bio,location,repositories,stars,followers,following,following_users = csv_row
+		self.nums = "0123456789"
+		self.name = name
+		self.url_name = url_name
+		self.bio = bio
+		self.location = location
+		self.repositories = repositories
+		self.stars = self.parseNum(stars)
+		self.followers = self.parseNum(followers)
+		self.following = self.parseNum(following)
+		self.following_users = following_users.split(',')
+
+	def parseNum(self,s):
+		for i in range(len(s)):
+			if s[i] in self.nums:
+				s_num = s[i:]
+				if s_num.endswith('k'):
+					return int(float(s_num[:-1])*1000)
+				else:
+					return int(s_num)
+
+	def get_stars(self):
+		return self.stars
+
+	def get_repositories(self):
+		return self.repositories
+
+	def get_stars(self):
+		return self.stars
+
+	def get_followers(self):
+		return self.followers
+
+
+
+
+
+
+
+def get_csv_rows():
+	tool = CSVTool(csv_data_path,'users.csv')
+	rows = tool.get_read_rows()
+	return rows	
+
 
 def get_csv_data():
 	ret = []
-	tool = CSVTool(csv_data_path,'users.csv')
-	rows = tool.get_read_rows()
+	rows = get_csv()
 	for row in rows:
 		head = row[1]
 		if len(row[-1])==0:
@@ -251,6 +298,35 @@ def get_csv_data():
 	# print(os.listdir('user_data'))
 	# print(len(os.listdir('user_data')))
 
-data = get_csv_data()
-graph_csv = Graph_CSV('callmeliuchu',data)
-print(graph_csv.get_path())
+# data = get_csv_data()
+# graph_csv = Graph_CSV('callmeliuchu',data)
+# path = graph_csv.get_path()
+# print(path)
+# print(len(path))
+
+def get_js_data():
+	rows = get_csv_rows()
+	arr_users = []
+	for row in rows:
+		name,url_name,bio,location,repositories,stars,followers,following,following_users = row
+		user = csv_user(row)
+		arr_users.append(user)
+		# print(user.name,user.url_name,user.get_followers())
+	# arr_users = sorted(arr_users, key=operator.attrgetter('followers'),reverse=True) 
+	user_names = []
+	data = []
+	count = 0
+	for user in arr_users:
+		# if count>20:
+		# 	break
+		count = count + 1
+		user_names.append(user.url_name)
+		data.append(user.get_followers())
+	print("var dataAxis=",user_names)
+	print("var data = ",data)
+
+get_js_data()
+	# print(row)
+	# if len(location)!=0:
+	# 	print(location)
+	# print(name,url_name,bio,location,repositories,stars,followers,following,following_users)

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+	    body{
+			
+		}
+		ul ul li{
+			list-style:none; 
+		}
+		.funclist{
+			cursor:pointer;
+		}
+		.func{
+			cursor:pointer;
+			list-style:none;
+		}
+		.product{
+			cursor:pointer;
+		}
+		.box{
+			width:50%; 
+			float:left; 
+			display:inline;
+		}
+	</style>
+</head>
+<body>
+        <ul>
+			<ul>
+			     <li>
+			        <input type="checkbox" name="product_check" onclick="choosePrd(this);">
+			         <a class='product' id="product" onclick="show(this)">product</a>
+			     </li>
+			     <li style="list-style:none;">
+			        <ul>
+			        	<li class='func'>
+			        	<input type="checkbox" name="func1" onclick="chooseFunc(this);">1
+			        	</li>
+			        	<li class='func'>
+			        	 <input type="checkbox" name="func2" onclick="chooseFunc(this);">2
+			        	</li>
+			        	<li class='func'>
+			        	 <input type="checkbox" name="func3" onclick="chooseFunc(this);">3
+			        	</li>
+			        </ul>
+			     </li>
+			  </ul>
+			<ul>
+			     <li>
+			        <input type="checkbox" name="product_check" onclick="choosePrd(this);">
+			         <a class='product' id="product" onclick="show(this)">product</a>
+			     </li>
+			     <li style="list-style:none;">
+			        <ul>
+			        	<li class='func'>
+			        	<input type="checkbox" name="func1" onclick="chooseFunc(this);">1
+			        	</li>
+			        	<li class='func'>
+			        	 <input type="checkbox" name="func2" onclick="chooseFunc(this);">2
+			        	</li>
+			        	<li class='func'>
+			        	 <input type="checkbox" name="func3" onclick="chooseFunc(this);">3
+			        	</li>
+			        </ul>
+			     </li>
+			  </ul>
+			<ul>
+			     <li>
+			        <input type="checkbox" name="product_check" onclick="choosePrd(this);">
+			         <a class='product' id="product" onclick="show(this)">product</a>
+			     </li>
+			     <li style="list-style:none;">
+			        <ul>
+			        	<li class='func'>
+			        	<input type="checkbox" name="func1" onclick="chooseFunc(this);">1
+			        	</li>
+			        	<li class='func'>
+			        	 <input type="checkbox" name="func2" onclick="chooseFunc(this);">2
+			        	</li>
+			        	<li class='func'>
+			        	 <input type="checkbox" name="func3" onclick="chooseFunc(this);">3
+			        	</li>
+			        </ul>
+			     </li>
+			  </ul>
+			<ul>
+			     <li>
+			        <input type="checkbox" name="product_check" onclick="choosePrd(this);">
+			         <a class='product' id="product" onclick="show(this)">product</a>
+			     </li>
+			     <li style="list-style:none;">
+			        <ul>
+			        	<li class='func'>
+			        	<input type="checkbox" name="func1" onclick="chooseFunc(this);">1
+			        	</li>
+			        	<li class='func'>
+			        	 <input type="checkbox" name="func2" onclick="chooseFunc(this);">2
+			        	</li>
+			        	<li class='func'>
+			        	 <input type="checkbox" name="func3" onclick="chooseFunc(this);">3
+			        	</li>
+			        </ul>
+			     </li>
+			  </ul>
+		 </ul>
+
+
+
+</body>
+<script type="text/javascript">
+   function show(obj){
+        var secondEle = obj.parentNode.nextElementSibling;
+        if(secondEle.style.display == "none"){
+        	secondEle.style.display = "block";
+        }else{
+             secondEle.style.display = "none";
+        }
+   }
+   function choosePrd(obj){
+       var secondEle = obj.parentNode.nextElementSibling;
+       var checkArr = secondEle.getElementsByTagName('input');
+       var isChoose = obj.checked;
+       for(var i=0;i<checkArr.length;i++){
+       	  checkArr[i].checked = isChoose;
+       }
+   }
+   function chooseFunc(obj){
+   	  var status = obj.checked;
+   	  var parentEle = obj.parentNode.parentNode;
+   	  var preEle  = parentEle.parentNode.previousElementSibling;
+   	  var checkObj = preEle.getElementsByTagName('input')[0];
+   	  var allSubCheckArr = parentEle.getElementsByTagName('input');
+   	  var isAllSame = true;
+   	  for(var i=0;i<allSubCheckArr.length;i++){
+   	  	 var subCheckObj = allSubCheckArr[i];
+   	  	 if(obj!=subCheckObj){
+                if(status!=subCheckObj.checked){
+                	isAllSame = false;
+                    break;
+                }
+   	  	 }
+   	  }
+   	  if(isAllSame){
+   	  	 checkObj.checked = status;
+   	  }
+   }
+</script>
+</html>

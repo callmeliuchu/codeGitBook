@@ -3,10 +3,12 @@ import os
 def split_int_sql(s):
 	# s = "C_UNIT_CODE=BOCOFFICE,C_BK_GROUP_ID=BOC,C_PRODUCT_ID=P12081400004,C_PRODUCT_NAME=出口托收直联业务,C_ITEM_ID=Release,C_FUNC_ID=F05030701131,C_LOCKED_FLAG=F,T_LOCKED_TIME=,SMS_CONTENT=null"
 	arr = s.split(',')
+	fields = []
 	vec = []
 	for ele in arr:
+		fields.append(ele.split('=')[0])
 		vec.append("'"+ele.split('=')[1]+"'")
-	return ','.join(vec)
+	return  'INSERT INTO "CEUSER"."SEC_SMS_FUNC" (' +   ','.join(fields)  +') VALUES ('+ ','.join(vec) + ')'
 # C_UNIT_CODE=BOCOFFICE,C_BK_GROUP_ID=BOC,C_PRODUCT_ID=P12081400004,C_PRODUCT_NAME=出口托收直联业务,C_ITEM_ID=Release,C_FUNC_ID=F05030701131,C_LOCKED_FLAG=F,T_LOCKED_TIME=,SMS_CONTENT=null
 
 # s="""
@@ -63,10 +65,11 @@ def split_int_sql(s):
 # C_UNIT_CODE=BOCOFFICE,C_BK_GROUP_ID=BOC,
 # C_PRODUCT_ID=P12081400004,C_PRODUCT_NAME=出口托收直联业务,
 # C_ITEM_ID=Release,C_FUNC_ID=F05030701131,C_LOCKED_FLAG=F,T_LOCKED_TIME=,SMS_CONTENT=null
+# C_UNIT_CODE,C_BK_GROUP_ID,C_MODULE,C_FUNGRP_ID,C_FUNGRP_NAME,C_FUNC_ID,C_FUNC_NAME,C_LOCKED_FLAG,C_SMS_CONTENT
 def parse_func_root():
 	prd_dic = {"P13040900000":"客户信息查询","P11032100001":"帮助文档维护","P11031400000":"银行网点操作员维护"}
 	path = 'C:\liuchusoftware\liuchusoftware\BOC\EnvironmentBOC/backupparameteter\PARAM\BOC\CN\AP\FUNC/function_root.xml'
-	base_sql = 'INSERT INTO "CEUSER"."STT_SMS_INFO" (C_UNIT_CODE,C_BK_GROUP_ID,C_PRODUCT_ID,C_PRODUCT_NAME,C_ITEM_ID,C_FUNC_ID,C_LOCKED_FLAG,T_LOCKED_TIME,SMS_CONTENT)'+\
+	base_sql = 'INSERT INTO "CEUSER"."STT_SMS_FUNC" (C_UNIT_CODE,C_BK_GROUP_ID,C_MODULE,C_FUNGRP_ID,C_FUNGRP_NAME,C_FUNC_ID,C_FUNC_NAME,C_LOCKED_FLAG,C_SMS_CONTENT)'+\
     'VALUES '
 	with open(path,encoding='utf-8') as f:
 		soup = BeautifulSoup(f.read(),"html.parser")
@@ -79,12 +82,12 @@ def parse_func_root():
 			module_desc = func.get('moduledesc')
 			product_id = func.get('product')
 			if product_id in prd_dic:
-				s = "C_UNIT_CODE=BOCOFFICE,C_BK_GROUP_ID=BOC,C_PRODUCT_ID="+product_id+",C_PRODUCT_NAME="+\
-				prd_dic[product_id]+",C_ITEM_ID="+func_item+",C_FUNC_ID="+func_id+",C_LOCKED_FLAG=F,T_LOCKED_TIME=,SMS_CONTENT=null"
+				s = "C_UNIT_CODE=BOCOFFICE,C_BK_GROUP_ID=BOC,C_MODULE=mod,C_FUNGRP_ID="+product_id+",C_FUNGRP_NAME="+\
+				prd_dic[product_id]+",C_FUNC_ID="+func_id+",C_FUNC_NAME="+func_desc+",C_LOCKED_FLAG=F,T_LOCKED_TIME=,C_SMS_CONTENT="+" ${funcInfo.DESC}.<${screenData.PARENT_MAIN_REF}> tify you about the Amend Export Collection "
 				# print(func_desc,func_type,func_id,func_item,module_desc,product_id,prd_dic[product_id])
 				# print(s)
-				values = '('+split_int_sql(s)+')'
-				sql = base_sql + values+";"
+				# values = '('+split_int_sql(s)+')'
+				sql = split_int_sql(s) + ";"
 				print(sql)
 		# for func in funclist:
 		# 	print(func)
