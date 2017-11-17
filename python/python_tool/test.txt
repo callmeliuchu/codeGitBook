@@ -1,0 +1,146 @@
+<TABLE style="TABLE-LAYOUT: fixed" border=0 cellSpacing=0 cellPadding=0 width="100%" align=center>
+<TBODY>
+<TR>
+<TD class=FldLabel width="14%">&nbsp;</TD>
+<TD class=FldLabel width="72%"></TD>
+<TD class=FldLabel width="14%">&nbsp;</TD></TR>
+<TR>
+<TD class=FldLabel width="14%">&nbsp;</TD>
+<TD class=FldLabel width="72%">
+<DIV align=center><STRONG>开立国际信用证申请书</STRONG></DIV></TD>
+<TD class=FldLabel width="14%">&nbsp;</TD></TR>
+<TR>
+<TD class=FldLabel width="14%">&nbsp;</TD>
+<TD class=FldLabel width="72%"><STRONG>致：中国银行股份公司&nbsp; <INPUT style="TEXT-ALIGN: center" id=TEMPLATE_C_1 class=CHAR_P title="" readOnly maxLength=22 size=22 type=text name=TEMPLATE_C_1> 行 </STRONG></TD>
+<TD class=FldLabel width="14%">&nbsp;</TD></TR>
+<TR>
+<TD class=FldLabel width="14%">&nbsp;</TD>
+<TD style="WORD-WRAP: break-word" class=FldLabel width="72%" line-height:2em;>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;现我司因业务需要，依据我司与贵行签署的编号为 <INPUT style="TEXT-ALIGN: center" onkeydown=this.onkeyup(); id=TEMPLATE_C_2 class=CHAR_P title="" onkeyup="this.size=(this.value.length>20?this.value.length:20);" readOnly maxLength=60 size=20 type=text name=TEMPLATE_C_2> 的 <INPUT id=TEMPLATE_C_BOX_1 title="" disabled type=checkbox name=TEMPLATE_C_BOX_1> 《授信额度协议》&nbsp;/ &nbsp; <INPUT id=TEMPLATE_C_BOX_2 title="" disabled type=checkbox name=TEMPLATE_C_BOX_2> 《授信额度协议》 及其“附件1：用于开立国际信用证业务”以及编号为 <INPUT style="TEXT-ALIGN: center" onkeydown=this.onkeyup(); id=TEMPLATE_C_3 class=CHAR_P title="" onkeyup="this.size=(this.value.length>20?this.value.length:20);" readOnly maxLength=60 size=20 type=text name=TEMPLATE_C_3> 《网银在线国际信用证开立总协议》，向贵行申请开立信用证。由于此产生的权利义务，均按照前述协议及其附件/合同和本申请书的约定。</TD>
+<TD class=FldLabel width="14%">&nbsp;</TD></TR>
+<TR>
+<TD class=FldLabel width="14%">&nbsp;</TD>
+<TD class=FldLabel width="72%">&nbsp;</TD>
+<TD class=FldLabel width="14%">&nbsp;</TD></TR>
+<TR>
+<TD class=FldLabel width="14%">&nbsp;</TD>
+<TD class=FldLabel width="72%"><STRONG>第一条&nbsp;&nbsp;&nbsp;&nbsp;信用证的内容</STRONG></TD>
+<TD class=FldLabel width="14%">&nbsp;</TD></TR>
+<TR>
+<TD class=FldLabel width="14%">&nbsp;</TD>
+<TD style="WORD-WRAP: break-word" class=FldLabel width="72%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;信用证的内容见编号为 <INPUT style="TEXT-ALIGN: center" id=TEMPLATE_C_4 class=CHAR_P title="" readOnly maxLength=22 size=22 type=text name=TEMPLATE_C_4> 的 《开立信用证申请书》（英文格式），关于信用证的备付款项、垫款利率和计算以及费用等事项均按照编号为&nbsp; <INPUT style="TEXT-ALIGN: center" onkeydown=this.onkeyup(); id=TEMPLATE_C_5 class=CHAR_P title="" onkeyup="this.size=(this.value.length>20?this.value.length:20);" readOnly maxLength=60 size=20 type=text name=TEMPLATE_C_5> &nbsp; 的《网银在线国际信用证开立总协议》的有关约定执行。</TD>
+<TD class=FldLabel width="14%">&nbsp;</TD></TR>
+<TR>
+<TD class=FldLabel width="14%">&nbsp;</TD>
+<TD class=FldLabel width="72%">&nbsp; </TD>
+<TD class=FldLabel width="14%">&nbsp;</TD></TR>
+<TR>
+<TD class=FldLabel width="14%">&nbsp;</TD>
+<TD class=FldLabel width="72%"><STRONG>第二条&nbsp;&nbsp;&nbsp;&nbsp;担保</STRONG></TD>
+<TD class=FldLabel width="14%">&nbsp;</TD></TR>
+<TR>
+<TD class=FldLabel width="14%">&nbsp;</TD>
+<TD class=FldLabel width="72%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<STRONG>&nbsp;1、本申请书项下债务的担保方式为：</STRONG></TD>
+<TD class=FldLabel width="14%">&nbsp;</TD></TR>
+<TR id=TEMPLATE_TR1>
+<TD class=FldLabel width="14%">&nbsp;</TD>
+<TD class=FldLabel width="72%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<INPUT id=TEMPLATE_C_BOX_3 title="" disabled type=checkbox name=TEMPLATE_C_BOX_3> 本申请书属于 <INPUT style="TEXT-ALIGN: center" onkeydown=this.onkeyup(); id=TEMPLATE_C_6 class=CHAR_P title="" onkeyup="this.size=(this.value.length>20?this.value.length:20);" readOnly maxLength=90 size=20 type=text name=TEMPLATE_C_6> 与贵行签订的编号为额质押合同》项下的主合同； <INPUT style="TEXT-ALIGN: center" onkeydown=this.onkeyup(); id=TEMPLATE_C_7 class=CHAR_P title="" onkeyup="this.size=(this.value.length>20?this.value.length:20);" readOnly maxLength=90 size=20 type=text name=TEMPLATE_C_7> 的 <INPUT id=TEMPLATE_C_BOX_4 title="" disabled type=checkbox name=TEMPLATE_C_BOX_4> 《最高额保证合同》&nbsp;/&nbsp; <INPUT id=TEMPLATE_C_BOX_5 title="" disabled type=checkbox name=TEMPLATE_C_BOX_5> 《最高额抵押合同》&nbsp;/&nbsp; <INPUT id=TEMPLATE_C_BOX_6 title="" disabled type=checkbox name=TEMPLATE_C_BOX_6> 《最高额质押合同》项下的主合同，由其提供最高额担保。</TD>
+<TD class=FldLabel width="14%">&nbsp;</TD></TR>
+<TR id=TEMPLATE_TR2>
+<TD class=FldLabel width="14%">&nbsp;</TD>
+<TD style="WORD-WRAP: break-word" class=FldLabel width="72%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <INPUT id=TEMPLATE_C_BOX_7 title="" disabled type=checkbox name=TEMPLATE_C_BOX_7> 本申请书属于 <INPUT style="TEXT-ALIGN: center" onkeydown=this.onkeyup(); id=TEMPLATE_C_8 class=CHAR_P title="" onkeyup="this.size=(this.value.length>20?this.value.length:20);" readOnly maxLength=90 size=20 type=text name=TEMPLATE_C_8> 与贵行签订的编号为额质押合同》项下的主合同； <INPUT style="TEXT-ALIGN: center" onkeydown=this.onkeyup(); id=TEMPLATE_C_9 class=CHAR_P title="" onkeyup="this.size=(this.value.length>20?this.value.length:20);" readOnly maxLength=90 size=20 type=text name=TEMPLATE_C_9> 的 <INPUT id=TEMPLATE_C_BOX_8 title="" disabled type=checkbox name=TEMPLATE_C_BOX_8> 《最高额保证合同》&nbsp;/&nbsp; <INPUT id=TEMPLATE_C_BOX_9 title="" disabled type=checkbox name=TEMPLATE_C_BOX_9> 《最高额抵押合同》&nbsp;/&nbsp; <INPUT id=TEMPLATE_C_BOX_10 title="" disabled type=checkbox name=TEMPLATE_C_BOX_10> 《最高额质押合同》项下的主合同，由其提供最高额担保。此外，由 <INPUT style="TEXT-ALIGN: center" onkeydown=this.onkeyup(); id=TEMPLATE_C_10 class=CHAR_P title="" onkeyup="this.size=(this.value.length>20?this.value.length:20);" readOnly maxLength=90 size=20 type=text name=TEMPLATE_C_10> 提供 <INPUT style="TEXT-ALIGN: center" onkeydown=this.onkeyup(); id=TEMPLATE_C_11 class=CHAR_P title="" onkeyup="this.size=(this.value.length>20?this.value.length:20);" readOnly maxLength=90 size=20 type=text name=TEMPLATE_C_11> 担保，……，并签订相应的担保合同，若提供保证金质押则按本条第2款的约定办理。其中：由该 <INPUT style="TEXT-ALIGN: center" onkeydown=this.onkeyup(); id=TEMPLATE_C_12 class=CHAR_P title="" onkeyup="this.size=(this.value.length>20?this.value.length:20);" readOnly maxLength=90 size=20 type=text name=TEMPLATE_C_12> 担保合同所对应的债务金额不在前述最高额担保合同之主债务范围内，其余债务金额在其主债务范围。</TD>
+<TD class=FldLabel width="14%">&nbsp;</TD></TR></TBODY>
+<TBODY>
+<TR id=TEMPLATE_TR3>
+<TD class=FldLabel width="14%">&nbsp;</TD>
+<TD style="WORD-WRAP: break-word" class=FldLabel width="72%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <INPUT id=TEMPLATE_C_BOX_11 title="" disabled type=checkbox name=TEMPLATE_C_BOX_11> 由 <INPUT style="TEXT-ALIGN: center" onkeydown=this.onkeyup(); id=TEMPLATE_C_13 class=CHAR_P title="" onkeyup="this.size=(this.value.length>20?this.value.length:20);" readOnly maxLength=90 size=20 type=text name=TEMPLATE_C_13> 提供 <INPUT style="TEXT-ALIGN: center" onkeydown=this.onkeyup(); id=TEMPLATE_C_14 class=CHAR_P title="" onkeyup="this.size=(this.value.length>20?this.value.length:20);" readOnly maxLength=90 size=20 type=text name=TEMPLATE_C_14> 担保，……，并签订相应的担保合同。若提供保证金质押，则按本条第2款的约定办理。</TD>
+<TD class=FldLabel width="14%">&nbsp;</TD></TR>
+<TR id=TEMPLATE_TR4>
+<TD class=FldLabel width="14%">&nbsp;</TD>
+<TD class=FldLabel width="1%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <INPUT id=TEMPLATE_C_BOX_12 title="" disabled type=checkbox name=TEMPLATE_C_BOX_12> 其他担保方式：<TEXTAREA style="HEIGHT: 20px; OVERFLOW: hidden" onkeydown=this.onkeyup(); id=TEMPLATE_C_TEXT_1 class=CHAR_P title="" onkeyup=EnterPress(this,event) rows=30 cols=100 readOnly name=TEMPLATE_C_TEXT_1 maxlength="3000"></TEXTAREA></TD>
+<TD class=FldLabel width="14%">&nbsp;</TD></TR>
+<TR>
+<TD class=FldLabel width="14%">&nbsp;</TD>
+<TD class=FldLabel width="72%">&nbsp; </TD>
+<TD class=FldLabel width="14%">&nbsp;</TD></TR>
+<TR>
+<TD class=FldLabel width="14%">&nbsp;</TD>
+<TD class=FldLabel width="72%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<STRONG>&nbsp;2、依前款约定提供保证金质押的，按下列方式办理：</STRONG></TD>
+<TD class=FldLabel width="14%">&nbsp;</TD></TR>
+<TR>
+<TD class=FldLabel width="14%">&nbsp;</TD>
+<TD class=FldLabel width="72%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <INPUT id=TEMPLATE_C_BOX_13 title="" type=checkbox name=TEMPLATE_C_BOX_13> 本申请书属于我司与贵行签署的编号为 <INPUT style="TEXT-ALIGN: center" onkeydown=this.onkeyup(); id=TEMPLATE_C_15 class=CHAR_O title="" onkeyup="this.size=(this.value.length>20?this.value.length:20);" value=12345 maxLength=60 size=20 type=text name=TEMPLATE_C_15> 的《保证金质押总协议》项下的主合同，由该协议提供保证金质押，并按下述约定办理：</TD>
+<TD class=FldLabel width="14%">&nbsp;</TD></TR>
+<TR>
+<TD class=FldLabel width="14%">&nbsp;</TD>
+<TD class=FldLabel width="72%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1）保证金金额为：&nbsp; <SELECT id=TEMPLATE_C_16 class=CHAR_O title="" name=TEMPLATE_C_16> <OPTION value=""></OPTION> <OPTION value=AUD>AUD</OPTION> <OPTION value=CAD>CAD</OPTION> <OPTION value=CHF>CHF</OPTION> <OPTION value=CNY>CNY</OPTION> <OPTION value=DKK>DKK</OPTION> <OPTION value=EUR>EUR</OPTION> <OPTION value=GBP>GBP</OPTION> <OPTION value=HKD>HKD</OPTION> <OPTION value=JPY>JPY</OPTION> <OPTION value=KZT>KZT</OPTION> <OPTION value=MNT>MNT</OPTION> <OPTION value=MNT>MNT</OPTION> <OPTION value=MOP>MOP</OPTION> <OPTION value=MYR>MYR</OPTION> <OPTION value=NOK>NOK</OPTION> <OPTION value=NZD>NZD</OPTION> <OPTION value=PHP>PHP</OPTION> <OPTION value=SEK>SEK</OPTION> <OPTION value=SGD>SGD</OPTION> <OPTION value=THB>THB</OPTION> <OPTION selected value=USD>USD</OPTION></SELECT> <INPUT id=TEMPLATE_C_17 class=AMT_O title="" value=1500 maxLength=20 size=20 type=text name=TEMPLATE_C_17> <INPUT style="TEXT-ALIGN: center" onkeydown=this.onkeyup(); id=TEMPLATE_C_18 class=CHAR_P title="" onkeyup="this.size=(this.value.length>20?this.value.length:20);" readOnly maxLength=60 size=20 type=text name=TEMPLATE_C_18> </TD>
+<TD class=FldLabel width="14%">&nbsp;</TD></TR>
+<TR>
+<TD class=FldLabel width="14%">&nbsp;</TD>
+<TD class=FldLabel width="72%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2）我司通过以下方式交付上述保证金：</TD>
+<TD class=FldLabel width="14%">&nbsp;</TD></TR>
+<TR>
+<TD class=FldLabel width="14%">&nbsp;</TD>
+<TD style="WORD-WRAP: break-word" class=FldLabel width="72%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <INPUT id=TEMPLATE_C_BOX_14 title="" type=checkbox name=TEMPLATE_C_BOX_14> 在本申请书生效之日起 <INPUT style="TEXT-ALIGN: center" onkeydown=this.onkeyup(); id=TEMPLATE_C_19 class=CHAR_P title="" onkeyup="this.size=(this.value.length>20?this.value.length:20);" readOnly maxLength=5 size=5 type=text name=TEMPLATE_C_19> 个银行工作日内，通过 <INPUT style="TEXT-ALIGN: center" onkeydown=this.onkeyup(); id=TEMPLATE_C_20 class=CHAR_P title="" onkeyup="this.size=(this.value.length>20?this.value.length:20);" readOnly maxLength=60 size=20 type=text name=TEMPLATE_C_20> 将保证金划入/存入我司在贵行开立的保证金账户（账号： <INPUT style="TEXT-ALIGN: center" onkeydown=this.onkeyup(); id=TEMPLATE_C_21 class=CHAR_P title="" onkeyup="this.size=(this.value.length>20?this.value.length:20);" readOnly maxLength=60 size=20 type=text name=TEMPLATE_C_21> ）</TD>
+<TD class=FldLabel width="14%">&nbsp;</TD></TR>
+<TR>
+<TD class=FldLabel width="14%">&nbsp;</TD>
+<TD style="WORD-WRAP: break-word" class=FldLabel width="72%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <INPUT id=TEMPLATE_C_BOX_15 title="" type=checkbox name=TEMPLATE_C_BOX_15> 授权贵行从我司在贵行开立的人民币账户（ <INPUT style="TEXT-ALIGN: center" onkeydown=this.onkeyup(); id=TEMPLATE_C_22 class=CHAR_O title="" onkeyup="this.size=(this.value.length>20?this.value.length:20);" value=123 maxLength=60 size=20 type=text name=TEMPLATE_C_22> )/外币账户（账号： <INPUT style="TEXT-ALIGN: center" onkeydown=this.onkeyup(); id=TEMPLATE_C_23 class=CHAR_O title="" onkeyup="this.size=(this.value.length>20?this.value.length:20);" value=321 maxLength=60 size=20 type=text name=TEMPLATE_C_23> ）直接将保证金划入我司在贵行开立的保证金账户（账号： <INPUT style="TEXT-ALIGN: center" onkeydown=this.onkeyup(); id=TEMPLATE_C_24 class=CHAR_O title="" onkeyup="this.size=(this.value.length>20?this.value.length:20);" value=12345 maxLength=60 size=20 type=text name=TEMPLATE_C_24> )</TD>
+<TD class=FldLabel width="14%">&nbsp;</TD></TR>
+<TR>
+<TD class=FldLabel width="14%">&nbsp;</TD>
+<TD style="WORD-WRAP: break-word" class=FldLabel width="72%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <INPUT id=TEMPLATE_C_BOX_16 title="" type=checkbox name=TEMPLATE_C_BOX_16> 我司在贵行办理的业务编号为 <INPUT style="TEXT-ALIGN: center" onkeydown=this.onkeyup(); id=TEMPLATE_C_25 class=CHAR_P title="" onkeyup="this.size=(this.value.length>20?this.value.length:20);" readOnly maxLength=60 size=20 type=text name=TEMPLATE_C_25> 的业务项下存入的保证金的担保责任经贵行确认已经解除，授权贵行直接从账号为 <INPUT style="TEXT-ALIGN: center" onkeydown=this.onkeyup(); id=TEMPLATE_C_26 class=CHAR_P title="" onkeyup="this.size=(this.value.length>20?this.value.length:20);" readOnly maxLength=60 size=20 type=text name=TEMPLATE_C_26> 的账户向我司在贵行开立的保证金账户（账号为： <INPUT style="TEXT-ALIGN: center" onkeydown=this.onkeyup(); id=TEMPLATE_C_27 class=CHAR_P title="" onkeyup="this.size=(this.value.length>20?this.value.length:20);" readOnly maxLength=60 size=20 type=text name=TEMPLATE_C_27> ）中划入保证金。 </TD>
+<TD class=FldLabel width="14%">&nbsp;</TD></TR>
+<TR>
+<TD class=FldLabel width="14%">&nbsp;</TD>
+<TD class=FldLabel width="72%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <INPUT id=TEMPLATE_C_BOX_17 title="" type=checkbox name=TEMPLATE_C_BOX_17> 其它方式： <TEXTAREA style="HEIGHT: 20px; OVERFLOW: hidden" onkeydown=this.onkeyup(); id=TEMPLATE_C_TEXT_2 class=CHAR_P title="" onkeyup="this.style.height=(this.style.height>=500?500:Math.ceil(this.value.length/100)*20);" rows=30 cols=100 readOnly name=TEMPLATE_C_TEXT_2 maxlength="3000"></TEXTAREA></TD>
+<TD class=FldLabel width="14%">&nbsp;</TD></TR>
+<TR>
+<TD class=FldLabel width="14%">&nbsp;</TD>
+<TD class=FldLabel width="72%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 3）如上述保证金的担保责任经贵行确认已解除，请贵行按以下方式返还： </TD>
+<TD class=FldLabel width="14%">&nbsp;</TD></TR>
+<TR>
+<TD class=FldLabel width="14%">&nbsp;</TD>
+<TD class=FldLabel width="72%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <INPUT id=TEMPLATE_C_BOX_18 title="" type=checkbox name=TEMPLATE_C_BOX_18> 退入我司在 <INPUT style="TEXT-ALIGN: center" onkeydown=this.onkeyup(); id=TEMPLATE_C_28 class=CHAR_P title="" onkeyup="this.size=(this.value.length>20?this.value.length:20);" readOnly maxLength=60 size=20 type=text name=TEMPLATE_C_28> 开立的账户（账号为： <INPUT style="TEXT-ALIGN: center" onkeydown=this.onkeyup(); id=TEMPLATE_C_29 class=CHAR_P title="" onkeyup="this.size=(this.value.length>20?this.value.length:20);" readOnly maxLength=60 size=20 type=text name=TEMPLATE_C_29> ）。</TD>
+<TD class=FldLabel width="14%">&nbsp;</TD></TR>
+<TR>
+<TD class=FldLabel width="14%">&nbsp;</TD>
+<TD class=FldLabel width="72%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <INPUT id=TEMPLATE_C_BOX_19 title="" type=checkbox name=TEMPLATE_C_BOX_19> 按其存入的路径返还。 </TD>
+<TD class=FldLabel width="14%">&nbsp;</TD></TR>
+<TR>
+<TD class=FldLabel width="14%">&nbsp;</TD>
+<TD class=FldLabel width="72%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <INPUT id=TEMPLATE_C_BOX_20 title="" type=checkbox name=TEMPLATE_C_BOX_20> 届时按我司的书面指示返还。 </TD>
+<TD class=FldLabel width="14%">&nbsp;</TD></TR>
+<TR>
+<TD class=FldLabel width="14%">&nbsp;</TD>
+<TD class=FldLabel width="72%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <INPUT id=TEMPLATE_C_BOX_21 title="" type=checkbox name=TEMPLATE_C_BOX_21> 其它方式： <TEXTAREA style="HEIGHT: 20px; OVERFLOW: hidden" onkeydown=this.onkeyup(); id=TEMPLATE_C_TEXT_3 class=CHAR_P title="" onkeyup="this.style.height=(this.style.height>=500?500:Math.ceil(this.value.length/100)*20);" rows=30 cols=100 readOnly name=TEMPLATE_C_TEXT_3 maxlength="3000"></TEXTAREA></TD>
+<TD class=FldLabel width="14%">&nbsp;</TD></TR>
+<TR>
+<TD class=FldLabel width="14%">&nbsp;</TD>
+<TD class=FldLabel width="72%">&nbsp; </TD>
+<TD class=FldLabel width="14%">&nbsp;</TD></TR>
+<TR>
+<TD class=FldLabel width="14%">&nbsp;</TD>
+<TD class=FldLabel width="72%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3、若我司或担保人发生贵行认为可能影响其履约能力的事件，或担保合同变为无效、被撤销或解除，或我司、担保人财务状况恶化或涉入重大诉讼或仲裁案件，或因其他原因而可能影响其履约能力，或担保人在担保合同或与贵行之间的其他合同项下发生违约，或担保物贬值、毁损、灭失、被查封，致使担保价值减弱或丧失时，贵行有权要求，且我司有义务提供新的担保、更换保证人等以担保本申请书项下债务。 </TD>
+<TD class=FldLabel width="14%">&nbsp;</TD></TR>
+<TR>
+<TD class=FldLabel width="14%">&nbsp;</TD>
+<TD class=FldLabel width="72%">&nbsp; </TD>
+<TD class=FldLabel width="14%">&nbsp;</TD></TR>
+<TR>
+<TD class=FldLabel width="14%">&nbsp;</TD>
+<TD class=FldLabel width="72%">
+<DIV align=right>申请人 <INPUT style="TEXT-ALIGN: center" onkeydown=this.onkeyup(); id=TEMPLATE_C_30 class=CHAR_P title="" onkeyup="this.size=(this.value.length>20?this.value.length:20);" value=客户合并主客户 readOnly maxLength=60 size=20 type=text name=TEMPLATE_C_30> </DIV></TD>
+<TD class=FldLabel width="14%">&nbsp;</TD></TR>
+<TR>
+<TD class=FldLabel width="14%">&nbsp;</TD>
+<TD class=FldLabel width="72%">
+<DIV align=right><INPUT style="TEXT-ALIGN: center" onkeydown=this.onkeyup(); id=TEMPLATE_C_31 class=CHAR_P title="" onkeyup="this.size=(this.value.length>20?this.value.length:20);" value=2017 readOnly maxLength=60 size=5 type=text name=TEMPLATE_C_31> 年 <INPUT style="TEXT-ALIGN: center" onkeydown=this.onkeyup(); id=TEMPLATE_C_32 class=CHAR_P title="" onkeyup="this.size=(this.value.length>20?this.value.length:20);" value=07 readOnly maxLength=60 size=5 type=text name=TEMPLATE_C_32> 月 <INPUT style="TEXT-ALIGN: center" onkeydown=this.onkeyup(); id=TEMPLATE_C_33 class=CHAR_P title="" onkeyup="this.size=(this.value.length>20?this.value.length:20);" value=11 readOnly maxLength=60 size=5 type=text name=TEMPLATE_C_33> 日 </DIV></TD>
+<TD class=FldLabel width="14%">&nbsp;</TD></TR>
+<TR>
+<TD class=FldLabel width="14%">&nbsp;</TD>
+<TD class=FldLabel width="72%"></TD>
+<TD class=FldLabel width="14%">&nbsp;</TD></TR>
+<TR>
+<TD class=FldLabel width="14%">&nbsp;</TD>
+<TD class=FldLabel width="72%">&nbsp;</TD>
+<TD class=FldLabel width="14%">&nbsp;</TD></TR></TBODY></TABLE>

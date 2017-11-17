@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript" src="pointAndDeminision.js"></script>
+	<script type="text/javascript" src="graph.js"></script>
+</head>
+<body>
+<canvas id="canvas"></canvas>
+</body>
+<script type="text/javascript">
+	var DrawTool = {}
+    DrawTool.canvas = document.getElementById("canvas");
+    DrawTool.ctx = DrawTool.canvas.getContext("2d");
+    DrawTool.iniCanvas = function(width=800,height=600){
+        this.width = width;
+        this.height = height;
+        this.canvas.width = width;
+        this.canvas.height = height;
+    }
+    DrawTool.line = function(p1,p2,width=0.5,color="000000"){
+         this.ctx.moveTo(p1.x,p1.y);
+         this.ctx.lineTo(p2.x,p2.y);
+         this.ctx.strokeStyle=color;
+         this.ctx.lineWidth=width;
+    }
+    DrawTool.clear = function(){
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    }
+    DrawTool.beginPath = function(){
+         this.ctx.beginPath();
+    }
+    DrawTool.fillCycle = function(rx,ry,radius){
+         this.beginPath();
+         this.ctx.arc(rx, ry, radius, 0, Math.PI*2, true);
+         this.stroke();
+    }
+    DrawTool.stroke = function(){
+         this.ctx.stroke();
+    }
+
+    DrawBox = {};
+    DrawBox.initBox = function(columnNum,rowNum){
+    	this.columnNum = columnNum;
+    	this.rowNum = rowNum;
+    }
+    DrawBox.drawLayOut = function(){
+    	 DrawTool.beginPath();
+    	 var columnNum = this.columnNum;
+         var rowNum = this.rowNum;
+         var width = DrawTool.width;
+         var height = DrawTool.height;
+         var columnWidth = Math.floor(width/columnNum);
+         var rowWidth = Math.floor(height/rowNum);
+         for(var i=0;i<=columnNum;i++){
+                 var p1 = new Point(i*columnWidth,0);
+                 var p2 = new Point(i*columnWidth,height);
+                 DrawTool.line(p1,p2);
+         }
+         for(var i=0;i<=rowNum;i++){
+                 var p1 = new Point(0,i*rowWidth);
+                 var p2 = new Point(width,i*rowWidth);
+                 DrawTool.line(p1,p2);
+         }
+         DrawTool.stroke();
+    }
+    DrawBox.fillRect = function(x,y,color='red'){
+    	 var width = DrawTool.width / DrawBox.columnNum;
+    	 var height = DrawTool.height / DrawBox.rowNum;
+    	 DrawTool.ctx.fillStyle = color;
+    	 DrawTool.ctx.fillRect(x*width,y*height,width,height);
+    }
+
+    var NumTool = {};
+    NumTool.getRandNumXY = function(){
+         var x = DrawBox.columnNum;
+         var y = DrawBox.rowNum;
+         x = Math.floor((Math.random()*(x-2)+1));
+         y = Math.floor((Math.random()*(y-2)+1));
+         return {x:x,y:y};
+    }
+
+    NumTool.getRandArr = function(num){
+    	const s = new Set();
+    	for(let i=0;;i++){
+    		let xy = this.getRandNumXY();
+    		let key = xy.x+""+xy.y;
+    		if(!s.has(xy.key)){
+    			s.add(xy);
+    		}
+    		if(s.size == num){
+    			break;
+    		}
+    	}
+    	return Array.from(s);
+    }
+
+    NumTool.getRandMapArr = function(num){
+    	var arr = this.getRandArr(num);
+    	var column = DrawBox.columnNum;
+    	var row = DrawBox.rowNum;
+    	for(let i=0;i<column;i++){
+    		arr.push({x:i,y:0});
+    		arr.push({x:i,y:row-1});
+    	}
+    	for(let j=1;j<row-1;j++){
+    		arr.push({x:0,y:j});
+    		arr.push({x:column-1,y:j});
+    	}
+    	return arr;
+    }
+
+    NumTool.Arr2Map2DArr = function(objArr){
+    	var column = DrawBox.columnNum;
+    	var row = DrawBox.rowNum;
+    	var arr = new Array(column);
+    	for(let i=0;i<column;i++){
+    		arr[i] = new Array(row);
+    		for(let j=0;j<row;j++){
+    			arr[i][j] = 0;
+    		}
+    	}
+    	for(let i=0;i<objArr.length;i++){
+    		let xy = objArr[i];
+    		arr[xy.x][xy.y] = 1;
+    	}
+    	return arr;
+    }
+
+    NumTool.TwoDArr2Map = function(arr){
+    	let path = [];
+    	for(let i=0;i<arr.length;i++){
+    		for(let j=0;j<arr[i].length;j++){
+    			if(arr[i][j]==2){
+    				path.push({x:i,y:j});
+    			}
+    		}
+    	}
+    	return path;
+    }
+    NumTool.make2DArr2Str = function(arr){
+    	var s = "";
+    	for(let i=0;i<arr.length;i++){
+    		var temp = "";
+    		for(let j=0;j<arr[i].length;j++){
+    			if(j == 0){
+    				temp = temp + arr[i][j];
+    			}else{
+    			    temp = temp + ',' + arr[i][j];
+    			}
+    		}
+    		if(i==0){
+    			s = s + "[" + temp + "]";
+    		}else{
+    			s = s + ",\n[" + temp + "]";
+    		}
+    	}
+    	s = "[" + s + "]";
+    	return s;
+    }
+
+
+    var width = 800;
+    var height = 600;
+    DrawTool.iniCanvas(width,height);
+    DrawBox.initBox(80,60);
+    DrawBox.drawLayOut();
+    var map = NumTool.getRandMapArr(700);
+    for(var i=0;i<map.length;i++){
+    	var x = map[i].x;
+    	var y = map[i].y;
+    	DrawBox.fillRect(x,y,'black');
+    }
+
+    var pathArr = Graph.getPath(NumTool.Arr2Map2DArr(map),{x:1,y:1},{x:78,y:58});
+    var path = NumTool.TwoDArr2Map(pathArr);
+    for(var i=0;i<path.length;i++){
+    	var x = path[i].x;
+    	var y = path[i].y;
+    	DrawBox.fillRect(x,y);
+    }    
+  
+</script>
+</html>

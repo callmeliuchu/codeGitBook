@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from bs4 import BeautifulSoup
 import os
 def split_int_sql(s):
@@ -96,3 +97,8 @@ def parse_func_root():
 		# print(help(soup))
 
 parse_func_root()
+=======
+with open("C:\\Users\\Administrator\\Desktop\\illegaltext.txt") as f:
+	content = f.read()
+	print(content)
+>>>>>>> js
